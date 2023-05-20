@@ -11,6 +11,9 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+include_directories(include)
+link_directories(lib)
+
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 add_executable(OpenGLDemo
@@ -18,6 +21,13 @@ add_executable(OpenGLDemo
   mainwindow.cpp
   mainwindow.h
   mainwindow.ui
+  MyOpenGLWidget.cpp
+  MyOpenGLWidget.h
+  Shader.cpp
+  Shader.h
+  Cube.cpp
+  Cube.h
 )
 
-target_link_libraries(OpenGLDemo PRIVATE Qt5::Widgets)
+target_link_libraries(OpenGLDemo PRIVATE Qt5::Widgets glew32.lib glew32.dll glfw3.dll libglfw3.a libglfw3dll.a)
+#target_link_libraries(OpenGLDemo PRIVATE Qt5::Widgets)

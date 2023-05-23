@@ -8,8 +8,15 @@
 #include <iostream>
 #include <vector>
 #include "Shader.h"
+#include "Cube.h"
+#include "Viewer.h"
 
-class MyOpenGLWidget : public QOpenGLWidget, QOpenGLFunctions_3_3_Core{
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+
+class MyOpenGLWidget : public QOpenGLWidget,QOpenGLFunctions_3_3_Core{
     Q_OBJECT
 public:
     explicit MyOpenGLWidget(QWidget *parent=nullptr);
@@ -26,7 +33,13 @@ protected:
     virtual void wheelEvent(QWheelEvent *event);
 
 private:
-    //Shader* shader;
+    Shader* shader;
+    Cube* cube;
+    Viewer viewer{};
+    int g_width{800};
+    int g_height{800};
+    int lastX{};
+    int lastY{};
 signals:
 };
 

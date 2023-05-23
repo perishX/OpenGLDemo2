@@ -8,12 +8,19 @@
 
 class Shader{
 public:
-    Shader();
-//    Shader(const char *vertexPath, const char *fragmentPath);
-    ~Shader();
-protected:
-private:
-    unsigned int ID{};
+public:
+    // 程序ID
+    unsigned int ID;
+
+    // 构造器读取并构建着色器
+    Shader(const char *vertexPath, const char *fragmentPath);
+    Shader(const char *vertexPath, const char *fragmentPath, const char *geometryPath);
+    void setInt(const char * name,int value);
+    void setFloat(const char * name,float value);
+    void setBool(const char * name,bool value);
+    void setVector3f(const char * name, int count,const float* value);
+    void setVector2f(const char * name, int count,const float* value);
+    void setMatrix4f(const char * name, int count,const float* value);
 };
 
 #endif // SHADER_H

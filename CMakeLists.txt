@@ -27,7 +27,10 @@ add_executable(OpenGLDemo
   Shader.h
   Cube.cpp
   Cube.h
+  glad.c
+  Viewer.cpp
+  Viewer.h
 )
 
-target_link_libraries(OpenGLDemo PRIVATE Qt5::Widgets glew32.lib glew32.dll glfw3.dll libglfw3.a libglfw3dll.a)
+target_link_libraries(OpenGLDemo PRIVATE Qt5::Widgets glew32.lib glew32.dll glfw3.dll libglfw3.a libglfw3dll.a opengl32.dll)
 #target_link_libraries(OpenGLDemo PRIVATE Qt5::Widgets)

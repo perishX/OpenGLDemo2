@@ -30,6 +30,12 @@ add_executable(OpenGLDemo
   glad.c
   Viewer.cpp
   Viewer.h
+#  Mesh.cpp
+#  Mesh.h
+#  Model.cpp
+#  Model.h
+  Vertex.h
+  Texture.h
 )
 
 target_link_libraries(OpenGLDemo PRIVATE Qt5::Widgets glew32.lib glew32.dll glfw3.dll libglfw3.a libglfw3dll.a opengl32.dll)

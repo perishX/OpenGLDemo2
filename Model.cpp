@@ -147,6 +147,7 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
 
 unsigned int Model::TextureFromFile(const char *path, const std::string &directory, bool gamma)
 {
+    glewInit();
     std::string filename = directory + "/" + std::string(path);
 
     int width, height, nrChannels;

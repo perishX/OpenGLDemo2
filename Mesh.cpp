@@ -34,6 +34,7 @@ Mesh::~Mesh()
 
 void Mesh::setupMesh()
 {
+    glewInit();
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -58,6 +59,7 @@ void Mesh::setupMesh()
 
 void Mesh::Draw(Shader shader, bool isLineMode)
 {
+    glewInit();
     unsigned int diffNum = 1;
     unsigned int specNum = 1;
     unsigned int reflNum = 1;

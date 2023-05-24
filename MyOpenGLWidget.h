@@ -5,14 +5,26 @@
 #include <QOpenGLFunctions_3_3_Core>
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QFocusEvent>
 #include <iostream>
 #include <vector>
 #include "Shader.h"
+#include "Cube.h"
+#include "Viewer.h"
+#include "Mesh.h"
+#include "Floor.h"
 
-class MyOpenGLWidget : public QOpenGLWidget, QOpenGLFunctions_3_3_Core{
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+
+class MyOpenGLWidget : public QOpenGLWidget,QOpenGLFunctions_3_3_Core{
     Q_OBJECT
 public:
     explicit MyOpenGLWidget(QWidget *parent=nullptr);
+    void setModelMatrix(glm::vec3 position,glm::vec3 rotation,glm::vec3 scale);
+    void test();
 protected:
     virtual void initializeGL();
     virtual void resizeGL(int w,int h);
@@ -24,9 +36,25 @@ protected:
     virtual void mouseReleaseEvent(QMouseEvent *event);
     virtual void mouseMoveEvent(QMouseEvent *event);
     virtual void wheelEvent(QWheelEvent *event);
+    virtual void focusInEvent(QFocusEvent *event);
+    virtual void focusOutEvent(QFocusEvent *event);
+
+public slots:
+    void hi();
 
 private:
-    //Shader* shader;
+    Shader* shader;
+    Cube* cube;
+    Mesh* mesh;
+    Viewer viewer{};
+    Floor* floor;
+    Shader* floorShader;
+    int g_width{800};
+    int g_height{800};
+    int lastX{};
+    int lastY{};
+
+    glm::mat4 modelMatrix{glm::mat4{1.0f}};
 signals:
 };
 

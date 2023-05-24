@@ -13,8 +13,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories(include)
 link_directories(lib)
+#link_directories("C:\\msys64\\mingw64\\lib")
+#link_directories("C:\\msys64\\mingw64\\bin")
+#include_directories("C:\\msys64\\mingw64\\include")
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
+#find_package(assimp REQUIRED)
 
 add_executable(OpenGLDemo
   main.cpp
@@ -27,7 +31,28 @@ add_executable(OpenGLDemo
   Shader.h
   Cube.cpp
   Cube.h
+  glad.c
+  Viewer.cpp
+  Viewer.h
+  Mesh.cpp
+  Mesh.h
+  Model.cpp
+  Model.h
+  Vertex.h
+  Texture.h
+  MyLineEditWidget.cpp
+  MyLineEditWidget.h
+  Floor.cpp
+  Floor.h
+  MyPushButton.cpp
+  MyPushButton.h
 )
 
-target_link_libraries(OpenGLDemo PRIVATE Qt5::Widgets glew32.lib glew32.dll glfw3.dll libglfw3.a libglfw3dll.a)
-#target_link_libraries(OpenGLDemo PRIVATE Qt5::Widgets)
+target_link_libraries(OpenGLDemo Qt5::Widgets)
+target_link_libraries(OpenGLDemo glew32)
+target_link_libraries(OpenGLDemo glfw3)
+target_link_libraries(OpenGLDemo opengl32)
+target_link_libraries(OpenGLDemo assimp-vc142-mtd)
+#target_link_libraries(OpenGLDemo assimp)
+#target_link_libraries(OpenGLDemo libassimp-5.dll)
+

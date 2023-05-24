@@ -2,6 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <iostream>
+#include <string>
+#include <QFileDialog>
+#include <QPushButton>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,5 +24,13 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+private slots:
+    void openModel();
+    void exit();
+    void about();
+
+    void salute();
+    void on_pushButton_clicked();
 };
 #endif // MAINWINDOW_H

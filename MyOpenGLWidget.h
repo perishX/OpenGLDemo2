@@ -13,6 +13,7 @@
 #include "Viewer.h"
 #include "Mesh.h"
 #include "Floor.h"
+#include "Model.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -55,6 +56,8 @@ private:
     int lastY{};
 
     glm::mat4 modelMatrix{glm::mat4{1.0f}};
+
+    Model* model;
 signals:
 };
 

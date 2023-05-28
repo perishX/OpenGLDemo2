@@ -69,3 +69,13 @@ void Viewer::zoom(float offset){
         this->fov = 45.f;
     }
 }
+
+void Viewer::moveTo(glm::vec3 position){
+    this->Pos=position;
+    this->updateDirection();
+}
+void Viewer::rotationTo(glm::vec2 rotation){
+    this->pitch=rotation.x;
+    this->yaw=rotation.y;
+    this->updateDirection();
+}

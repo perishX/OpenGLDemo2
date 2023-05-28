@@ -11,6 +11,8 @@ public:
     ~Viewer();
     void updateDirection(float yawOffset=0, float pitchOffset=0);
     void move();
+    void moveTo(glm::vec3 position);
+    void rotationTo(glm::vec2 rotation);
     void zoom(float offset);
     void setForwardFlag(float flag);
     void setRightFlag(float flag);

@@ -10,6 +10,7 @@
 #include <assimp/postprocess.h>
 #include "glm/glm.hpp"
 #define STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_STATIC
 #include <stb_image.h>
 #include "Mesh.h"
 #include "Shader.h"

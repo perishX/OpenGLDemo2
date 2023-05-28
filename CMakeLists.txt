@@ -13,12 +13,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories(include)
 link_directories(lib)
+#link_directories(bin)
 #link_directories("C:\\msys64\\mingw64\\lib")
 #link_directories("C:\\msys64\\mingw64\\bin")
 #include_directories("C:\\msys64\\mingw64\\include")
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 #find_package(assimp REQUIRED)
+
+#find_package(GLEW REQUIRED)
+#include_directories(${GLEW_INCLUDE_DIRS})
+#link_libraries(${GLEW_LIBRARIES})
 
 add_executable(OpenGLDemo
   main.cpp
@@ -31,7 +36,6 @@ add_executable(OpenGLDemo
   Shader.h
   Cube.cpp
   Cube.h
-  glad.c
   Viewer.cpp
   Viewer.h
   Mesh.cpp
@@ -46,13 +50,23 @@ add_executable(OpenGLDemo
   Floor.h
   MyPushButton.cpp
   MyPushButton.h
+  CameraOpenGLWidget.cpp
+  CameraOpenGLWidget.h
 )
+
+#if(assimp_FOUND)
+##    target_include_directories(clib PRIVATE ${assimp_FOUND})
+#    target_link_libraries(OpenGLDemo ${assimp_FOUND})
+#    message(${assimp_LIBRARY})
+#else(assimp_FOUND)
+#    message(FATAL_ERROR ”CURL library not found”)
+#endif(assimp_FOUND)
 
 target_link_libraries(OpenGLDemo Qt5::Widgets)
 target_link_libraries(OpenGLDemo glew32)
-target_link_libraries(OpenGLDemo glfw3)
 target_link_libraries(OpenGLDemo opengl32)
-target_link_libraries(OpenGLDemo assimp-vc142-mtd)
-#target_link_libraries(OpenGLDemo assimp)
-#target_link_libraries(OpenGLDemo libassimp-5.dll)
+#target_link_libraries(OpenGLDemo zlibstatic)
+#target_link_libraries(OpenGLDemo ${assimp_LIBRARY})
+target_link_libraries(OpenGLDemo libassimp.dll.a)
+
 

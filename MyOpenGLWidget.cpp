@@ -104,10 +104,14 @@ void MyOpenGLWidget::initializeGL(){
     glEnable(GL_DEPTH_TEST);
 
     this->cube=new Cube();
-    this->shader=new Shader{"C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\shader.vert","C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\shader.frag"};
+//    this->shader=new Shader{"C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\shader.vert","C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\shader.frag"};
+    this->shader=new Shader{"D:\\Qt\\projects\\OpenGLDemo2\\shaders\\shader.vert","D:\\Qt\\projects\\OpenGLDemo2\\shaders\\shader.frag"};
     this->mesh=new Mesh();
     this->floor=new Floor();
-    this->floorShader=new Shader{"C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\floorShader.vert","C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\floorShader.frag"};
+//    this->floorShader=new Shader{"C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\floorShader.vert","C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\floorShader.frag"};
+    this->floorShader=new Shader{"D:\\Qt\\projects\\OpenGLDemo2\\shaders\\floorShader.vert","D:\\Qt\\projects\\OpenGLDemo2\\shaders\\floorShader.frag"};
+    this->model=new Model{"D:\\Qt\\projects\\OpenGLDemo2\\models\\nanosuit\\nanosuit.obj"};
+
 }
 
 void MyOpenGLWidget::resizeGL(int w, int h){
@@ -123,7 +127,8 @@ void MyOpenGLWidget::paintGL(){
     glClear(GL_COLOR_BUFFER_BIT);
 
 //    glm::mat4 model = glm::mat4{1.0f};
-    glm::mat4 model = this->modelMatrix;
+    glm::mat4 model = glm::scale(this->modelMatrix,glm::vec3{0.1});
+
     glm::mat4 view = glm::mat4{1.0f};
     view = this->viewer.getViewMatrix();
     glm::mat4 perspective = glm::mat4{1.0f};
@@ -133,7 +138,8 @@ void MyOpenGLWidget::paintGL(){
     this->shader->setMatrix4f("model", 1, glm::value_ptr(model));
     this->shader->setMatrix4f("view", 1, glm::value_ptr(view));
     this->shader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
-    this->cube->Draw();
+//    this->cube->Draw();
+    this->model->Draw(*this->shader,false);
 
     model = glm::mat4{1.0f};
     glUseProgram(this->floorShader->ID);

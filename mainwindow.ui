@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1050</width>
+    <width>1060</width>
     <height>699</height>
    </rect>
   </property>
@@ -208,8 +208,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>870</x>
-      <y>190</y>
+      <x>860</x>
+      <y>10</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -218,13 +218,23 @@
      <string>PushButton</string>
     </property>
    </widget>
+   <widget class="CameraOpenGLWidget" name="openGLWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>340</y>
+      <width>300</width>
+      <height>300</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1050</width>
+     <width>1060</width>
      <height>23</height>
     </rect>
    </property>
@@ -293,6 +303,11 @@
    <class>MyPushButton</class>
    <extends>QPushButton</extends>
    <header>MyPushButton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CameraOpenGLWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header>cameraopenglwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

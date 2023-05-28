@@ -1,5 +1,5 @@
 #include <gl/glew.h>
-#include <GLFW/glfw3.h>
+//#include <GLFW/glfw3.h>
 #include "Mesh.h"
 
 Mesh::Mesh()

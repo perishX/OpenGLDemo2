@@ -1,6 +1,6 @@
 #define GLEW_STATIC
 #include <gl/glew.h>
-#include <GLFW/glfw3.h>
+//#include <GLFW/glfw3.h>
 #include "Shader.h"
 
 Shader::Shader(const char *vertexPath, const char *fragmentPath)

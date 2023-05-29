@@ -25,6 +25,7 @@ public:
     ~Mesh();
 
     void Draw(Shader shader, bool isLineMode = false);
+    void deleteMesh();
 };
 
 

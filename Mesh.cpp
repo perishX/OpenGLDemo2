@@ -92,9 +92,21 @@ void Mesh::Draw(Shader shader, bool isLineMode)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
     glBindVertexArray(VAO);
-//    glDrawArrays(GL_TRIANGLES, 0, vertices.size()*3);
-    glDrawElements(GL_TRIANGLES, this->indices.size(), GL_UNSIGNED_INT, 0);
+//    glDrawArrays(GL_TRIANGLES, 0, this->indices.size());
+    glDrawElements(GL_TRIANGLES,this->indices.size(), GL_UNSIGNED_INT, (void*)0);
 
     glBindVertexArray(0);
     glActiveTexture(GL_TEXTURE0);
+}
+
+void Mesh::deleteMesh(){
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
+    glDeleteBuffers(1,&this->VBO);
+    glDeleteBuffers(1,&this->EBO);
+    glDeleteVertexArrays(1,&this->VAO);
+
+//    this->indices.clear();
+//    this->vertices.clear();
 }

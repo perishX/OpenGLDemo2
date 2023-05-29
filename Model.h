@@ -33,6 +33,7 @@ public:
     void loadModel(std::string path);
     void Draw(Shader shader, bool isLineMode = false);
     void print();
+    void deleteMesh();
 };
 
 #endif // MODEL_H

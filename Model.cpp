@@ -3,7 +3,7 @@
 
 Model::Model()
 {
-//    glewInit();
+    glewInit();
 }
 
 
@@ -21,7 +21,7 @@ void Model::Draw(Shader shader, bool isLineMode)
 {
 //    int count=0;
     if(!hasModel) return;
-    for (Mesh mesh : meshes)
+    for (Mesh& mesh : meshes)
     {
         mesh.Draw(shader, isLineMode);
 //        std::cout<<count++<<std::endl;
@@ -30,6 +30,7 @@ void Model::Draw(Shader shader, bool isLineMode)
 
 void Model::loadModel(std::string path)
 {
+    glewInit();
     this->hasModel=true;
     Assimp::Importer import{};
     const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -198,5 +199,13 @@ unsigned int Model::TextureFromFile(const char *path, const std::string &directo
 void Model::print(){
     for(Mesh& mesh:this->meshes){
         std::cout<<mesh.vertices.size()<<" "<<mesh.indices.size()<<" "<<mesh.textures.size()<<" "<<mesh.VAO<<" "<<mesh.VBO<<" "<<mesh.EBO<<std::endl;
+    }
+}
+
+void Model::deleteMesh(){
+//    this->hasModel=false;
+    for (Mesh& mesh : meshes)
+    {
+        mesh.deleteMesh();
     }
 }

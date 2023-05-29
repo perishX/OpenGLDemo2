@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
 //    ui->scaleZ->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
 
     ui->openGLWidget->test();
+    this->gt=GlewInit();
 }
 
 void MainWindow::salute(){

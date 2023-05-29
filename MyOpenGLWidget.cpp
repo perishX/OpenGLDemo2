@@ -204,6 +204,8 @@ void MyOpenGLWidget::loadModel(std::string path){
 //    },path);
 //    std::cout<<f.get()<<std::endl;
 //    std::cout << std::this_thread::get_id() << std::endl;
+    this->model->deleteMesh();
+//    update();
     this->model->loadModel(path);
 //this->models.push_back(Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"});
 

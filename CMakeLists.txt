@@ -56,6 +56,10 @@ add_executable(OpenGLDemo
   BtnMeshMode.h
   BtnInfo.cpp
   BtnInfo.h
+  GameObject.cpp
+  GameObject.h
+  GlewInit.cpp
+  GlewInit.h
 )
 
 #if(assimp_FOUND)

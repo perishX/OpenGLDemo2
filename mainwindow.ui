@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1060</width>
+    <width>1331</width>
     <height>699</height>
    </rect>
   </property>
@@ -20,7 +20,7 @@
    <widget class="MyOpenGLWidget" name="openGLWidget">
     <property name="geometry">
      <rect>
-      <x>-1</x>
+      <x>269</x>
       <y>-1</y>
       <width>741</width>
       <height>661</height>
@@ -33,7 +33,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>760</x>
+      <x>1030</x>
       <y>10</y>
       <width>54</width>
       <height>12</height>
@@ -46,7 +46,7 @@
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>760</x>
+      <x>1030</x>
       <y>40</y>
       <width>290</width>
       <height>121</height>
@@ -205,8 +205,8 @@
    <widget class="CameraOpenGLWidget" name="openGLWidget_2">
     <property name="geometry">
      <rect>
-      <x>750</x>
-      <y>340</y>
+      <x>1020</x>
+      <y>360</y>
       <width>300</width>
       <height>300</height>
      </rect>
@@ -218,7 +218,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>770</x>
+      <x>1040</x>
       <y>180</y>
       <width>75</width>
       <height>23</height>
@@ -234,7 +234,7 @@
    <widget class="BtnMeshMode" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>860</x>
+      <x>1130</x>
       <y>180</y>
       <width>75</width>
       <height>23</height>
@@ -247,7 +247,7 @@
    <widget class="BtnInfo" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>950</x>
+      <x>1220</x>
       <y>180</y>
       <width>75</width>
       <height>23</height>
@@ -257,13 +257,42 @@
      <string>信息统计</string>
     </property>
    </widget>
+   <widget class="QListView" name="listView">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>256</width>
+      <height>651</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="GameObject" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>231</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>18</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Box</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1060</width>
+     <width>1331</width>
      <height>23</height>
     </rect>
    </property>
@@ -330,6 +359,11 @@
    <class>BtnInfo</class>
    <extends>QPushButton</extends>
    <header>btninfo.h</header>
+  </customwidget>
+  <customwidget>
+   <class>GameObject</class>
+   <extends>QLabel</extends>
+   <header>GameObject.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

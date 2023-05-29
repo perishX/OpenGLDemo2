@@ -19,9 +19,11 @@ Model::~Model()
 
 void Model::Draw(Shader shader, bool isLineMode)
 {
+//    int count=0;
     for (Mesh mesh : meshes)
     {
         mesh.Draw(shader, isLineMode);
+//        std::cout<<count++<<std::endl;
     }
 }
 
@@ -139,7 +141,7 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
         }
         if (!skip)
         {
-            std::cout << type << " " << str.C_Str() << std::endl;
+//            std::cout << type << " " << str.C_Str() << std::endl;
             Texture texture;
             texture.id = TextureFromFile(str.C_Str(), directory);
             texture.type = typeName;
@@ -180,7 +182,7 @@ unsigned int Model::TextureFromFile(const char *path, const std::string &directo
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        std::cout << "Success to load texture" << std::endl;
+//        std::cout << "Success to load texture" << std::endl;
     }
     else
     {
@@ -188,4 +190,11 @@ unsigned int Model::TextureFromFile(const char *path, const std::string &directo
     }
     stbi_image_free(data);
     return texture;
+}
+
+
+void Model::print(){
+    for(Mesh& mesh:this->meshes){
+        std::cout<<mesh.vertices.size()<<" "<<mesh.indices.size()<<" "<<mesh.textures.size()<<" "<<mesh.VAO<<" "<<mesh.VBO<<" "<<mesh.EBO<<std::endl;
+    }
 }

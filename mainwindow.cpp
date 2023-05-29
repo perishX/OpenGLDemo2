@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionAbout,&QAction::triggered,this,&MainWindow::about);
 
     connect(ui->pushButton,&QPushButton::clicked,this,&MainWindow::on_pushButton_clicked);
+    connect(ui->pushButton_2,&QPushButton::clicked,this,&MainWindow::on_pushButton_2_clicked);
+    connect(ui->pushButton_3,&QPushButton::clicked,this,&MainWindow::on_pushButton_3_clicked);
     //"^(-?\d+)(\.\d+)?$"
 //    ui->positionX->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
 //    ui->positionY->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
@@ -52,6 +54,7 @@ void MainWindow::exit(){
 
 void MainWindow::about(){
     std::cout<<"about trigger!!!"<<std::endl;
+    QMessageBox::about(this,"about","版本：0.1.1\n更新日期：2023/5/29");
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -61,4 +64,17 @@ void MainWindow::on_pushButton_clicked()
     glm::vec3 rotation{ui->rotationX->num,ui->rotationY->num,ui->rotationZ->num};
     glm::vec3 scale{ui->scaleX->num,ui->scaleY->num,ui->scaleZ->num};
     ui->openGLWidget->setModelMatrix(position,rotation,scale);
+}
+
+void MainWindow::on_pushButton_2_clicked(bool isMeshMode)
+{
+    std::cout<<"meshmode: "<<isMeshMode<<std::endl;
+    ui->openGLWidget->setMeshMode(isMeshMode);
+}
+
+void MainWindow::on_pushButton_3_clicked(){
+    std::string title{"title"};
+    std::string info{"title"};
+    std::cout<<"info: "<<title<<" "<<info<<std::endl;
+    ui->openGLWidget->displayInfo();
 }

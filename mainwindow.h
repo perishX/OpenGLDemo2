@@ -6,6 +6,7 @@
 #include <string>
 #include <QFileDialog>
 #include <QPushButton>
+#include <QMessageBox>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -32,5 +33,7 @@ private slots:
 
     void salute();
     void on_pushButton_clicked();
+    void on_pushButton_2_clicked(bool isMeshMode);
+    void on_pushButton_3_clicked();
 };
 #endif // MAINWINDOW_H

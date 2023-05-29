@@ -32,6 +32,7 @@ public:
     ~Model();
     void loadModel(std::string path);
     void Draw(Shader shader, bool isLineMode = false);
+    void print();
 };
 
 #endif // MODEL_H

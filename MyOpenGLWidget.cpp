@@ -104,16 +104,19 @@ void MyOpenGLWidget::initializeGL(){
     glEnable(GL_DEPTH_TEST);
 
     this->cube=new Cube();
+    this->cube2=new Cube();
     this->floor=new Floor();
     this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
     this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
-    this->model=new Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"};
+//    this->model=new Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"};
 //    this->model->loadModel("C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj");
 
 //    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
 //    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
 //    this->model=new Model{"D:/Qt/projects/OpenGLDemo2/models/nanosuit/nanosuit.obj"};
-
+    this->models.push_back(Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"});
+//    this->models.push_back(Model{"C:/Users/73965/Downloads/91-21-iphonex/Iphone seceond version finished.obj"});
+    this->modelShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.frag"};
 }
 
 void MyOpenGLWidget::resizeGL(int w, int h){
@@ -123,14 +126,13 @@ void MyOpenGLWidget::resizeGL(int w, int h){
 }
 
 void MyOpenGLWidget::paintGL(){
+        std::cout<<"paintGL"<<std::endl;
     glViewport(0,0,g_width,g_height);
 
     glClearColor(0.5f,0.5f,0.5f,1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-//    glm::mat4 model = glm::mat4{1.0f};
-    glm::mat4 model = glm::scale(this->modelMatrix,glm::vec3{0.1});
-
+    glm::mat4 model = glm::mat4{1.0f};
     glm::mat4 view = glm::mat4{1.0f};
     view = this->viewer.getViewMatrix();
     glm::mat4 perspective = glm::mat4{1.0f};
@@ -141,9 +143,28 @@ void MyOpenGLWidget::paintGL(){
     this->shader->setMatrix4f("view", 1, glm::value_ptr(view));
     this->shader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
     this->cube->Draw();
-    if(this->model!=nullptr){
-        this->model->Draw(*this->shader,false);
+//    model=glm::translate(model,glm::vec3{10,0,0});
+//    this->shader->setMatrix4f("model", 1, glm::value_ptr(model));
+//    this->cube2->Draw();
+
+    model = glm::scale(this->modelMatrix,glm::vec3{0.2});
+    model=glm::translate(model,glm::vec3{10,0,0});
+    glUseProgram(this->modelShader->ID);
+    this->modelShader->setMatrix4f("model", 1, glm::value_ptr(model));
+    this->modelShader->setMatrix4f("view", 1, glm::value_ptr(view));
+    this->modelShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
+    this->modelShader->setFloat("material.shininess", 256.f);
+    this->modelShader->setVector3f("viewerPos", 1, glm::value_ptr(this->viewer.Pos));
+    this->modelShader->setVector3f("directionLight.color", 1, glm::value_ptr(this->directionlightColor));
+    this->modelShader->setVector3f("directionLight.direction", 1, glm::value_ptr(this->directionlightDir));
+    this->modelShader->setVector3f("directionLight.ambient", 1, glm::value_ptr(this->directionlightColor * 0.2f));
+    this->modelShader->setVector3f("directionLight.diffuse", 1, glm::value_ptr(this->directionlightColor * 0.5f));
+    this->modelShader->setVector3f("directionLight.specular", 1, glm::value_ptr(this->directionlightColor * 1.0f));
+    for(Model& m:this->models){
+        m.Draw(*this->modelShader,isMeshMode);
+//        m.print();
     }
+
     model = glm::mat4{1.0f};
     glUseProgram(this->floorShader->ID);
     this->floorShader->setMatrix4f("model", 1, glm::value_ptr(model));
@@ -153,7 +174,7 @@ void MyOpenGLWidget::paintGL(){
 //    this->mesh->Draw(*this->shader);
 }
 
-void MyOpenGLWidget::setModelMatrix(glm::vec3 position,glm::vec3 rotation,glm::vec3 scale){
+    void MyOpenGLWidget::setModelMatrix(glm::vec3 position,glm::vec3 rotation,glm::vec3 scale){
     this->modelMatrix = glm::mat4{1.0f};
     this->modelMatrix = glm::translate(this->modelMatrix,position);
     this->modelMatrix = glm::scale(this->modelMatrix,scale);
@@ -172,7 +193,29 @@ void MyOpenGLWidget::test(){
 }
 
 void MyOpenGLWidget::loadModel(std::string path){
-    this->model=new Model{path};
+    this->models.push_back(Model{path});
+
     std::cout<<"loaded!!!"<<std::endl;
+//    this->models[this->models.size()-1].print();
 //    update();
+}
+
+void MyOpenGLWidget::setMeshMode(bool isMeshMode){
+    this->isMeshMode=isMeshMode;
+    update();
+}
+
+void MyOpenGLWidget::displayInfo(){
+    int vertexNum{};
+    int meshNum{};
+    for(Model& m:this->models){
+        for(Mesh& mesh:m.meshes){
+            vertexNum+=mesh.vertices.size();
+            meshNum+=mesh.indices.size()/3;
+        }
+    }
+    std::stringstream ss{};
+    ss<<"顶点数："<<vertexNum<<"\n"<<"面数："<<meshNum<<std::endl;
+
+    QMessageBox::about(this,"about",ss.str().c_str());
 }

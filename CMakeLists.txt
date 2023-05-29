@@ -52,6 +52,10 @@ add_executable(OpenGLDemo
   MyPushButton.h
   CameraOpenGLWidget.cpp
   CameraOpenGLWidget.h
+  BtnMeshMode.cpp
+  BtnMeshMode.h
+  BtnInfo.cpp
+  BtnInfo.h
 )
 
 #if(assimp_FOUND)

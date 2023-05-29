@@ -1,8 +1,15 @@
 #include <gl/glew.h>
 #include "Model.h"
 
+Model::Model()
+{
+    glewInit();
+}
+
+
 Model::Model(std::string path)
 {
+    glewInit();
     loadModel(path);
 }
 
@@ -28,7 +35,7 @@ void Model::loadModel(std::string path)
         std::cout << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
         return;
     }
-    directory = path.substr(0, path.find_last_of("\\"));
+    directory = path.substr(0, path.find_last_of("/"));
 
     processNode(scene->mRootNode, scene);
 }
@@ -146,8 +153,8 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
 
 unsigned int Model::TextureFromFile(const char *path, const std::string &directory, bool gamma)
 {
-    glewInit();
-    std::string filename = directory + "\\" + std::string(path);
+
+    std::string filename = directory + "/" + std::string(path);
 
     int width, height, nrChannels;
     unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrChannels, 0);

@@ -4,7 +4,7 @@
 
 void Cube::Draw(bool isLineMode)
 {
-    glewInit();
+//    glewInit();
     if (isLineMode)
     {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

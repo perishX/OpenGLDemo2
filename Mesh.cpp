@@ -59,7 +59,7 @@ void Mesh::setupMesh()
 
 void Mesh::Draw(Shader shader, bool isLineMode)
 {
-    glewInit();
+//    glewInit();
     unsigned int diffNum = 1;
     unsigned int specNum = 1;
     unsigned int reflNum = 1;

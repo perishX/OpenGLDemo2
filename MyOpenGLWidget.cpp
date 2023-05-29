@@ -104,13 +104,15 @@ void MyOpenGLWidget::initializeGL(){
     glEnable(GL_DEPTH_TEST);
 
     this->cube=new Cube();
-//    this->shader=new Shader{"C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\shader.vert","C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\shader.frag"};
-    this->shader=new Shader{"D:\\Qt\\projects\\OpenGLDemo2\\shaders\\shader.vert","D:\\Qt\\projects\\OpenGLDemo2\\shaders\\shader.frag"};
-    this->mesh=new Mesh();
     this->floor=new Floor();
-//    this->floorShader=new Shader{"C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\floorShader.vert","C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\floorShader.frag"};
-    this->floorShader=new Shader{"D:\\Qt\\projects\\OpenGLDemo2\\shaders\\floorShader.vert","D:\\Qt\\projects\\OpenGLDemo2\\shaders\\floorShader.frag"};
-    this->model=new Model{"D:\\Qt\\projects\\OpenGLDemo2\\models\\nanosuit\\nanosuit.obj"};
+    this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
+    this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
+    this->model=new Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"};
+//    this->model->loadModel("C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj");
+
+//    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
+//    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
+//    this->model=new Model{"D:/Qt/projects/OpenGLDemo2/models/nanosuit/nanosuit.obj"};
 
 }
 
@@ -138,9 +140,10 @@ void MyOpenGLWidget::paintGL(){
     this->shader->setMatrix4f("model", 1, glm::value_ptr(model));
     this->shader->setMatrix4f("view", 1, glm::value_ptr(view));
     this->shader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
-//    this->cube->Draw();
-    this->model->Draw(*this->shader,false);
-
+    this->cube->Draw();
+    if(this->model!=nullptr){
+        this->model->Draw(*this->shader,false);
+    }
     model = glm::mat4{1.0f};
     glUseProgram(this->floorShader->ID);
     this->floorShader->setMatrix4f("model", 1, glm::value_ptr(model));
@@ -166,4 +169,10 @@ void MyOpenGLWidget::hi(){
 
 void MyOpenGLWidget::test(){
     std::cout<<"setea"<<std::endl;
+}
+
+void MyOpenGLWidget::loadModel(std::string path){
+    this->model=new Model{path};
+    std::cout<<"loaded!!!"<<std::endl;
+//    update();
 }

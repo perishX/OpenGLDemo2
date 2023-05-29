@@ -26,6 +26,7 @@ public:
     explicit MyOpenGLWidget(QWidget *parent=nullptr);
     void setModelMatrix(glm::vec3 position,glm::vec3 rotation,glm::vec3 scale);
     void test();
+    void loadModel(std::string path);
 protected:
     virtual void initializeGL();
     virtual void resizeGL(int w,int h);

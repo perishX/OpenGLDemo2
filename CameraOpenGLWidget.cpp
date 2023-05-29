@@ -5,20 +5,114 @@ CameraOpenGLWidget::CameraOpenGLWidget(QWidget *parent):QOpenGLWidget{parent}
 
 }
 
+void CameraOpenGLWidget::resizeEvent(QResizeEvent *event){
+    this->g_width=this->width();
+    this->g_height=this->height();
+}
+
+void CameraOpenGLWidget::keyPressEvent(QKeyEvent *event){
+    if(event->key()==Qt::Key_W){
+        this->viewer.setForwardFlag(1);
+    }else if(event->key()==Qt::Key_S){
+        this->viewer.setForwardFlag(-1);
+    }
+
+    if(event->key()==Qt::Key_D){
+       this->viewer.setRightFlag(1);
+    }else if(event->key()==Qt::Key_A){
+        this->viewer.setRightFlag(-1);
+    }
+
+    if(event->key()==Qt::Key_Q){
+        this->viewer.setUpFlag(1);
+    }else if(event->key()==Qt::Key_E){
+        this->viewer.setUpFlag(-1);
+    }
+    this->viewer.move();
+    update();
+}
+
+void CameraOpenGLWidget::keyReleaseEvent(QKeyEvent *event){
+    if(event->key()==Qt::Key_W || event->key()==Qt::Key_S){
+        this->viewer.setForwardFlag(0);
+    }
+
+    if(event->key()==Qt::Key_D || event->key()==Qt::Key_A){
+        this->viewer.setRightFlag(0);
+    }
+
+    if(event->key()==Qt::Key_Q || event->key()==Qt::Key_E){
+        this->viewer.setUpFlag(0);
+    }
+}
+
+void CameraOpenGLWidget::mousePressEvent(QMouseEvent *event){
+    if(event->button()==Qt::LeftButton){
+        this->grabKeyboard();
+    }
+    if(event->button()==Qt::RightButton){
+        this->lastX=event->x();
+        this->lastY=event->y();
+    }
+}
+
+void CameraOpenGLWidget::mouseReleaseEvent(QMouseEvent *event){
+    if(event->button()==Qt::LeftButton){
+    }
+    if(event->button()==Qt::RightButton){
+    }
+}
+
+void CameraOpenGLWidget::mouseMoveEvent(QMouseEvent *event){
+    if(event->buttons()&Qt::RightButton){
+        float xOffset=event->x()-this->lastX;
+        float yOffset=this->lastY-event->y();
+
+        this->lastX=event->x();
+        this->lastY=event->y();
+
+        this->viewer.updateDirection(xOffset,yOffset);
+        update();
+    }
+}
+
+void CameraOpenGLWidget::wheelEvent(QWheelEvent *event){
+    float offset{};
+    if(event->delta() > 0){
+        offset=-1;
+    }else{
+        offset=1;
+    }
+    this->viewer.zoom(offset);
+    update();
+}
+
+void CameraOpenGLWidget::focusInEvent(QFocusEvent *event){
+    std::cout<<"OpenGLWidget focusInEvent"<<std::endl;
+    this->grabKeyboard();
+//    this->grabMouse();
+}
+void CameraOpenGLWidget::focusOutEvent(QFocusEvent *event){
+    std::cout<<"OpenGLWidget focusOutEvent"<<std::endl;
+    this->releaseKeyboard();
+//    this->releaseMouse();
+}
+
 void CameraOpenGLWidget::initializeGL(){
     initializeOpenGLFunctions();
     glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
     glEnable(GL_DEPTH_TEST);
 
     this->cube=new Cube();
-//    this->shader=new Shader{"C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\shader.vert","C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\shader.frag"};
-    this->shader=new Shader{"D:\\Qt\\projects\\OpenGLDemo2\\shaders\\shader.vert","D:\\Qt\\projects\\OpenGLDemo2\\shaders\\shader.frag"};
     this->floor=new Floor();
-//    this->floorShader=new Shader{"C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\floorShader.vert","C:\\Users\\73965\\Documents\\OpenGLDemo\\shaders\\floorShader.frag"};
-    this->floorShader=new Shader{"D:\\Qt\\projects\\OpenGLDemo2\\shaders\\floorShader.vert","D:\\Qt\\projects\\OpenGLDemo2\\shaders\\floorShader.frag"};
-    this->model=new Model{"D:\\Qt\\projects\\OpenGLDemo2\\models\\nanosuit\\nanosuit.obj"};
-    this->viewer.moveTo(glm::vec3{4,1,5});
-    this->viewer.rotationTo(glm::vec2{0,-135});
+    this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
+    this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
+//    this->model=new Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"};
+
+//    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
+//    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
+//    this->model=new Model{"D:/Qt/projects/OpenGLDemo2/models/nanosuit/nanosuit.obj"};
+
 }
 
 void CameraOpenGLWidget::resizeGL(int w, int h){
@@ -46,7 +140,7 @@ void CameraOpenGLWidget::paintGL(){
     this->shader->setMatrix4f("view", 1, glm::value_ptr(view));
     this->shader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
 //    this->cube->Draw();
-    this->model->Draw(*this->shader,false);
+//    this->model->Draw(*this->shader,false);
 
     model = glm::mat4{1.0f};
     glUseProgram(this->floorShader->ID);

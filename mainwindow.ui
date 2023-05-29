@@ -53,31 +53,17 @@
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
+     <item row="2" column="4">
+      <widget class="MyLineEditWidget" name="rotationY">
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="positionLabel">
        <property name="text">
         <string>position</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="positionXLabel">
-       <property name="text">
-        <string>X</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="5">
-      <widget class="QLabel" name="positionZLabel">
-       <property name="text">
-        <string>Z</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="6">
-      <widget class="MyLineEditWidget" name="positionZ">
-       <property name="focusPolicy">
-        <enum>Qt::ClickFocus</enum>
        </property>
       </widget>
      </item>
@@ -88,38 +74,10 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="3">
-      <widget class="QLabel" name="rotationYLabel">
-       <property name="text">
-        <string>Y</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="4">
-      <widget class="MyLineEditWidget" name="rotationY">
-       <property name="focusPolicy">
-        <enum>Qt::ClickFocus</enum>
-       </property>
-      </widget>
-     </item>
      <item row="3" column="1">
       <widget class="QLabel" name="scaleXLabel">
        <property name="text">
         <string>X</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="MyLineEditWidget" name="rotationX">
-       <property name="focusPolicy">
-        <enum>Qt::ClickFocus</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="scaleLabel">
-       <property name="text">
-        <string>scale</string>
        </property>
       </widget>
      </item>
@@ -130,15 +88,15 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="5">
-      <widget class="QLabel" name="rotationZLabel">
+     <item row="1" column="3">
+      <widget class="QLabel" name="positionYLabel">
        <property name="text">
-        <string>Z</string>
+        <string>Y</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="2" alignment="Qt::AlignRight|Qt::AlignVCenter">
-      <widget class="MyLineEditWidget" name="positionX">
+     <item row="1" column="6">
+      <widget class="MyLineEditWidget" name="positionZ">
        <property name="focusPolicy">
         <enum>Qt::ClickFocus</enum>
        </property>
@@ -151,8 +109,50 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="3">
-      <widget class="QLabel" name="scaleYLabel">
+     <item row="1" column="5">
+      <widget class="QLabel" name="positionZLabel">
+       <property name="text">
+        <string>Z</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="MyLineEditWidget" name="rotationX">
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="4">
+      <widget class="MyLineEditWidget" name="scaleY">
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="scaleLabel">
+       <property name="text">
+        <string>scale</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="positionXLabel">
+       <property name="text">
+        <string>X</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="MyLineEditWidget" name="scaleX">
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="3">
+      <widget class="QLabel" name="rotationYLabel">
        <property name="text">
         <string>Y</string>
        </property>
@@ -172,27 +172,6 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="4">
-      <widget class="MyLineEditWidget" name="scaleY">
-       <property name="focusPolicy">
-        <enum>Qt::ClickFocus</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="3">
-      <widget class="QLabel" name="positionYLabel">
-       <property name="text">
-        <string>Y</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="2">
-      <widget class="MyLineEditWidget" name="scaleX">
-       <property name="focusPolicy">
-        <enum>Qt::ClickFocus</enum>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="4">
       <widget class="MyLineEditWidget" name="positionY">
        <property name="focusPolicy">
@@ -200,23 +179,28 @@
        </property>
       </widget>
      </item>
+     <item row="1" column="2" alignment="Qt::AlignRight|Qt::AlignVCenter">
+      <widget class="MyLineEditWidget" name="positionX">
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="3">
+      <widget class="QLabel" name="scaleYLabel">
+       <property name="text">
+        <string>Y</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="5">
+      <widget class="QLabel" name="rotationZLabel">
+       <property name="text">
+        <string>Z</string>
+       </property>
+      </widget>
+     </item>
     </layout>
-   </widget>
-   <widget class="MyPushButton" name="pushButton">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>860</x>
-      <y>10</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
    </widget>
    <widget class="CameraOpenGLWidget" name="openGLWidget_2">
     <property name="geometry">
@@ -226,6 +210,25 @@
       <width>300</width>
       <height>300</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="MyPushButton" name="pushButton">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>170</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
     </property>
    </widget>
   </widget>
@@ -255,18 +258,6 @@
    <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="actionModel"/>
-  </widget>
   <action name="actionImport">
    <property name="text">
     <string>导入模型</string>
@@ -279,12 +270,7 @@
   </action>
   <action name="actionExit">
    <property name="text">
-    <string>修改状态</string>
-   </property>
-  </action>
-  <action name="actionModel">
-   <property name="text">
-    <string>设置属性</string>
+    <string>退出</string>
    </property>
   </action>
  </widget>

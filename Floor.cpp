@@ -39,7 +39,7 @@ void Floor::setupMesh()
 
 void Floor::Draw(bool isLineMode)
 {
-    glewInit();
+//    glewInit();
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);

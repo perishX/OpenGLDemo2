@@ -103,8 +103,8 @@ void Mesh::Draw(Shader shader, bool isLineMode)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, this->vertices.size());
-//    glDrawElements(GL_TRIANGLES,this->indices.size(), GL_UNSIGNED_INT, (void*)0);
+//    glDrawArrays(GL_TRIANGLES, 0, this->vertices.size());
+    glDrawElements(GL_TRIANGLES,this->indices.size(), GL_UNSIGNED_INT, (void*)0);
 
     glBindVertexArray(0);
     glActiveTexture(GL_TEXTURE0);

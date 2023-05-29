@@ -4,19 +4,19 @@
 
 Mesh::Mesh()
 {
-    std::cout << "default" << std::endl;
-    this->vertices = {};
-    this->textures = {};
-    this->indices = {0, 1, 2};
+//    std::cout << "default" << std::endl;
+//    this->vertices = {};
+//    this->textures = {};
+//    this->indices = {0, 1, 2};
 
-    Vertex vertex1{glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(0.0f, 0.0f)};
-    Vertex vertex2{glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(1.0f, 0.0f)};
-    Vertex vertex3{glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(1.0f, 1.0f)};
-    this->vertices.push_back(vertex1);
-    this->vertices.push_back(vertex2);
-    this->vertices.push_back(vertex3);
+//    Vertex vertex1{glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(0.0f, 0.0f)};
+//    Vertex vertex2{glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(1.0f, 0.0f)};
+//    Vertex vertex3{glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(1.0f, 1.0f)};
+//    this->vertices.push_back(vertex1);
+//    this->vertices.push_back(vertex2);
+//    this->vertices.push_back(vertex3);
 
-    setupMesh();
+//    setupMesh();
 }
 
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures)
@@ -60,7 +60,7 @@ void Mesh::setupMesh()
 
 void Mesh::Draw(Shader shader, bool isLineMode)
 {
-//    glewInit();
+    glewInit();
     unsigned int diffNum = 1;
     unsigned int specNum = 1;
     unsigned int reflNum = 1;

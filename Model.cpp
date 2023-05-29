@@ -3,14 +3,14 @@
 
 Model::Model()
 {
-    glewInit();
+//    glewInit();
 }
 
 
 Model::Model(std::string path)
 {
-    glewInit();
-    loadModel(path);
+//    glewInit();
+//    loadModel(path);
 }
 
 Model::~Model()
@@ -20,6 +20,7 @@ Model::~Model()
 void Model::Draw(Shader shader, bool isLineMode)
 {
 //    int count=0;
+    if(!hasModel) return;
     for (Mesh mesh : meshes)
     {
         mesh.Draw(shader, isLineMode);
@@ -29,6 +30,7 @@ void Model::Draw(Shader shader, bool isLineMode)
 
 void Model::loadModel(std::string path)
 {
+    this->hasModel=true;
     Assimp::Importer import{};
     const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 

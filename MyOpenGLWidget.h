@@ -10,6 +10,9 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <future>
+#include <thread>
+#include <chrono>
 #include "Shader.h"
 #include "Cube.h"
 #include "Viewer.h"
@@ -61,12 +64,14 @@ private:
     int lastX{};
     int lastY{};
     glm::mat4 modelMatrix{glm::mat4{1.0f}};
-//    Model* model;
+    Model* model;
     std::vector<Model> models{};
     Shader* modelShader;
     glm::vec3 directionlightColor{1.0f, 1.0f, 1.0f};
     glm::vec3 directionlightDir{-0.2f, -1.0f, -0.3f};
     bool isMeshMode{false};
+
+    bool load(std::string path);
 signals:
 };
 

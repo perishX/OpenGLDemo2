@@ -108,13 +108,13 @@ void MyOpenGLWidget::initializeGL(){
     this->floor=new Floor();
     this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
     this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
-//    this->model=new Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"};
-//    this->model->loadModel("C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj");
+    this->model=new Model();
+    this->model->loadModel("C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj");
 
 //    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
 //    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
 //    this->model=new Model{"D:/Qt/projects/OpenGLDemo2/models/nanosuit/nanosuit.obj"};
-    this->models.push_back(Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"});
+//    this->models.push_back(Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"});
 //    this->models.push_back(Model{"C:/Users/73965/Downloads/91-21-iphonex/Iphone seceond version finished.obj"});
     this->modelShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.frag"};
 }
@@ -160,6 +160,7 @@ void MyOpenGLWidget::paintGL(){
     this->modelShader->setVector3f("directionLight.ambient", 1, glm::value_ptr(this->directionlightColor * 0.2f));
     this->modelShader->setVector3f("directionLight.diffuse", 1, glm::value_ptr(this->directionlightColor * 0.5f));
     this->modelShader->setVector3f("directionLight.specular", 1, glm::value_ptr(this->directionlightColor * 1.0f));
+    this->model->Draw(*this->modelShader,isMeshMode);
     for(Model& m:this->models){
         m.Draw(*this->modelShader,isMeshMode);
 //        m.print();
@@ -193,11 +194,27 @@ void MyOpenGLWidget::test(){
 }
 
 void MyOpenGLWidget::loadModel(std::string path){
-    this->models.push_back(Model{path});
+//    this->models.push_back(Model{path});
+    std::cout<<path<<std::endl;
+//    std::future<bool> f=std::async(std::launch::deferred,[&](std::string path){
+//        std::cout<<std::this_thread::get_id()<<" "<<path<<std::endl;
+//        std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+//        this->models.push_back(Model{path});
+//        return true;
+//    },path);
+//    std::cout<<f.get()<<std::endl;
+//    std::cout << std::this_thread::get_id() << std::endl;
+    this->model->loadModel(path);
+//this->models.push_back(Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"});
 
-    std::cout<<"loaded!!!"<<std::endl;
+    std::cout<<"loaded!!! "<<this->models.size()<<std::endl;
 //    this->models[this->models.size()-1].print();
 //    update();
+}
+
+bool MyOpenGLWidget::load(std::string path){
+    std::cout<<std::this_thread::get_id()<<" "<<path<<std::endl;
+    return "hello11";
 }
 
 void MyOpenGLWidget::setMeshMode(bool isMeshMode){

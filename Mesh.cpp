@@ -24,7 +24,14 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std:
     this->vertices = vertices;
     this->textures = textures;
     this->indices = indices;
-
+//    for(Vertex& v:this->vertices){
+//        std::cout<<v.Position.x<<" "<<v.Position.y<<" "<<v.Position.z<<" || ";
+//    }
+//    std::cout<<'\n';
+//    for(unsigned int i:this->indices){
+//        std::cout<<i<<" ";
+//    }
+//    std::cout<<this->vertices.size()<<" "<<this->indices.size()<<std::endl;
     setupMesh();
 }
 
@@ -41,6 +48,7 @@ void Mesh::setupMesh()
     glGenBuffers(1, &EBO);
 
     glBindVertexArray(VAO);
+    std::cout<<VAO<<" "<<VBO<<" "<<EBO<<std::endl;
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
@@ -56,6 +64,9 @@ void Mesh::setupMesh()
     glEnableVertexAttribArray(2);
 
     glBindVertexArray(0);
+//    VAO+=2;
+//    VBO-=4;
+//    EBO-=4;
 }
 
 void Mesh::Draw(Shader shader, bool isLineMode)
@@ -92,20 +103,29 @@ void Mesh::Draw(Shader shader, bool isLineMode)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
     glBindVertexArray(VAO);
-//    glDrawArrays(GL_TRIANGLES, 0, this->indices.size());
-    glDrawElements(GL_TRIANGLES,this->indices.size(), GL_UNSIGNED_INT, (void*)0);
+    glDrawArrays(GL_TRIANGLES, 0, this->vertices.size());
+//    glDrawElements(GL_TRIANGLES,this->indices.size(), GL_UNSIGNED_INT, (void*)0);
 
     glBindVertexArray(0);
     glActiveTexture(GL_TEXTURE0);
 }
 
 void Mesh::deleteMesh(){
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-    glDisableVertexAttribArray(2);
-    glDeleteBuffers(1,&this->VBO);
-    glDeleteBuffers(1,&this->EBO);
+//    glDisableVertexAttribArray(0);
+//    glDisableVertexAttribArray(1);
+//    glDisableVertexAttribArray(2);
+
+    glBindVertexArray(0);
+
     glDeleteVertexArrays(1,&this->VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glDeleteBuffers(1,&this->VBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glDeleteBuffers(1,&this->EBO);
+
+//    this->VAO=0;
+//    this->VBO=0;
+//    this->EBO=0;
 
 //    this->indices.clear();
 //    this->vertices.clear();

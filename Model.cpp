@@ -4,6 +4,7 @@
 Model::Model()
 {
     glewInit();
+    std::cout<<"model default"<<std::endl;
 }
 
 
@@ -11,6 +12,7 @@ Model::Model(std::string path)
 {
 //    glewInit();
 //    loadModel(path);
+    std::cout<<"model param"<<std::endl;
 }
 
 Model::~Model()
@@ -20,7 +22,7 @@ Model::~Model()
 void Model::Draw(Shader shader, bool isLineMode)
 {
 //    int count=0;
-    if(!hasModel) return;
+//    if(!hasModel) return;
     for (Mesh& mesh : meshes)
     {
         mesh.Draw(shader, isLineMode);
@@ -30,8 +32,9 @@ void Model::Draw(Shader shader, bool isLineMode)
 
 void Model::loadModel(std::string path)
 {
+//    std::cout<<"model loadModel"<<std::endl;
     glewInit();
-    this->hasModel=true;
+//    this->hasModel=true;
     Assimp::Importer import{};
     const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 

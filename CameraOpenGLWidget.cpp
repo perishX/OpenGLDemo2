@@ -105,12 +105,12 @@ void CameraOpenGLWidget::initializeGL(){
 
     this->cube=new Cube();
     this->floor=new Floor();
-    this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
-    this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
+//    this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
+//    this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
 //    this->model=new Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"};
 
-//    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
-//    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
+    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
+    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
 //    this->model=new Model{"D:/Qt/projects/OpenGLDemo2/models/nanosuit/nanosuit.obj"};
 
 }

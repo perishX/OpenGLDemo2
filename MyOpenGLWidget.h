@@ -75,6 +75,10 @@ private:
 
     bool load(std::string path);
 
+    std::string path{""};
+    bool needLoad{false};
+    bool isLoaded{false};
+
 signals:
 };
 

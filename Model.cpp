@@ -11,7 +11,7 @@ Model::Model()
 Model::Model(std::string path)
 {
 //    glewInit();
-//    loadModel(path);
+    loadModel(path);
     std::cout<<"model param"<<std::endl;
 }
 
@@ -30,7 +30,7 @@ void Model::Draw(Shader shader, bool isLineMode)
     }
 }
 
-void Model::loadModel(std::string path)
+void Model::loadModel(std::string path,std::function<void(float)> callback)
 {
 //    std::cout<<"model loadModel"<<std::endl;
     glewInit();
@@ -45,21 +45,29 @@ void Model::loadModel(std::string path)
     }
     directory = path.substr(0, path.find_last_of("/"));
 
-    processNode(scene->mRootNode, scene);
+    this->process=0;
+    this->totalNode=0;
+    this->calcNodesSum(scene->mRootNode);
+
+    processNode(scene->mRootNode, scene, callback);
 }
 
-void Model::processNode(aiNode *node, const aiScene *scene)
+void Model::processNode(aiNode *node, const aiScene *scene,std::function<void(float)> callback)
 {
     // 处理节点所有的网格（如果有的话）
     for (unsigned int i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
         meshes.push_back(processMesh(mesh, scene));
+
     }
     // 接下来对它的子节点重复这一过程
     for (unsigned int i = 0; i < node->mNumChildren; i++)
     {
-        processNode(node->mChildren[i], scene);
+        processNode(node->mChildren[i], scene, callback);
+        ++process;
+//        std::cout<<"process: "<<process<<" total: "<<totalNode<<std::endl;
+        callback(totalNode==0?1:static_cast<float>(process)/totalNode);
     }
 }
 
@@ -210,5 +218,13 @@ void Model::deleteMesh(){
     for (Mesh& mesh : meshes)
     {
         mesh.deleteMesh();
+    }
+}
+
+void Model::calcNodesSum(aiNode *node){
+    for (unsigned int i = 0; i < node->mNumChildren; i++)
+    {
+        ++this->totalNode;
+        calcNodesSum(node->mChildren[i]);
     }
 }

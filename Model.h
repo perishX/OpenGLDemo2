@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <string_view>
+#include <functional>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -20,17 +21,20 @@ class Model
 private:
     std::vector<Texture> textures_loaded{};
     std::string directory{};
-    void processNode(aiNode *node, const aiScene *scene);
+    void processNode(aiNode *node, const aiScene *scene,std::function<void(float)> callback=[](float){});
     Mesh processMesh(aiMesh *mesh, const aiScene *scene);
     std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
     unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
     bool hasModel{false};
+    int process{};
+    int totalNode{};
+    void calcNodesSum(aiNode *node);
 public:
     std::vector<Mesh> meshes{};
     Model();
     Model(std::string path);
     ~Model();
-    void loadModel(std::string path);
+    void loadModel(std::string path,std::function<void(float)> callback=[](float){});
     void Draw(Shader shader, bool isLineMode = false);
     void print();
     void deleteMesh();

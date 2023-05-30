@@ -48,7 +48,7 @@ void Mesh::setupMesh()
     glGenBuffers(1, &EBO);
 
     glBindVertexArray(VAO);
-    std::cout<<VAO<<" "<<VBO<<" "<<EBO<<std::endl;
+//    std::cout<<VAO<<" "<<VBO<<" "<<EBO<<std::endl;
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);

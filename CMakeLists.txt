@@ -60,6 +60,14 @@ add_executable(OpenGLDemo
   GameObject.h
   GlewInit.cpp
   GlewInit.h
+  FBXModel.cpp
+  FBXModel.h
+  STBImage.cpp
+  STBImage.h
+  FBXMesh.cpp
+  FBXMesh.h
+  FBXTexture.h
+  FBXVertex.h
 )
 
 #if(assimp_FOUND)

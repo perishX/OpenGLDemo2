@@ -88,12 +88,12 @@ void MyOpenGLWidget::wheelEvent(QWheelEvent *event){
 }
 
 void MyOpenGLWidget::focusInEvent(QFocusEvent *event){
-    std::cout<<"OpenGLWidget focusInEvent"<<std::endl;
+//    std::cout<<"OpenGLWidget focusInEvent"<<std::endl;
     this->grabKeyboard();
 //    this->grabMouse();
 }
 void MyOpenGLWidget::focusOutEvent(QFocusEvent *event){
-    std::cout<<"OpenGLWidget focusOutEvent"<<std::endl;
+//    std::cout<<"OpenGLWidget focusOutEvent"<<std::endl;
     this->releaseKeyboard();
 //    this->releaseMouse();
 }
@@ -119,6 +119,8 @@ void MyOpenGLWidget::initializeGL(){
 //    this->models.push_back(Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"});
 //    this->models.push_back(Model{"C:/Users/73965/Downloads/91-21-iphonex/Iphone seceond version finished.obj"});
 
+    fbxModel=new FBXModel();
+//    fbxModel->loadModel("C:/Users/73965/Downloads/models/FBX/huesitos.fbx");
 }
 
 void MyOpenGLWidget::resizeGL(int w, int h){
@@ -128,7 +130,7 @@ void MyOpenGLWidget::resizeGL(int w, int h){
 }
 
 void MyOpenGLWidget::paintGL(){
-        std::cout<<"paintGL"<<std::endl;
+//    std::cout<<"paintGL"<<std::endl;
     glViewport(0,0,g_width,g_height);
 
     glClearColor(0.5f,0.5f,0.5f,1.0f);
@@ -149,6 +151,13 @@ void MyOpenGLWidget::paintGL(){
 //    this->shader->setMatrix4f("model", 1, glm::value_ptr(model));
 //    this->cube2->Draw();
 
+    model = glm::mat4{1.0f};
+    glUseProgram(this->floorShader->ID);
+    this->floorShader->setMatrix4f("model", 1, glm::value_ptr(model));
+    this->floorShader->setMatrix4f("view", 1, glm::value_ptr(view));
+    this->floorShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
+    this->floor->Draw();
+
     model = glm::scale(this->modelMatrix,glm::vec3{0.2});
     model=glm::translate(model,glm::vec3{10,0,0});
     glUseProgram(this->modelShader->ID);
@@ -166,37 +175,38 @@ void MyOpenGLWidget::paintGL(){
     if(needLoad){
         this->isLoaded=false;
         this->needLoad=false;
-        this->model->loadModel(this->path,[](float count){
+        QProgressDialog *progressDlg=new QProgressDialog;
+//        progressDlg->setWindowModality(Qt::WindowModal);
+        progressDlg->setMinimumDuration(0);
+        progressDlg->setWindowTitle("Please Wait...");
+        progressDlg->setLabelText("Loading...");
+//        progressDlg->setCancelButtonText("Cancel");
+        progressDlg->setRange(0,100);
+        progressDlg->show();
+        this->fbxModel->deleteMesh();
+        this->fbxModel->loadModel(this->path,[&](float count){
+//            std::this_thread::sleep_for(std::chrono::milliseconds(500));
             std::cout<<"count: "<<count<<std::endl;
+            progressDlg->setValue(static_cast<int>(count*100));
+            int progress=static_cast<int>(count*100);
+            QCoreApplication::processEvents();
+            makeCurrent();
+            if(progress==100){
+                std::cout<<"loaded "<<progress<<std::endl;
+                progressDlg->cancel();
+                this->isLoaded=true;
+            }
         });
-        this->isLoaded=true;
-//        std::future<bool> f=std::async([&](std::string path){
-//                std::cout<<std::this_thread::get_id()<<" "<<path<<std::endl;
-////                std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-////                makeCurrent();
-//                this->model->loadModel(path);
-//                this->isLoaded=true;
-//                return true;
-//            },path);
-//        std::cout<<"f.get "<<f.get()<<std::endl;
-//        std::cout<<"isloaded "<<this->isLoaded<<std::endl;
-//        std::cout << "this_thread_id " <<std::this_thread::get_id() << std::endl;
-
     }
     if(isLoaded){
-        this->model->Draw(*this->modelShader,isMeshMode);
+        this->fbxModel->Draw(*this->modelShader,isMeshMode);
     }
 //    for(Model& m:this->models){
 //        m.Draw(*this->modelShader,isMeshMode);
 ////        m.print();
 //    }
 
-    model = glm::mat4{1.0f};
-    glUseProgram(this->floorShader->ID);
-    this->floorShader->setMatrix4f("model", 1, glm::value_ptr(model));
-    this->floorShader->setMatrix4f("view", 1, glm::value_ptr(view));
-    this->floorShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
-    this->floor->Draw();
+
 //    this->mesh->Draw(*this->shader);
 }
 
@@ -211,11 +221,11 @@ void MyOpenGLWidget::paintGL(){
 }
 
 void MyOpenGLWidget::hi(){
-    std::cout<<"hiiiii"<<std::endl;
+//    std::cout<<"hiiiii"<<std::endl;
 }
 
 void MyOpenGLWidget::test(){
-    std::cout<<"setea"<<std::endl;
+//    std::cout<<"setea"<<std::endl;
 }
 
 void MyOpenGLWidget::loadModel(std::string path){

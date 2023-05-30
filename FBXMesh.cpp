@@ -1,8 +1,8 @@
 #include <gl/glew.h>
 //#include <GLFW/glfw3.h>
-#include "Mesh.h"
+#include "FBXMesh.h"
 
-Mesh::Mesh()
+FBXMesh::FBXMesh()
 {
 //    std::cout << "default" << std::endl;
 //    this->vertices = {};
@@ -19,7 +19,7 @@ Mesh::Mesh()
 //    setupMesh();
 }
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures)
+FBXMesh::FBXMesh(std::vector<FBXVertex> vertices, std::vector<unsigned int> indices, std::vector<FBXTexture> textures)
 {
     this->vertices = vertices;
     this->textures = textures;
@@ -35,12 +35,12 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std:
     setupMesh();
 }
 
-Mesh::~Mesh()
+FBXMesh::~FBXMesh()
 {
 
 }
 
-void Mesh::setupMesh()
+void FBXMesh::setupMesh()
 {
     glewInit();
     glGenVertexArrays(1, &VAO);
@@ -51,16 +51,16 @@ void Mesh::setupMesh()
 //    std::cout<<VAO<<" "<<VBO<<" "<<EBO<<std::endl;
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(FBXVertex), &vertices[0], GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(FBXVertex), (void *)0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, Normal));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(FBXVertex), (void *)offsetof(FBXVertex, Normal));
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, TexCoords));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(FBXVertex), (void *)offsetof(FBXVertex, TexCoords));
     glEnableVertexAttribArray(2);
 
     glBindVertexArray(0);
@@ -69,7 +69,7 @@ void Mesh::setupMesh()
 //    EBO-=4;
 }
 
-void Mesh::Draw(Shader shader, bool isLineMode)
+void FBXMesh::Draw(Shader shader, bool isLineMode)
 {
     glewInit();
     unsigned int diffNum = 1;
@@ -110,7 +110,7 @@ void Mesh::Draw(Shader shader, bool isLineMode)
     glActiveTexture(GL_TEXTURE0);
 }
 
-void Mesh::deleteMesh(){
+void FBXMesh::deleteMesh(){
 //    glDisableVertexAttribArray(0);
 //    glDisableVertexAttribArray(1);
 //    glDisableVertexAttribArray(2);

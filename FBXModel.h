@@ -1,5 +1,5 @@
-#ifndef MODEL_H
-#define MODEL_H
+#ifndef FBXMODEL_H
+#define FBXMODEL_H
 
 #include <iostream>
 #include <vector>
@@ -10,35 +10,33 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include "glm/glm.hpp"
-//#define STB_IMAGE_IMPLEMENTATION
-//#define STB_IMAGE_STATIC
-//#include <stb_image.h>
-#include "Mesh.h"
+#include "FBXMesh.h"
+#include "FBXTexture.h"
+#include "FBXVertex.h"
 #include "Shader.h"
 #include "STBImage.h"
 
-class Model
+class FBXModel
 {
 private:
-    std::vector<Texture> textures_loaded{};
+    std::vector<FBXTexture> textures_loaded{};
     std::string directory{};
     void processNode(aiNode *node, const aiScene *scene,std::function<void(float)> callback=[](float){});
-    Mesh processMesh(aiMesh *mesh, const aiScene *scene);
-    std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
+    FBXMesh processMesh(aiMesh *mesh, const aiScene *scene);
+    std::vector<FBXTexture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
 //    unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
     bool hasModel{false};
     int process{};
     int totalNode{};
     void calcNodesSum(aiNode *node);
 public:
-    std::vector<Mesh> meshes{};
-    Model();
-    Model(std::string path);
-    ~Model();
+    std::vector<FBXMesh> meshes{};
+    FBXModel();
+    FBXModel(std::string path);
+    ~FBXModel();
     void loadModel(std::string path,std::function<void(float)> callback=[](float){});
     void Draw(Shader shader, bool isLineMode = false);
     void print();
     void deleteMesh();
 };
-
-#endif // MODEL_H
+#endif // FBXMODEL_H

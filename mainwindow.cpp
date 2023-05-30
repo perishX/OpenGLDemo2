@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 //    ui->scaleY->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
 //    ui->scaleZ->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
 
-    ui->openGLWidget->test();
+//    ui->openGLWidget->test();
     this->gt=GlewInit();
 }
 
@@ -60,7 +60,7 @@ void MainWindow::about(){
 
 void MainWindow::on_pushButton_clicked()
 {
-    std::cout<<"sadsa"<<std::endl;
+//    std::cout<<"sadsa"<<std::endl;
     glm::vec3 position{ui->positionX->num,ui->positionY->num,ui->positionZ->num};
     glm::vec3 rotation{ui->rotationX->num,ui->rotationY->num,ui->rotationZ->num};
     glm::vec3 scale{ui->scaleX->num,ui->scaleY->num,ui->scaleZ->num};
@@ -69,13 +69,13 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked(bool isMeshMode)
 {
-    std::cout<<"meshmode: "<<isMeshMode<<std::endl;
+//    std::cout<<"meshmode: "<<isMeshMode<<std::endl;
     ui->openGLWidget->setMeshMode(isMeshMode);
 }
 
 void MainWindow::on_pushButton_3_clicked(){
     std::string title{"title"};
     std::string info{"title"};
-    std::cout<<"info: "<<title<<" "<<info<<std::endl;
+//    std::cout<<"info: "<<title<<" "<<info<<std::endl;
     ui->openGLWidget->displayInfo();
 }

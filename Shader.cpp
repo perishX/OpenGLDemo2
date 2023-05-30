@@ -51,7 +51,7 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath)
     }
     else
     {
-        std::cout << "VERTEX SHADER COMPILE SUCCESS" << '\n';
+//        std::cout << "VERTEX SHADER COMPILE SUCCESS" << '\n';
     }
 
     unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -66,7 +66,7 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath)
     }
     else
     {
-        std::cout << "FRAGMENT SHADER COMPILE SUCCESS" << '\n';
+//        std::cout << "FRAGMENT SHADER COMPILE SUCCESS" << '\n';
     }
 
     unsigned int shaderProgram = glCreateProgram();
@@ -83,7 +83,7 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath)
     }
     else
     {
-        std::cout << "LINK SUCCESS" << '\n';
+//        std::cout << "LINK SUCCESS" << '\n';
     }
 
     glDeleteShader(fragmentShader);

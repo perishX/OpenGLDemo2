@@ -1,36 +1,36 @@
 #include <gl/glew.h>
-#include "Model.h"
+#include "FBXModel.h"
 
-Model::Model()
+FBXModel::FBXModel()
 {
     glewInit();
 //    std::cout<<"model default"<<std::endl;
 }
 
 
-Model::Model(std::string path)
+FBXModel::FBXModel(std::string path)
 {
 //    glewInit();
     loadModel(path);
 //    std::cout<<"model param"<<std::endl;
 }
 
-Model::~Model()
+FBXModel::~FBXModel()
 {
 }
 
-void Model::Draw(Shader shader, bool isLineMode)
+void FBXModel::Draw(Shader shader, bool isLineMode)
 {
 //    int count=0;
 //    if(!hasModel) return;
-    for (Mesh& mesh : meshes)
+    for (FBXMesh& mesh : meshes)
     {
         mesh.Draw(shader, isLineMode);
 //        std::cout<<count++<<std::endl;
     }
 }
 
-void Model::loadModel(std::string path,std::function<void(float)> callback)
+void FBXModel::loadModel(std::string path,std::function<void(float)> callback)
 {
 //    std::cout<<"model loadModel"<<std::endl;
     glewInit();
@@ -52,7 +52,7 @@ void Model::loadModel(std::string path,std::function<void(float)> callback)
     processNode(scene->mRootNode, scene, callback);
 }
 
-void Model::processNode(aiNode *node, const aiScene *scene,std::function<void(float)> callback)
+void FBXModel::processNode(aiNode *node, const aiScene *scene,std::function<void(float)> callback)
 {
     // 处理节点所有的网格（如果有的话）
     for (unsigned int i = 0; i < node->mNumMeshes; i++)
@@ -71,15 +71,15 @@ void Model::processNode(aiNode *node, const aiScene *scene,std::function<void(fl
     }
 }
 
-Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
+FBXMesh FBXModel::processMesh(aiMesh *mesh, const aiScene *scene)
 {
-    std::vector<Vertex> vertices;
+    std::vector<FBXVertex> vertices;
     std::vector<unsigned int> indices;
-    std::vector<Texture> textures;
+    std::vector<FBXTexture> textures;
 
     for (unsigned int i = 0; i < mesh->mNumVertices; i++)
     {
-        Vertex vertex{};
+        FBXVertex vertex{};
         // 处理顶点位置、法线和纹理坐标
         glm::vec3 position;
         position.x = mesh->mVertices[i].x;
@@ -120,31 +120,31 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
     if (mesh->mMaterialIndex >= 0)
     {
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-        std::vector<Texture> diffuseMaps = loadMaterialTextures(material,
+        std::vector<FBXTexture> diffuseMaps = loadMaterialTextures(material,
                                                                 aiTextureType_DIFFUSE, "texture_diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-        std::vector<Texture> specularMaps = loadMaterialTextures(material,
+        std::vector<FBXTexture> specularMaps = loadMaterialTextures(material,
                                                                  aiTextureType_SPECULAR, "texture_specular");
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-        std::vector<Texture> reflectMaps = loadMaterialTextures(material,
+        std::vector<FBXTexture> reflectMaps = loadMaterialTextures(material,
                                                                 aiTextureType_AMBIENT, "texture_reflect");
         textures.insert(textures.end(), reflectMaps.begin(), reflectMaps.end());
     }
 
-    return Mesh(vertices, indices, textures);
+    return FBXMesh(vertices, indices, textures);
 }
 
-std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type,
+std::vector<FBXTexture> FBXModel::loadMaterialTextures(aiMaterial *mat, aiTextureType type,
                                                  std::string typeName)
 {
 
-    std::vector<Texture> textures;
+    std::vector<FBXTexture> textures;
     for (int i = 0; i < mat->GetTextureCount(type); i++)
     {
         aiString str;
         mat->GetTexture(type, i, &str);
         bool skip = false;
-        for (Texture t : textures_loaded)
+        for (FBXTexture t : textures_loaded)
         {
             if (t.path == str)
             {
@@ -156,7 +156,7 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
         if (!skip)
         {
 //            std::cout << type << " " << str.C_Str() << std::endl;
-            Texture texture;
+            FBXTexture texture;
             texture.id = TextureFromFile(str.C_Str(), directory);
             texture.type = typeName;
             texture.path = str;
@@ -207,15 +207,15 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
 //}
 
 
-void Model::print(){
-    for(Mesh& mesh:this->meshes){
+void FBXModel::print(){
+    for(FBXMesh& mesh:this->meshes){
         std::cout<<mesh.vertices.size()<<" "<<mesh.indices.size()<<" "<<mesh.textures.size()<<" "<<mesh.VAO<<" "<<mesh.VBO<<" "<<mesh.EBO<<std::endl;
     }
 }
 
-void Model::deleteMesh(){
+void FBXModel::deleteMesh(){
 //    this->hasModel=false;
-    for (Mesh& mesh : meshes)
+    for (FBXMesh& mesh : meshes)
     {
         mesh.deleteMesh();
     }
@@ -223,7 +223,7 @@ void Model::deleteMesh(){
     textures_loaded.clear();
 }
 
-void Model::calcNodesSum(aiNode *node){
+void FBXModel::calcNodesSum(aiNode *node){
     for (unsigned int i = 0; i < node->mNumChildren; i++)
     {
         ++this->totalNode;

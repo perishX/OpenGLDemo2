@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <QFileDialog>
 #include <QPushButton>
 #include <QMessageBox>

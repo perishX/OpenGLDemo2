@@ -119,7 +119,7 @@ void MyOpenGLWidget::initializeGL(){
 //    this->models.push_back(Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"});
 //    this->models.push_back(Model{"C:/Users/73965/Downloads/91-21-iphonex/Iphone seceond version finished.obj"});
 
-    fbxModel=new FBXModel();
+//    fbxModel=new FBXModel();
 //    fbxModel->loadModel("C:/Users/73965/Downloads/models/FBX/huesitos.fbx");
 }
 
@@ -142,6 +142,7 @@ void MyOpenGLWidget::paintGL(){
     glm::mat4 perspective = glm::mat4{1.0f};
     perspective = glm::perspective(glm::radians(this->viewer.getFov()), static_cast<float>(this->g_width) / static_cast<float>(this->g_height), 0.1f, 100.0f);
 
+    model= glm::translate(model,glm::vec3{-2,0,0});
     glUseProgram(this->shader->ID);
     this->shader->setMatrix4f("model", 1, glm::value_ptr(model));
     this->shader->setMatrix4f("view", 1, glm::value_ptr(view));
@@ -158,8 +159,8 @@ void MyOpenGLWidget::paintGL(){
     this->floorShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
     this->floor->Draw();
 
+    this->setModelMatrix();
     model = glm::scale(this->modelMatrix,glm::vec3{0.2});
-    model=glm::translate(model,glm::vec3{10,0,0});
     glUseProgram(this->modelShader->ID);
     this->modelShader->setMatrix4f("model", 1, glm::value_ptr(model));
     this->modelShader->setMatrix4f("view", 1, glm::value_ptr(view));
@@ -183,8 +184,8 @@ void MyOpenGLWidget::paintGL(){
 //        progressDlg->setCancelButtonText("Cancel");
         progressDlg->setRange(0,100);
         progressDlg->show();
-        this->fbxModel->deleteMesh();
-        this->fbxModel->loadModel(this->path,[&](float count){
+        this->model->deleteMesh();
+        this->model->loadModel(this->path,[&](float count){
 //            std::this_thread::sleep_for(std::chrono::milliseconds(500));
             std::cout<<"count: "<<count<<std::endl;
             progressDlg->setValue(static_cast<int>(count*100));
@@ -199,7 +200,7 @@ void MyOpenGLWidget::paintGL(){
         });
     }
     if(isLoaded){
-        this->fbxModel->Draw(*this->modelShader,isMeshMode);
+        this->model->Draw(*this->modelShader,isMeshMode);
     }
 //    for(Model& m:this->models){
 //        m.Draw(*this->modelShader,isMeshMode);
@@ -210,14 +211,21 @@ void MyOpenGLWidget::paintGL(){
 //    this->mesh->Draw(*this->shader);
 }
 
-    void MyOpenGLWidget::setModelMatrix(glm::vec3 position,glm::vec3 rotation,glm::vec3 scale){
+void MyOpenGLWidget::setModelMatrix(){
     this->modelMatrix = glm::mat4{1.0f};
-    this->modelMatrix = glm::translate(this->modelMatrix,position);
-    this->modelMatrix = glm::scale(this->modelMatrix,scale);
-    this->modelMatrix = glm::rotate(this->modelMatrix,rotation.x,glm::vec3{1,0,0});
-    this->modelMatrix = glm::rotate(this->modelMatrix,rotation.y,glm::vec3{0,1,0});
-    this->modelMatrix = glm::rotate(this->modelMatrix,rotation.z,glm::vec3{0,0,1});
-    update();
+    this->modelMatrix = glm::translate(this->modelMatrix,this->position);
+    this->modelMatrix = glm::scale(this->modelMatrix,this->scale);
+    this->modelMatrix = glm::rotate(this->modelMatrix,this->rotation.x,glm::vec3{1,0,0});
+    this->modelMatrix = glm::rotate(this->modelMatrix,this->rotation.y,glm::vec3{0,1,0});
+    this->modelMatrix = glm::rotate(this->modelMatrix,this->rotation.z,glm::vec3{0,0,1});
+}
+
+void MyOpenGLWidget::setModelAttribute(glm::vec3 position,glm::vec3 rotation,glm::vec3 scale){
+    this->position=position;
+    this->rotation=rotation;
+    this->scale=scale;
+    this->setModelMatrix();
+    this->update();
 }
 
 void MyOpenGLWidget::hi(){

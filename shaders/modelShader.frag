@@ -46,7 +46,7 @@ void main()
     specularMapColor+=vec3(texture(texture_specular3,TexCoord).rgb);
     
     result+=calculateDirectionLight(directionLight,normal,viewDir,diffuseMapColor,specularMapColor);
-    FragColor=vec4(vec3(0,0.5,1.f),1.f);
+    FragColor=vec4(result,1.f);
 }
 
 vec3 calculateDirectionLight(DirectionLight light,vec3 normal,vec3 viewDir,vec3 diffuseMapColor,vec3 specularMapColor){

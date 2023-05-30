@@ -68,6 +68,8 @@ add_executable(OpenGLDemo
   FBXMesh.h
   FBXTexture.h
   FBXVertex.h
+  MyLCDNumber.cpp
+  MyLCDNumber.h
 )
 
 #if(assimp_FOUND)

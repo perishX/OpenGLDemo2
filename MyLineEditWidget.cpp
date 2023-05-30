@@ -16,17 +16,23 @@ void MyLineEditWidget::focusInEvent(QFocusEvent *event){
     std::cout<<"LineEdit focusInEvent"<<std::endl;
     this->grabKeyboard();
 //    this->grabMouse();
+    QLineEdit::focusInEvent(event);
+
+
 }
 void MyLineEditWidget::focusOutEvent(QFocusEvent *event){
     std::cout<<"LineEdit focusOutEvent "<<this->text().toStdString()<<std::endl;
     this->releaseKeyboard();
+    QLineEdit::focusOutEvent(event);
 //    this->releaseMouse();
 //    emit this->hello();
     this->num=this->text().toInt();
 }
 
-
-
 void MyLineEditWidget::textChanged(QString &text){
     std::cout<<text.toStdString()<<std::endl;
+}
+
+void MyLineEditWidget::updateNum(){
+    this->num=this->text().toInt();
 }

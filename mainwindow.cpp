@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pushButton,&QPushButton::clicked,this,&MainWindow::on_pushButton_clicked);
     connect(ui->pushButton_2,&QPushButton::clicked,this,&MainWindow::on_pushButton_2_clicked);
-    connect(ui->pushButton_3,&QPushButton::clicked,this,&MainWindow::on_pushButton_3_clicked);
+//    connect(ui->pushButton_3,&QPushButton::clicked,this,&MainWindow::on_pushButton_3_clicked);
     //"^(-?\d+)(\.\d+)?$"
 //    ui->positionX->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
 //    ui->positionY->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
@@ -44,6 +44,29 @@ void MainWindow::openModel(){
     std::string path=filename.toStdString();
     std::cout<<path<<std::endl;
     ui->openGLWidget->loadModel(path);
+
+    ui->positionX->setText(QString::number(ui->openGLWidget->position.x));
+    ui->positionY->setText(QString::number(ui->openGLWidget->position.y));
+    ui->positionZ->setText(QString::number(ui->openGLWidget->position.z));
+    ui->rotationX->setText(QString::number(ui->openGLWidget->rotation.x));
+    ui->rotationY->setText(QString::number(ui->openGLWidget->rotation.y));
+    ui->rotationZ->setText(QString::number(ui->openGLWidget->rotation.z));
+    ui->scaleX->setText(QString::number(ui->openGLWidget->scale.x));
+    ui->scaleY->setText(QString::number(ui->openGLWidget->scale.y));
+    ui->scaleZ->setText(QString::number(ui->openGLWidget->scale.z));
+    ui->positionX->updateNum();
+    ui->positionX->updateNum();
+    ui->positionX->updateNum();
+    ui->rotationX->updateNum();
+    ui->rotationY->updateNum();
+    ui->rotationZ->updateNum();
+    ui->scaleX->updateNum();
+    ui->scaleY->updateNum();
+    ui->scaleZ->updateNum();
+
+    ui->lcdNumber->setLCDValue(ui->openGLWidget->model->vertexNum);
+    ui->lcdNumber_2->setLCDValue(ui->openGLWidget->model->triangleNum);
+    ui->lcdNumber_3->setLCDValue(ui->openGLWidget->model->boneNum);
 }
 
 void MainWindow::exit(){
@@ -64,7 +87,7 @@ void MainWindow::on_pushButton_clicked()
     glm::vec3 position{ui->positionX->num,ui->positionY->num,ui->positionZ->num};
     glm::vec3 rotation{ui->rotationX->num,ui->rotationY->num,ui->rotationZ->num};
     glm::vec3 scale{ui->scaleX->num,ui->scaleY->num,ui->scaleZ->num};
-    ui->openGLWidget->setModelMatrix(position,rotation,scale);
+    ui->openGLWidget->setModelAttribute(position,rotation,scale);
 }
 
 void MainWindow::on_pushButton_2_clicked(bool isMeshMode)

@@ -22,7 +22,7 @@ public:
     float getUpFlag();
     float getFov();
     glm::mat4 getViewMatrix();
-    glm::vec3 Pos{1,1,5};
+    glm::vec3 Pos{0,1.5,5};
 private:
 
     glm::vec3 Front{0,0,-1};

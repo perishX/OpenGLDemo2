@@ -39,6 +39,9 @@ public:
     void Draw(Shader shader, bool isLineMode = false);
     void print();
     void deleteMesh();
+    int vertexNum{1};
+    int triangleNum{2};
+    int boneNum{3};
 };
 
 #endif // MODEL_H

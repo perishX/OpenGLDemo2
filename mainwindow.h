@@ -38,5 +38,14 @@ private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked(bool isMeshMode);
     void on_pushButton_3_clicked();
+    void on_lightColor_clicked();
+    void on_dial_valueChanged(int value);
+    void on_up_clicked();
+    void on_front_clicked();
+    void on_bottom_clicked();
+    void on_left_clicked();
+    void on_back_clicked();
+    void on_right_clicked();
+    void on_showMesh_stateChanged(int arg1);
 };
 #endif // MAINWINDOW_H

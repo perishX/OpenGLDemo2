@@ -29,7 +29,7 @@ private:
     bool hasModel{false};
     int process{};
     int totalNode{};
-    void calcNodesSum(aiNode *node);
+    std::function<void()> infoCallback;
 public:
     std::vector<Mesh> meshes{};
     Model();
@@ -39,9 +39,11 @@ public:
     void Draw(Shader shader, bool isLineMode = false);
     void print();
     void deleteMesh();
-    int vertexNum{1};
-    int triangleNum{2};
-    int boneNum{3};
+    int vertexNum{};
+    int triangleNum{};
+    int boneNum{};
+    void calcNodesSum(aiNode *node,const aiScene *scene);
+    void initInfo(std::function<void()> infoCallback);
 };
 
 #endif // MODEL_H

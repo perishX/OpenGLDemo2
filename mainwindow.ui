@@ -40,7 +40,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>3</number>
     </property>
     <property name="movable">
      <bool>false</bool>
@@ -281,7 +281,7 @@
       <property name="geometry">
        <rect>
         <x>50</x>
-        <y>160</y>
+        <y>150</y>
         <width>54</width>
         <height>12</height>
        </rect>
@@ -344,7 +344,7 @@
        <string> 光照方向</string>
       </property>
      </widget>
-     <widget class="QDial" name="dial">
+     <widget class="MyQDial" name="lightDir">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -352,6 +352,12 @@
         <width>50</width>
         <height>64</height>
        </rect>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::ClickFocus</enum>
+      </property>
+      <property name="maximum">
+       <number>359</number>
       </property>
      </widget>
      <widget class="QLabel" name="label_6">
@@ -367,35 +373,39 @@
        <string>光照颜色</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="MyPushButton" name="lightColor">
       <property name="geometry">
        <rect>
-        <x>60</x>
-        <y>220</y>
-        <width>51</width>
-        <height>20</height>
+        <x>120</x>
+        <y>270</y>
+        <width>91</width>
+        <height>23</height>
        </rect>
+      </property>
+      <property name="text">
+       <string> 修改光照颜色</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_2">
+     <widget class="QWidget" name="gridLayoutWidget_2">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>220</y>
-        <width>51</width>
-        <height>20</height>
+        <x>40</x>
+        <y>190</y>
+        <width>251</width>
+        <height>71</height>
        </rect>
       </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_3">
-      <property name="geometry">
-       <rect>
-        <x>200</x>
-        <y>220</y>
-        <width>51</width>
-        <height>20</height>
-       </rect>
-      </property>
+      <layout class="QGridLayout" name="gridLayout_2" rowstretch="0" rowminimumheight="0">
+       <item row="0" column="2">
+        <widget class="MyLineEditWidget" name="lightB"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="MyLineEditWidget" name="lightR"/>
+       </item>
+       <item row="0" column="1">
+        <widget class="MyLineEditWidget" name="lightG"/>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_4">
@@ -415,7 +425,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox">
+     <widget class="MyQCheckBox" name="showMesh">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -428,7 +438,7 @@
        <string>网格可见性</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_4">
+     <widget class="MyPushButton" name="front">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -441,7 +451,7 @@
        <string> 前</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_5">
+     <widget class="MyPushButton" name="left">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -454,7 +464,7 @@
        <string> 左</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_6">
+     <widget class="MyPushButton" name="back">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -467,7 +477,7 @@
        <string>后</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_7">
+     <widget class="MyPushButton" name="right">
       <property name="geometry">
        <rect>
         <x>210</x>
@@ -477,10 +487,10 @@
        </rect>
       </property>
       <property name="text">
-       <string>  右</string>
+       <string>右</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_8">
+     <widget class="MyPushButton" name="up">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -493,7 +503,7 @@
        <string>上</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_9">
+     <widget class="MyPushButton" name="bottom">
       <property name="geometry">
        <rect>
         <x>210</x>
@@ -583,6 +593,16 @@
    <class>MyLCDNumber</class>
    <extends>QLCDNumber</extends>
    <header>mylcdnumber.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MyQDial</class>
+   <extends>QDial</extends>
+   <header>myqdial.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MyQCheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>myqcheckbox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

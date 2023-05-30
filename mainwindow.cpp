@@ -13,7 +13,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pushButton,&QPushButton::clicked,this,&MainWindow::on_pushButton_clicked);
     connect(ui->pushButton_2,&QPushButton::clicked,this,&MainWindow::on_pushButton_2_clicked);
-//    connect(ui->pushButton_3,&QPushButton::clicked,this,&MainWindow::on_pushButton_3_clicked);
+    connect(ui->lightColor,&QPushButton::clicked,this,&MainWindow::on_lightColor_clicked);
+    connect(ui->lightDir,&QDial::valueChanged,this,&MainWindow::on_dial_valueChanged);
+    connect(ui->up,&QPushButton::clicked,this,&MainWindow::on_up_clicked);
+    connect(ui->showMesh,&QCheckBox::stateChanged,this,&MainWindow::on_showMesh_stateChanged);
+//    connect(ui->pushButton_3,&QPushButton::clicked,this,&MainWindow::on_lightColor_clicked);
     //"^(-?\d+)(\.\d+)?$"
 //    ui->positionX->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
 //    ui->positionY->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
@@ -64,9 +68,12 @@ void MainWindow::openModel(){
     ui->scaleY->updateNum();
     ui->scaleZ->updateNum();
 
-    ui->lcdNumber->setLCDValue(ui->openGLWidget->model->vertexNum);
-    ui->lcdNumber_2->setLCDValue(ui->openGLWidget->model->triangleNum);
-    ui->lcdNumber_3->setLCDValue(ui->openGLWidget->model->boneNum);
+    std::cout<<"info "<<ui->openGLWidget->model->vertexNum<<" "<<ui->openGLWidget->model->triangleNum<<std::endl;
+    ui->openGLWidget->model->initInfo([&](){
+        ui->lcdNumber->setLCDValue(ui->openGLWidget->model->triangleNum);
+        ui->lcdNumber_2->setLCDValue(ui->openGLWidget->model->vertexNum);
+        ui->lcdNumber_3->setLCDValue(ui->openGLWidget->model->boneNum);
+    });
 }
 
 void MainWindow::exit(){
@@ -101,4 +108,55 @@ void MainWindow::on_pushButton_3_clicked(){
     std::string info{"title"};
 //    std::cout<<"info: "<<title<<" "<<info<<std::endl;
     ui->openGLWidget->displayInfo();
+}
+
+void MainWindow::on_lightColor_clicked()
+{
+    glm::vec3 color{ui->lightR->num/255.f,ui->lightG->num/255.f,ui->lightB->num/255.f};
+    std::cout<<color.x<<" "<<color.y<<" "<<color.z<<std::endl;
+    ui->openGLWidget->setLightColor(color);
+}
+
+void MainWindow::on_dial_valueChanged(int value)
+{
+    std::cout<<"dial "<<value<<std::endl;
+    ui->openGLWidget->setLightRotation(value/180.f*3.14159);
+}
+
+
+void MainWindow::on_up_clicked()
+{
+    std::cout<<"on_up_clicked"<<std::endl;
+    ui->openGLWidget->setView(glm::vec3{0,5,0},glm::vec2{-89,-90});
+}
+
+void MainWindow::on_front_clicked()
+{
+    ui->openGLWidget->setView(glm::vec3{0,1,5},glm::vec2{0,-90});
+}
+
+void MainWindow::on_bottom_clicked()
+{
+    ui->openGLWidget->setView(glm::vec3{0,-5,0},glm::vec2{89,-90});
+}
+
+void MainWindow::on_left_clicked()
+{
+    ui->openGLWidget->setView(glm::vec3{-5,1,0},glm::vec2{0,0});
+}
+
+void MainWindow::on_back_clicked()
+{
+    ui->openGLWidget->setView(glm::vec3{0,1,-5},glm::vec2{0,90});
+}
+
+void MainWindow::on_right_clicked()
+{
+    ui->openGLWidget->setView(glm::vec3{5,1,0},glm::vec2{0,-180});
+}
+
+void MainWindow::on_showMesh_stateChanged(int arg1)
+{
+//    std::cout<<"on_showMesh_stateChanged "<<arg1<<std::endl;
+    ui->openGLWidget->setShowMesh(arg1==0?false:true);
 }

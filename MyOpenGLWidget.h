@@ -43,6 +43,12 @@ public:
     glm::vec3 scale{1,1,1};
     void setModelAttribute(glm::vec3 position,glm::vec3 rotation,glm::vec3 scale);
     Model* model;
+    glm::vec3 lightColor{1,1,1};
+    glm::vec3 lightDirection{1,-1,1};
+    void setLightColor(glm::vec3 lightColor);
+    void setLightRotation(float rotation);
+    void setView(glm::vec3 position,glm::vec2 rotation);
+    void setShowMesh(bool showMesh);
 protected:
     virtual void initializeGL();
     virtual void resizeGL(int w,int h);
@@ -88,6 +94,8 @@ private:
     bool isLoaded{false};
 
     FBXModel* fbxModel;
+
+    bool showMesh{false};
 signals:
 };
 

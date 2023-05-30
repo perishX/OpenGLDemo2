@@ -47,7 +47,12 @@ void Model::loadModel(std::string path,std::function<void(float)> callback)
 
     this->process=0;
     this->totalNode=0;
-    this->calcNodesSum(scene->mRootNode);
+    this->vertexNum=0;
+    this->triangleNum=0;
+    this->boneNum=0;
+    this->calcNodesSum(scene->mRootNode,scene);
+    this->infoCallback();
+//    std::cout<<"info "<<this->vertexNum<<" "<<this->triangleNum<<std::endl;
 
     processNode(scene->mRootNode, scene, callback);
 }
@@ -223,10 +228,21 @@ void Model::deleteMesh(){
     textures_loaded.clear();
 }
 
-void Model::calcNodesSum(aiNode *node){
+void Model::calcNodesSum(aiNode *node,const aiScene *scene){
+    for (unsigned int i = 0; i < node->mNumMeshes; i++)
+    {
+        aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
+        this->vertexNum+=mesh->mNumVertices;
+        this->triangleNum+=mesh->mNumFaces;
+    }
+
     for (unsigned int i = 0; i < node->mNumChildren; i++)
     {
         ++this->totalNode;
-        calcNodesSum(node->mChildren[i]);
+        calcNodesSum(node->mChildren[i],scene);
     }
+}
+
+void Model::initInfo(std::function<void()> infoCallback){
+    this->infoCallback=infoCallback;
 }

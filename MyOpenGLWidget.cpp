@@ -107,15 +107,15 @@ void MyOpenGLWidget::initializeGL(){
     this->cube2=new Cube();
     this->floor=new Floor();
     this->model=new Model();
-    this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
-    this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
-//    this->model->loadModel("C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj");
-    this->modelShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.frag"};
+//    this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
+//    this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
+////    this->model->loadModel("C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj");
+//    this->modelShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.frag"};
 
-//    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
-//    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
+    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
+    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
 //    this->model->loadModel("D:/Qt/projects/OpenGLDemo2/models/nanosuit/nanosuit.obj");
-//    this->modelShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/modelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/modelShader.frag"};
+    this->modelShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/modelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/modelShader.frag"};
 //    this->models.push_back(Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"});
 //    this->models.push_back(Model{"C:/Users/73965/Downloads/91-21-iphonex/Iphone seceond version finished.obj"});
 
@@ -152,12 +152,12 @@ void MyOpenGLWidget::paintGL(){
 //    this->shader->setMatrix4f("model", 1, glm::value_ptr(model));
 //    this->cube2->Draw();
 
-    model = glm::mat4{1.0f};
-    glUseProgram(this->floorShader->ID);
-    this->floorShader->setMatrix4f("model", 1, glm::value_ptr(model));
-    this->floorShader->setMatrix4f("view", 1, glm::value_ptr(view));
-    this->floorShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
-    this->floor->Draw();
+//    model = glm::mat4{1.0f};
+//    glUseProgram(this->floorShader->ID);
+//    this->floorShader->setMatrix4f("model", 1, glm::value_ptr(model));
+//    this->floorShader->setMatrix4f("view", 1, glm::value_ptr(view));
+//    this->floorShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
+//    this->floor->Draw();
 
     this->setModelMatrix();
     model = glm::scale(this->modelMatrix,glm::vec3{0.2});
@@ -168,10 +168,10 @@ void MyOpenGLWidget::paintGL(){
     this->modelShader->setFloat("material.shininess", 256.f);
     this->modelShader->setVector3f("viewerPos", 1, glm::value_ptr(this->viewer.Pos));
     this->modelShader->setVector3f("directionLight.color", 1, glm::value_ptr(this->directionlightColor));
-    this->modelShader->setVector3f("directionLight.direction", 1, glm::value_ptr(this->directionlightDir));
-    this->modelShader->setVector3f("directionLight.ambient", 1, glm::value_ptr(this->directionlightColor * 0.2f));
-    this->modelShader->setVector3f("directionLight.diffuse", 1, glm::value_ptr(this->directionlightColor * 0.5f));
-    this->modelShader->setVector3f("directionLight.specular", 1, glm::value_ptr(this->directionlightColor * 1.0f));
+    this->modelShader->setVector3f("directionLight.direction", 1, glm::value_ptr(this->lightDirection));
+    this->modelShader->setVector3f("directionLight.ambient", 1, glm::value_ptr(this->lightColor * 0.2f));
+    this->modelShader->setVector3f("directionLight.diffuse", 1, glm::value_ptr(this->lightColor * 0.5f));
+    this->modelShader->setVector3f("directionLight.specular", 1, glm::value_ptr(this->lightColor * 1.0f));
 
     if(needLoad){
         this->isLoaded=false;
@@ -282,4 +282,28 @@ void MyOpenGLWidget::displayInfo(){
     ss<<"顶点数："<<vertexNum<<"\n"<<"面数："<<meshNum<<std::endl;
 
     QMessageBox::about(this,"about",ss.str().c_str());
+}
+
+void MyOpenGLWidget::setLightColor(glm::vec3 lightColor){
+    this->lightColor=lightColor;
+    update();
+}
+
+void MyOpenGLWidget::setLightRotation(float rotation){
+    glm::mat4 rotateMatrix=glm::mat4{1.0f};
+    rotateMatrix=glm::rotate(rotateMatrix,rotation,glm::vec3{0,-1,0});
+    glm::vec4 temp{0,-1,1,0};
+    temp=rotateMatrix*temp;
+    this->lightDirection=glm::vec3{temp.x,temp.y,temp.z};
+    update();
+}
+
+void MyOpenGLWidget::setView(glm::vec3 position,glm::vec2 rotation){
+    this->viewer.setView(position,rotation);
+    update();
+}
+
+void MyOpenGLWidget::setShowMesh(bool showMesh){
+    this->showMesh=showMesh;
+    std::cout<<"showMesh: "<<showMesh<<std::endl;
 }

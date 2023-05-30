@@ -79,3 +79,10 @@ void Viewer::rotationTo(glm::vec2 rotation){
     this->yaw=rotation.y;
     this->updateDirection();
 }
+
+void Viewer::setView(glm::vec3 position,glm::vec2 rotation){
+    this->Pos=position;
+    this->pitch=rotation.x;
+    this->yaw=rotation.y;
+    this->updateDirection();
+}

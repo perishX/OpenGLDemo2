@@ -23,6 +23,7 @@ public:
     float getFov();
     glm::mat4 getViewMatrix();
     glm::vec3 Pos{0,1.5,5};
+    void setView(glm::vec3 position,glm::vec2 rotation);
 private:
 
     glm::vec3 Front{0,0,-1};

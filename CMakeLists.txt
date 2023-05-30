@@ -70,6 +70,10 @@ add_executable(OpenGLDemo
   FBXVertex.h
   MyLCDNumber.cpp
   MyLCDNumber.h
+  MyQDial.cpp
+  MyQDial.h
+  MyQCheckBox.cpp
+  MyQCheckBox.h
 )
 
 #if(assimp_FOUND)

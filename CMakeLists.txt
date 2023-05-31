@@ -74,6 +74,14 @@ add_executable(OpenGLDemo
   MyQDial.h
   MyQCheckBox.cpp
   MyQCheckBox.h
+  BoneInfo.h
+  AssimpGLMHelpers.h
+#  Bone.cpp
+  Bone.h
+#  Animation.cpp
+  Animation.h
+#  Animator.cpp
+  Animator.h
 )
 
 #if(assimp_FOUND)

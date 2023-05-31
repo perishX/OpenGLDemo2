@@ -23,6 +23,8 @@
 #include "Model.h"
 #include "GlewInit.h"
 #include "FBXModel.h"
+#include "Animation.h"
+#include "Animator.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -96,6 +98,9 @@ private:
     FBXModel* fbxModel;
 
     bool showMesh{true};
+
+    Animation* animation;
+    Animator* animator;
 signals:
 };
 

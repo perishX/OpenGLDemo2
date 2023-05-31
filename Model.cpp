@@ -72,7 +72,9 @@ void Model::processNode(aiNode *node, const aiScene *scene,std::function<void(fl
         processNode(node->mChildren[i], scene, callback);
         ++process;
 //        std::cout<<"process: "<<process<<" total: "<<totalNode<<std::endl;
-        callback(totalNode==0?1:static_cast<float>(process)/totalNode);
+        if(callback!=nullptr){
+            callback(totalNode==0?1:static_cast<float>(process)/totalNode);
+        }
     }
 }
 
@@ -85,18 +87,13 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
     for (unsigned int i = 0; i < mesh->mNumVertices; i++)
     {
         Vertex vertex{};
-        // 处理顶点位置、法线和纹理坐标
-        glm::vec3 position;
-        position.x = mesh->mVertices[i].x;
-        position.y = mesh->mVertices[i].y;
-        position.z = mesh->mVertices[i].z;
-        vertex.Position = position;
 
-        glm::vec3 normal;
-        normal.x = mesh->mNormals[i].x;
-        normal.y = mesh->mNormals[i].y;
-        normal.z = mesh->mNormals[i].z;
-        vertex.Normal = normal;
+        //animation
+        SetVertexBoneDataToDefault(vertex);
+
+        // 处理顶点位置、法线和纹理坐标
+        vertex.Position = AssimpGLMHelpers::GetGLMVec(mesh->mVertices[i]);
+        vertex.Normal = AssimpGLMHelpers::GetGLMVec(mesh->mNormals[i]);
 
         if (mesh->mTextureCoords[0])
         {
@@ -135,6 +132,8 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
                                                                 aiTextureType_AMBIENT, "texture_reflect");
         textures.insert(textures.end(), reflectMaps.begin(), reflectMaps.end());
     }
+
+    this->ExtractBoneWeightForVertices(vertices,mesh,scene);
 
     return Mesh(vertices, indices, textures);
 }
@@ -245,4 +244,63 @@ void Model::calcNodesSum(aiNode *node,const aiScene *scene){
 
 void Model::initInfo(std::function<void()> infoCallback){
     this->infoCallback=infoCallback;
+}
+
+
+void Model::SetVertexBoneDataToDefault(Vertex& vertex)
+{
+    for (int i = 0; i < MAX_BONE_INFLUENCE; i++)
+    {
+        vertex.m_BoneIDs[i] = -1;
+        vertex.m_Weights[i] = 0.0f;
+    }
+}
+
+void Model::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene)
+{
+    auto& boneInfoMap = m_BoneInfoMap;
+    int& boneCount = m_BoneCounter;
+
+    for (int boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex)
+    {
+        int boneID = -1;
+        std::string boneName = mesh->mBones[boneIndex]->mName.C_Str();
+        if (boneInfoMap.find(boneName) == boneInfoMap.end())
+        {
+            BoneInfo newBoneInfo;
+            newBoneInfo.id = boneCount;
+            newBoneInfo.offset = AssimpGLMHelpers::ConvertMatrixToGLMFormat(mesh->mBones[boneIndex]->mOffsetMatrix);
+            boneInfoMap[boneName] = newBoneInfo;
+            boneID = boneCount;
+            boneCount++;
+        }
+        else
+        {
+            boneID = boneInfoMap[boneName].id;
+        }
+        assert(boneID != -1);
+        auto weights = mesh->mBones[boneIndex]->mWeights;
+        int numWeights = mesh->mBones[boneIndex]->mNumWeights;
+
+        for (int weightIndex = 0; weightIndex < numWeights; ++weightIndex)
+        {
+            int vertexId = weights[weightIndex].mVertexId;
+            float weight = weights[weightIndex].mWeight;
+            assert(vertexId <= vertices.size());
+            SetVertexBoneData(vertices[vertexId], boneID, weight);
+        }
+    }
+}
+
+void Model::SetVertexBoneData(Vertex& vertex, int boneID, float weight)
+{
+    for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
+    {
+        if (vertex.m_BoneIDs[i] < 0)
+        {
+            vertex.m_Weights[i] = weight;
+            vertex.m_BoneIDs[i] = boneID;
+            break;
+        }
+    }
 }

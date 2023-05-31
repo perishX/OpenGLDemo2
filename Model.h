@@ -6,6 +6,7 @@
 #include <string>
 #include <string_view>
 #include <functional>
+#include <map>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -16,6 +17,8 @@
 #include "Mesh.h"
 #include "Shader.h"
 #include "STBImage.h"
+#include "BoneInfo.h"
+#include "AssimpGLMHelpers.h"
 
 class Model
 {
@@ -31,6 +34,10 @@ private:
     int process{};
     int totalNode{};
     std::function<void()> infoCallback;
+
+    //animation
+    std::map<std::string, BoneInfo> m_BoneInfoMap{};
+    int m_BoneCounter{0};
 public:
     std::vector<Mesh> meshes{};
     Model();
@@ -46,6 +53,13 @@ public:
     int boneNum{};
     void calcNodesSum(aiNode *node,const aiScene *scene);
     void initInfo(std::function<void()> infoCallback);
+
+    //animation
+    auto& GetBoneInfoMap() { return m_BoneInfoMap; }
+    int& GetBoneCount() { return m_BoneCounter; }
+    void SetVertexBoneDataToDefault(Vertex& vertex);
+    void ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene);
+    void SetVertexBoneData(Vertex& vertex, int boneID, float weight);
 };
 
 #endif // MODEL_H

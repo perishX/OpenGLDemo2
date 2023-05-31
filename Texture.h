@@ -7,9 +7,9 @@
 
 struct Texture
 {
-    unsigned int id;
-    std::string type;
-    aiString path;
+    unsigned int id{};
+    std::string type{};
+    aiString path{};
 };
 
 #endif // TEXTURE_H

@@ -109,8 +109,9 @@ void MyOpenGLWidget::initializeGL(){
     this->model=new Model();
     this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
     this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
-////    this->model->loadModel("C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj");
-    this->modelShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.frag"};
+//    this->modelShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.frag"};
+    this->modelShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/animationModelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/animationModelShader.frag"};
+
 
 //    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
 //    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
@@ -162,7 +163,7 @@ void MyOpenGLWidget::paintGL(){
     }
 
     this->setModelMatrix();
-    model = glm::scale(this->modelMatrix,glm::vec3{0.2});
+    model = this->modelMatrix;
     glUseProgram(this->modelShader->ID);
     this->modelShader->setMatrix4f("model", 1, glm::value_ptr(model));
     this->modelShader->setMatrix4f("view", 1, glm::value_ptr(view));
@@ -198,10 +199,20 @@ void MyOpenGLWidget::paintGL(){
                 std::cout<<"loaded "<<progress<<std::endl;
                 progressDlg->cancel();
                 this->isLoaded=true;
+                this->animation=new Animation(this->path,this->model);
+                this->animator=new Animator(this->animation);
             }
         });
     }
     if(isLoaded){
+        this->animator->UpdateAnimation(0.033);
+        std::vector<glm::mat4> transforms = animator->GetFinalBoneMatrices();
+        for (int i = 0; i < transforms.size(); ++i){
+            glm::mat4 t=transforms[i];
+            std::stringstream ss{};
+            ss<<"finalBonesMatrices[" << i << "]";
+            this->modelShader->setMatrix4f(ss.str().c_str(), 1, glm::value_ptr(t));
+        }
         this->model->Draw(*this->modelShader,isMeshMode);
     }
 //    for(Model& m:this->models){
@@ -209,7 +220,7 @@ void MyOpenGLWidget::paintGL(){
 ////        m.print();
 //    }
 
-
+    update();
 //    this->mesh->Draw(*this->shader);
 }
 

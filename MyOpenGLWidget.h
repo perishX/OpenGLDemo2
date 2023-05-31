@@ -95,7 +95,7 @@ private:
 
     FBXModel* fbxModel;
 
-    bool showMesh{false};
+    bool showMesh{true};
 signals:
 };
 

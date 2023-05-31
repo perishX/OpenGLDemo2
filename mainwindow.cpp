@@ -30,7 +30,10 @@ MainWindow::MainWindow(QWidget *parent)
 //    ui->scaleZ->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
 
 //    ui->openGLWidget->test();
-    this->gt=GlewInit();
+//    this->gt=GlewInit();
+    ui->lightR->updateNum();
+    ui->lightG->updateNum();
+    ui->lightB->updateNum();
 }
 
 void MainWindow::salute(){

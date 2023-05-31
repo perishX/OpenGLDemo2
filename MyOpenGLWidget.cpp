@@ -107,15 +107,15 @@ void MyOpenGLWidget::initializeGL(){
     this->cube2=new Cube();
     this->floor=new Floor();
     this->model=new Model();
-//    this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
-//    this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
+    this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
+    this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
 ////    this->model->loadModel("C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj");
-//    this->modelShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.frag"};
+    this->modelShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.frag"};
 
-    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
-    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
+//    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
+//    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
 //    this->model->loadModel("D:/Qt/projects/OpenGLDemo2/models/nanosuit/nanosuit.obj");
-    this->modelShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/modelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/modelShader.frag"};
+//    this->modelShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/modelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/modelShader.frag"};
 //    this->models.push_back(Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"});
 //    this->models.push_back(Model{"C:/Users/73965/Downloads/91-21-iphonex/Iphone seceond version finished.obj"});
 
@@ -133,7 +133,7 @@ void MyOpenGLWidget::paintGL(){
 //    std::cout<<"paintGL"<<std::endl;
     glViewport(0,0,g_width,g_height);
 
-    glClearColor(0.5f,0.5f,0.5f,1.0f);
+    glClearColor(0.8f,0.8f,0.8f,1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glm::mat4 model = glm::mat4{1.0f};
@@ -152,12 +152,14 @@ void MyOpenGLWidget::paintGL(){
 //    this->shader->setMatrix4f("model", 1, glm::value_ptr(model));
 //    this->cube2->Draw();
 
-//    model = glm::mat4{1.0f};
-//    glUseProgram(this->floorShader->ID);
-//    this->floorShader->setMatrix4f("model", 1, glm::value_ptr(model));
-//    this->floorShader->setMatrix4f("view", 1, glm::value_ptr(view));
-//    this->floorShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
-//    this->floor->Draw();
+    if(this->showMesh){
+        model = glm::mat4{1.0f};
+        glUseProgram(this->floorShader->ID);
+        this->floorShader->setMatrix4f("model", 1, glm::value_ptr(model));
+        this->floorShader->setMatrix4f("view", 1, glm::value_ptr(view));
+        this->floorShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
+        this->floor->Draw();
+    }
 
     this->setModelMatrix();
     model = glm::scale(this->modelMatrix,glm::vec3{0.2});
@@ -306,4 +308,5 @@ void MyOpenGLWidget::setView(glm::vec3 position,glm::vec2 rotation){
 void MyOpenGLWidget::setShowMesh(bool showMesh){
     this->showMesh=showMesh;
     std::cout<<"showMesh: "<<showMesh<<std::endl;
+    update();
 }

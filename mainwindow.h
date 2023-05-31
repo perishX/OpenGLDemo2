@@ -27,7 +27,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    GlewInit gt{};
+//    GlewInit gt{};
 
 private slots:
     void openModel();

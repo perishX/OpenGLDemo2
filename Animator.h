@@ -35,6 +35,10 @@ public:
         }
     }
 
+    void setAnimation(float rate){
+        m_CurrentTime=rate*m_CurrentAnimation->GetDuration();
+    }
+
     void PlayAnimation(Animation* pAnimation)
     {
         m_CurrentAnimation = pAnimation;
@@ -73,6 +77,9 @@ public:
         return m_FinalBoneMatrices;
     }
 
+    float getProgress(){
+        return this->m_CurrentTime/m_CurrentAnimation->GetDuration();
+    }
 private:
     std::vector<glm::mat4> m_FinalBoneMatrices;
     Animation* m_CurrentAnimation;

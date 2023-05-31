@@ -47,14 +47,18 @@ void Model::loadModel(std::string path,std::function<void(float)> callback)
 
     this->process=0;
     this->totalNode=0;
-    this->vertexNum=0;
-    this->triangleNum=0;
-    this->boneNum=0;
-    this->calcNodesSum(scene->mRootNode,scene);
-    this->infoCallback();
 //    std::cout<<"info "<<this->vertexNum<<" "<<this->triangleNum<<std::endl;
 
+    this->vertexNum=0;
+    this->triangleNum=0;
+    this->calcNodesSum(scene->mRootNode,scene);
+
     processNode(scene->mRootNode, scene, callback);
+
+    this->boneNum=this->m_BoneCounter;
+    this->infoCallback();
+
+    this->animationNum=scene->mNumAnimations;
 }
 
 void Model::processNode(aiNode *node, const aiScene *scene,std::function<void(float)> callback)
@@ -303,4 +307,8 @@ void Model::SetVertexBoneData(Vertex& vertex, int boneID, float weight)
             break;
         }
     }
+}
+
+bool Model::hasAnimation(){
+    return this->animationNum>0;
 }

@@ -82,6 +82,10 @@ add_executable(OpenGLDemo
   Animation.h
 #  Animator.cpp
   Animator.h
+  BTNPlayAndPause.cpp
+  BTNPlayAndPause.h
+  MyQSlider.cpp
+  MyQSlider.h
 )
 
 #if(assimp_FOUND)

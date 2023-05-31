@@ -23,7 +23,7 @@
       <x>9</x>
       <y>-1</y>
       <width>741</width>
-      <height>661</height>
+      <height>621</height>
      </rect>
     </property>
     <property name="focusPolicy">
@@ -36,7 +36,7 @@
       <x>756</x>
       <y>-1</y>
       <width>311</width>
-      <height>661</height>
+      <height>621</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -282,8 +282,8 @@
        <rect>
         <x>50</x>
         <y>150</y>
-        <width>54</width>
-        <height>12</height>
+        <width>41</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
@@ -431,7 +431,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>330</y>
+        <y>310</y>
         <width>300</width>
         <height>300</height>
        </rect>
@@ -441,7 +441,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>240</y>
+        <y>220</y>
         <width>91</width>
         <height>16</height>
        </rect>
@@ -533,8 +533,39 @@
      </widget>
     </widget>
    </widget>
+   <widget class="BTNPlayAndPause" name="playAndPause">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>630</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>pause</string>
+    </property>
+   </widget>
+   <widget class="MyQSlider" name="horizontalSlider">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>630</y>
+      <width>631</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
    <zorder>tabWidget</zorder>
    <zorder>openGLWidget</zorder>
+   <zorder>playAndPause</zorder>
+   <zorder>horizontalSlider</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -618,6 +649,16 @@
    <class>MyQCheckBox</class>
    <extends>QCheckBox</extends>
    <header>myqcheckbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>BTNPlayAndPause</class>
+   <extends>QPushButton</extends>
+   <header>BTNPlayAndPause.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MyQSlider</class>
+   <extends>QSlider</extends>
+   <header>myqslider.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

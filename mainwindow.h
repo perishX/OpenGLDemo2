@@ -28,6 +28,7 @@ public:
 private:
     Ui::MainWindow *ui;
 //    GlewInit gt{};
+    int progress{};
 
 private slots:
     void openModel();
@@ -47,5 +48,11 @@ private slots:
     void on_back_clicked();
     void on_right_clicked();
     void on_showMesh_stateChanged(int arg1);
+    void on_playAndPause_clicked(bool checked);
+    void on_horizontalSlider_valueChanged(int value);
+    void on_openGLWidget_frameSwapped();
+    void on_horizontalSlider_sliderPressed();
+    void on_horizontalSlider_sliderReleased();
+    void on_horizontalSlider_sliderMoved(int position);
 };
 #endif // MAINWINDOW_H

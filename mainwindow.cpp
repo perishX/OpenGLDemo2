@@ -17,6 +17,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->lightDir,&QDial::valueChanged,this,&MainWindow::on_dial_valueChanged);
     connect(ui->up,&QPushButton::clicked,this,&MainWindow::on_up_clicked);
     connect(ui->showMesh,&QCheckBox::stateChanged,this,&MainWindow::on_showMesh_stateChanged);
+    connect(ui->playAndPause,&QPushButton::clicked,this,&MainWindow::on_playAndPause_clicked);
+    connect(ui->horizontalSlider,&QSlider::valueChanged,this,&MainWindow::on_horizontalSlider_valueChanged);
+    connect(ui->openGLWidget,&QOpenGLWidget::frameSwapped,this,&MainWindow::on_openGLWidget_frameSwapped);
+    connect(ui->horizontalSlider,&QSlider::sliderPressed,this,&MainWindow::on_horizontalSlider_sliderPressed);
+    connect(ui->horizontalSlider,&QSlider::sliderReleased,this,&MainWindow::on_horizontalSlider_sliderReleased);
+    connect(ui->horizontalSlider,&QSlider::sliderMoved,this,&MainWindow::on_horizontalSlider_sliderMoved);
 //    connect(ui->pushButton_3,&QPushButton::clicked,this,&MainWindow::on_lightColor_clicked);
     //"^(-?\d+)(\.\d+)?$"
 //    ui->positionX->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
@@ -162,4 +168,42 @@ void MainWindow::on_showMesh_stateChanged(int arg1)
 {
 //    std::cout<<"on_showMesh_stateChanged "<<arg1<<std::endl;
     ui->openGLWidget->setShowMesh(arg1==0?false:true);
+}
+
+void MainWindow::on_playAndPause_clicked(bool checked)
+{
+    ui->openGLWidget->setAnimationStatus(checked);
+}
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+//    std::cout<<"on_horizontalSlider_valueChanged "<<value<<std::endl;
+//    ui->openGLWidget->setAnimationProgress(value);
+//    this->progress=value;
+}
+
+void MainWindow::on_openGLWidget_frameSwapped()
+{
+    float progress=ui->openGLWidget->getAnimationProgress();
+//    std::cout<<"on_openGLWidget_frameSwapped "<<progress<<std::endl;
+    int minimum=ui->horizontalSlider->minimum();
+    int maximum=ui->horizontalSlider->maximum();
+    ui->horizontalSlider->setValue(static_cast<int>(progress*(maximum-minimum)));
+}
+
+void MainWindow::on_horizontalSlider_sliderPressed()
+{
+//    std::cout<<"on_horizontalSlider_sliderPressed "<<std::endl;
+//    ui->openGLWidget->setAnimationStatus(false);
+}
+
+void MainWindow::on_horizontalSlider_sliderReleased()
+{
+//    std::cout<<"on_horizontalSlider_sliderReleased "<<std::endl;
+//    ui->openGLWidget->setAnimationStatus(ui->playAndPause->isPlay);
+}
+
+void MainWindow::on_horizontalSlider_sliderMoved(int position)
+{
+//    std::cout<<"on_horizontalSlider_sliderMoved "<<position<<std::endl;
 }

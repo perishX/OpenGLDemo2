@@ -51,6 +51,9 @@ public:
     void setLightRotation(float rotation);
     void setView(glm::vec3 position,glm::vec2 rotation);
     void setShowMesh(bool showMesh);
+    void setAnimationStatus(bool isPlay);
+    void setAnimationProgress(int progress);
+    float getAnimationProgress();
 protected:
     virtual void initializeGL();
     virtual void resizeGL(int w,int h);
@@ -101,6 +104,10 @@ private:
 
     Animation* animation;
     Animator* animator;
+    Shader* modelShaderWithAnimation;
+
+    bool isPlay{true};
+//    int progress{0};
 signals:
 };
 

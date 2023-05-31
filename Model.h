@@ -26,6 +26,7 @@ private:
     Mesh processMesh(aiMesh *mesh, const aiScene *scene);
     std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
 //    unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
+
     bool hasModel{false};
     int process{};
     int totalNode{};
@@ -37,6 +38,7 @@ public:
     ~Model();
     void loadModel(std::string path,std::function<void(float)> callback=[](float){});
     void Draw(Shader shader, bool isLineMode = false);
+
     void print();
     void deleteMesh();
     int vertexNum{};

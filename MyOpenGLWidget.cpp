@@ -107,21 +107,33 @@ void MyOpenGLWidget::initializeGL(){
     this->cube2=new Cube();
     this->floor=new Floor();
     this->model=new Model();
-    this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
-    this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
+//    this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
+//    this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
+//    this->modelShaderWithAnimation=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/animationModelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/animationModelShader.frag"};
 //    this->modelShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.frag"};
-    this->modelShaderWithAnimation=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/animationModelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/animationModelShader.frag"};
-    this->modelShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.frag"};
 
 //    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
 //    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
-//    this->model->loadModel("D:/Qt/projects/OpenGLDemo2/models/nanosuit/nanosuit.obj");
 //    this->modelShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/modelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/modelShader.frag"};
-//    this->models.push_back(Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"});
-//    this->models.push_back(Model{"C:/Users/73965/Downloads/91-21-iphonex/Iphone seceond version finished.obj"});
+//    this->modelShaderWithAnimation=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/animationModelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/animationModelShader.frag"};
 
-//    fbxModel=new FBXModel();
-//    fbxModel->loadModel("C:/Users/73965/Downloads/models/FBX/huesitos.fbx");
+    char* buffer;
+
+    if((buffer = _getcwd(NULL, 0)) == NULL)
+    {
+        std::cerr<<"getcwd error"<<std::endl;
+    }
+    else
+    {
+        this->workPath=buffer;
+        free(buffer);
+    }
+    std::cout<<workPath<<std::endl;
+
+    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
+    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
+    this->modelShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/modelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/modelShader.frag"};
+    this->modelShaderWithAnimation=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/animationModelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/animationModelShader.frag"};
 }
 
 void MyOpenGLWidget::resizeGL(int w, int h){
@@ -133,7 +145,6 @@ void MyOpenGLWidget::resizeGL(int w, int h){
 void MyOpenGLWidget::paintGL(){
 //    std::cout<<"paintGL"<<std::endl;
     glViewport(0,0,g_width,g_height);
-
     glClearColor(0.8f,0.8f,0.8f,1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -149,9 +160,6 @@ void MyOpenGLWidget::paintGL(){
     this->shader->setMatrix4f("view", 1, glm::value_ptr(view));
     this->shader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
     this->cube->Draw();
-//    model=glm::translate(model,glm::vec3{10,0,0});
-//    this->shader->setMatrix4f("model", 1, glm::value_ptr(model));
-//    this->cube2->Draw();
 
     if(this->showMesh){
         model = glm::mat4{1.0f};
@@ -222,7 +230,6 @@ void MyOpenGLWidget::paintGL(){
                 ss<<"finalBonesMatrices[" << i << "]";
                 this->modelShaderWithAnimation->setMatrix4f(ss.str().c_str(), 1, glm::value_ptr(t));
             }
-
             this->model->Draw(*this->modelShaderWithAnimation,isMeshMode);
         }else{
             glUseProgram(this->modelShader->ID);
@@ -240,11 +247,7 @@ void MyOpenGLWidget::paintGL(){
         }
 
     }
-//    for(Model& m:this->models){
-//        m.Draw(*this->modelShader,isMeshMode);
-////        m.print();
-//    }
-    this->getAnimationProgress();
+
     update();
 //    this->mesh->Draw(*this->shader);
 }

@@ -69,6 +69,8 @@ void Floor::setupMesh()
 
 void Floor::Draw(bool isLineMode)
 {
+    std::cout<<"line draw"<<std::endl;
+    glewInit();
     if (isLineMode)
     {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -77,7 +79,6 @@ void Floor::Draw(bool isLineMode)
     {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
-//    glewInit();
     glBindVertexArray(VAO);
     glDrawArrays(GL_LINES, 0, this->vertices.size());
     glBindVertexArray(0);

@@ -2,6 +2,7 @@
 #define FLOOR_H
 
 #include <vector>
+#include <iostream>
 
 class Floor
 {

@@ -15,6 +15,7 @@
 #include <future>
 #include <thread>
 #include <chrono>
+#include <direct.h>
 #include "Shader.h"
 #include "Cube.h"
 #include "Viewer.h"
@@ -44,7 +45,6 @@ public:
     glm::vec3 rotation{0,0,0};
     glm::vec3 scale{1,1,1};
     void setModelAttribute(glm::vec3 position,glm::vec3 rotation,glm::vec3 scale);
-    Model* model;
     glm::vec3 lightColor{1,1,1};
     glm::vec3 lightDirection{1,-1,1};
     void setLightColor(glm::vec3 lightColor);
@@ -54,6 +54,22 @@ public:
     void setAnimationStatus(bool isPlay);
     void setAnimationProgress(int progress);
     float getAnimationProgress();
+
+
+    Cube* cube;
+    Shader* shader;
+    Floor* floor;
+    Shader* floorShader;
+    Model* model;
+    Shader* modelShader;
+    Shader* modelShaderWithAnimation;
+    bool isMeshMode{false};
+    bool isLoaded{false};
+
+
+    unsigned int framebuffer;
+    unsigned int textureColorbuffer;
+    unsigned int rbo;
 protected:
     virtual void initializeGL();
     virtual void resizeGL(int w,int h);
@@ -73,13 +89,12 @@ public slots:
 
 private:
 
-    Shader* shader;
-    Cube* cube;
+    std::string workPath{};
     Cube* cube2;
     Mesh* mesh;
     Viewer viewer{};
-    Floor* floor;
-    Shader* floorShader;
+
+
     int g_width{800};
     int g_height{800};
     int lastX{};
@@ -87,16 +102,16 @@ private:
     glm::mat4 modelMatrix{glm::mat4{1.0f}};
 
     std::vector<Model> models{};
-    Shader* modelShader;
+
     glm::vec3 directionlightColor{1.0f, 1.0f, 1.0f};
     glm::vec3 directionlightDir{-0.2f, -1.0f, -0.3f};
-    bool isMeshMode{false};
+
 
     bool load(std::string path);
 
     std::string path{""};
     bool needLoad{false};
-    bool isLoaded{false};
+
 
     FBXModel* fbxModel;
 
@@ -104,10 +119,11 @@ private:
 
     Animation* animation;
     Animator* animator;
-    Shader* modelShaderWithAnimation;
+
 
     bool isPlay{true};
 //    int progress{0};
+
 signals:
 };
 

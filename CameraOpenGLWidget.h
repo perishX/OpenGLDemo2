@@ -25,6 +25,7 @@ class CameraOpenGLWidget : public QOpenGLWidget,QOpenGLFunctions_3_3_Core
 public:
     explicit  CameraOpenGLWidget(QWidget *parent=nullptr);
     void setModelMatrix(glm::vec3 position,glm::vec3 rotation,glm::vec3 scale);
+    void setContext(Cube* cube,Shader* cubeShader,Floor* floor,Shader* floorShader,Model* model, Shader* modelShader, bool meshMode);
 protected:
     virtual void initializeGL();
     virtual void resizeGL(int w,int h);
@@ -39,20 +40,23 @@ protected:
     virtual void focusInEvent(QFocusEvent *event);
     virtual void focusOutEvent(QFocusEvent *event);
 private:
-    Shader* shader;
-    Cube* cube;
-    Mesh* mesh;
     Viewer viewer{};
-    Floor* floor;
-    Shader* floorShader;
     int g_width{800};
     int g_height{800};
     int lastX{};
     int lastY{};
-
     glm::mat4 modelMatrix{glm::mat4{1.0f}};
 
+    Cube* cube;
+    Shader* cubeShader;
+    Floor* floor;
+    Shader* floorShader;
     Model* model;
+    Shader* modelShader;
+    bool meshMode{false};
+
+    Cube* test;
+    Shader* testShader;
 signals:
 };
 

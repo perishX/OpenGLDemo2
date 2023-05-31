@@ -17,7 +17,7 @@ public:
     virtual void focusInEvent(QFocusEvent *event);
     virtual void focusOutEvent(QFocusEvent *event);
     virtual void textChanged(QString &text);
-    int num{};
+    float num{};
     void updateNum();
 signals:
     void hello();

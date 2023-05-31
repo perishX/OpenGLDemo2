@@ -26,7 +26,7 @@ void MyLineEditWidget::focusOutEvent(QFocusEvent *event){
     QLineEdit::focusOutEvent(event);
 //    this->releaseMouse();
 //    emit this->hello();
-    this->num=this->text().toInt();
+    this->num=this->text().toFloat();
 }
 
 void MyLineEditWidget::textChanged(QString &text){
@@ -34,5 +34,5 @@ void MyLineEditWidget::textChanged(QString &text){
 }
 
 void MyLineEditWidget::updateNum(){
-    this->num=this->text().toInt();
+    this->num=this->text().toFloat();
 }

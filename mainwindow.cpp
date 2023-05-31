@@ -47,7 +47,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::openModel(){
     std::cout<<"openModel trigger!!!"<<std::endl;
-    QString filename = QFileDialog::getOpenFileName(this,tr("选择模型"),tr("C:/Users/73965/Downloads"),tr("*.fbx *.obj"));
+    QString filename = QFileDialog::getOpenFileName(this,tr("选择模型"),tr("C:/Users/73965/Downloads"),tr("*.fbx *.obj *.dae"));
     std::string path=filename.toStdString();
     std::cout<<path<<std::endl;
     ui->openGLWidget->loadModel(path);

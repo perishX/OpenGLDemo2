@@ -194,16 +194,19 @@ void MainWindow::on_openGLWidget_frameSwapped()
 void MainWindow::on_horizontalSlider_sliderPressed()
 {
 //    std::cout<<"on_horizontalSlider_sliderPressed "<<std::endl;
-//    ui->openGLWidget->setAnimationStatus(false);
+    ui->openGLWidget->setAnimationStatus(false);
 }
 
 void MainWindow::on_horizontalSlider_sliderReleased()
 {
 //    std::cout<<"on_horizontalSlider_sliderReleased "<<std::endl;
-//    ui->openGLWidget->setAnimationStatus(ui->playAndPause->isPlay);
+    ui->openGLWidget->setAnimationProgress(this->progress);
+    ui->openGLWidget->setAnimationStatus(ui->playAndPause->isPlay);
 }
 
 void MainWindow::on_horizontalSlider_sliderMoved(int position)
 {
-//    std::cout<<"on_horizontalSlider_sliderMoved "<<position<<std::endl;
+    std::cout<<"on_horizontalSlider_sliderMoved "<<position<<std::endl;
+    this->progress=position;
+    ui->horizontalSlider->setValue(position);
 }

@@ -40,7 +40,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <property name="movable">
      <bool>false</bool>
@@ -557,6 +557,9 @@
     </property>
     <property name="maximum">
      <number>100</number>
+    </property>
+    <property name="sliderPosition">
+     <number>0</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>

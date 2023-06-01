@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QRegExpValidator>
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -11,7 +12,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "GlewInit.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,7 +27,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
-//    GlewInit gt{};
     int progress{};
 
 private slots:
@@ -35,10 +34,8 @@ private slots:
     void exit();
     void about();
 
-    void salute();
     void on_pushButton_clicked();
     void on_pushButton_2_clicked(bool isMeshMode);
-    void on_pushButton_3_clicked();
     void on_lightColor_clicked();
     void on_dial_valueChanged(int value);
     void on_up_clicked();

@@ -3,16 +3,12 @@
 
 Model::Model()
 {
-    glewInit();
-//    std::cout<<"model default"<<std::endl;
 }
 
 
 Model::Model(std::string path)
 {
-//    glewInit();
     loadModel(path);
-//    std::cout<<"model param"<<std::endl;
 }
 
 Model::~Model()
@@ -21,20 +17,15 @@ Model::~Model()
 
 void Model::Draw(Shader shader, bool isLineMode)
 {
-//    int count=0;
-//    if(!hasModel) return;
     for (Mesh& mesh : meshes)
     {
         mesh.Draw(shader, isLineMode);
-//        std::cout<<count++<<std::endl;
     }
 }
 
 void Model::loadModel(std::string path,std::function<void(float)> callback)
 {
-//    std::cout<<"model loadModel"<<std::endl;
     glewInit();
-//    this->hasModel=true;
     Assimp::Importer import{};
     const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
@@ -47,7 +38,6 @@ void Model::loadModel(std::string path,std::function<void(float)> callback)
 
     this->process=0;
     this->totalNode=0;
-//    std::cout<<"info "<<this->vertexNum<<" "<<this->triangleNum<<std::endl;
 
     this->vertexNum=0;
     this->triangleNum=0;
@@ -63,19 +53,17 @@ void Model::loadModel(std::string path,std::function<void(float)> callback)
 
 void Model::processNode(aiNode *node, const aiScene *scene,std::function<void(float)> callback)
 {
-    // 处理节点所有的网格（如果有的话）
     for (unsigned int i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
         meshes.push_back(processMesh(mesh, scene));
 
     }
-    // 接下来对它的子节点重复这一过程
+    
     for (unsigned int i = 0; i < node->mNumChildren; i++)
     {
         processNode(node->mChildren[i], scene, callback);
         ++process;
-//        std::cout<<"process: "<<process<<" total: "<<totalNode<<std::endl;
         if(callback!=nullptr){
             callback(totalNode==0?1:static_cast<float>(process)/totalNode);
         }
@@ -92,10 +80,8 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
     {
         Vertex vertex{};
 
-        //animation
         SetVertexBoneDataToDefault(vertex);
 
-        // 处理顶点位置、法线和纹理坐标
         vertex.Position = AssimpGLMHelpers::GetGLMVec(mesh->mVertices[i]);
         vertex.Normal = AssimpGLMHelpers::GetGLMVec(mesh->mNormals[i]);
 
@@ -122,7 +108,6 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
         }
     }
 
-    // 处理材质
     if (mesh->mMaterialIndex >= 0)
     {
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
@@ -163,7 +148,6 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
         }
         if (!skip)
         {
-//            std::cout << type << " " << str.C_Str() << std::endl;
             Texture texture;
             texture.id = TextureFromFile(str.C_Str(), directory);
             texture.type = typeName;
@@ -175,46 +159,6 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
     return textures;
 }
 
-//unsigned int Model::TextureFromFile(const char *path, const std::string &directory, bool gamma)
-//{
-
-//    std::string filename = directory + "/" + std::string(path);
-
-//    int width, height, nrChannels;
-//    unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrChannels, 0);
-
-//    unsigned int texture;
-//    glGenTextures(1, &texture);
-
-//    // std::cout << "load image" << std::endl;
-//    if (data)
-//    {
-//        GLenum format;
-//        if (nrChannels == 1)
-//            format = GL_RED;
-//        else if (nrChannels == 3)
-//            format = GL_RGB;
-//        else if (nrChannels == 4)
-//            format = GL_RGBA;
-
-//        glBindTexture(GL_TEXTURE_2D, texture);
-//        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-//        glGenerateMipmap(GL_TEXTURE_2D);
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-////        std::cout << "Success to load texture" << std::endl;
-//    }
-//    else
-//    {
-//        std::cerr << "Failed to load texture" << std::endl;
-//    }
-//    stbi_image_free(data);
-//    return texture;
-//}
-
-
 void Model::print(){
     for(Mesh& mesh:this->meshes){
         std::cout<<mesh.vertices.size()<<" "<<mesh.indices.size()<<" "<<mesh.textures.size()<<" "<<mesh.VAO<<" "<<mesh.VBO<<" "<<mesh.EBO<<std::endl;
@@ -222,7 +166,6 @@ void Model::print(){
 }
 
 void Model::deleteMesh(){
-//    this->hasModel=false;
     for (Mesh& mesh : meshes)
     {
         mesh.deleteMesh();

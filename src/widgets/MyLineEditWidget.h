@@ -13,14 +13,10 @@ class MyLineEditWidget : public QLineEdit
     Q_OBJECT
 public:
     explicit MyLineEditWidget(QWidget *parent=nullptr);
-    virtual void mousePressEvent(QMouseEvent *event);
     virtual void focusInEvent(QFocusEvent *event);
     virtual void focusOutEvent(QFocusEvent *event);
-    virtual void textChanged(QString &text);
     float num{};
     void updateNum();
-signals:
-    void hello();
 };
 
 #endif // MYLINEEDITWIDGET_H

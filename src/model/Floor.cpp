@@ -9,20 +9,6 @@ Floor::Floor(std::vector<float> vertices)
 
 Floor::Floor()
 {
-//    this->vertices = {
-//        // positions
-//        -25.0f, 0, -25.0f,
-//        -25.0f, 0, 25.0f,
-
-//        25.0f, 0, -25.0f,
-//        25.0f, 0, 25.0f,
-
-//        -25.0f, 0, -25.0f,
-//        25.0f, 0, -25.0f,
-
-//        -25.0f, 0, 25.0f,
-//        25.0f, 0, 25.0f,
-//    };
     float x=-bound;
     float z=-bound;
     float step=this->bound*2.0f/(this->lineNum+1);
@@ -59,17 +45,10 @@ void Floor::setupMesh()
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)(0));
     glEnableVertexAttribArray(0);
-//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(0));
-//    glEnableVertexAttribArray(0);
-//    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float)));
-//    glEnableVertexAttribArray(1);
-//    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
-//    glEnableVertexAttribArray(2);
 }
 
 void Floor::Draw(bool isLineMode)
 {
-//    std::cout<<"line draw"<<std::endl;
     glewInit();
     if (isLineMode)
     {

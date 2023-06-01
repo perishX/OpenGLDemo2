@@ -12,7 +12,6 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
     unsigned int texture;
     glGenTextures(1, &texture);
 
-    // std::cout << "load image" << std::endl;
     if (data)
     {
         GLenum format;
@@ -30,7 +29,6 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//        std::cout << "Success to load texture" << std::endl;
     }
     else
     {

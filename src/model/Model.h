@@ -11,9 +11,6 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include "glm/glm.hpp"
-//#define STB_IMAGE_IMPLEMENTATION
-//#define STB_IMAGE_STATIC
-//#include <stb_image.h>
 #include "Mesh.h"
 #include "Shader.h"
 #include "STBImage.h"
@@ -28,14 +25,12 @@ private:
     void processNode(aiNode *node, const aiScene *scene,std::function<void(float)> callback=[](float){});
     Mesh processMesh(aiMesh *mesh, const aiScene *scene);
     std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
-//    unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
 
     bool hasModel{false};
     int process{};
     int totalNode{};
     std::function<void()> infoCallback;
 
-    //animation
     std::map<std::string, BoneInfo> m_BoneInfoMap{};
     int m_BoneCounter{0};
 public:
@@ -54,7 +49,6 @@ public:
     void calcNodesSum(aiNode *node,const aiScene *scene);
     void initInfo(std::function<void()> infoCallback);
 
-    //animation
     auto& GetBoneInfoMap() { return m_BoneInfoMap; }
     int& GetBoneCount() { return m_BoneCounter; }
     void SetVertexBoneDataToDefault(Vertex& vertex);

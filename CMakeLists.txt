@@ -52,5 +52,3 @@ target_link_libraries(OpenGLDemo Qt5::Widgets)
 target_link_libraries(OpenGLDemo glew32)
 target_link_libraries(OpenGLDemo opengl32)
 target_link_libraries(OpenGLDemo libassimp.dll.a)
-
-

@@ -40,7 +40,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <property name="movable">
      <bool>false</bool>
@@ -214,7 +214,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="MyPushButton" name="pushButton">
+     <widget class="QPushButton" name="pushButton">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -290,7 +290,7 @@
        <string>骨骼数</string>
       </property>
      </widget>
-     <widget class="MyLCDNumber" name="lcdNumber">
+     <widget class="QLCDNumber" name="lcdNumber">
       <property name="geometry">
        <rect>
         <x>200</x>
@@ -300,7 +300,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="MyLCDNumber" name="lcdNumber_2">
+     <widget class="QLCDNumber" name="lcdNumber_2">
       <property name="geometry">
        <rect>
         <x>200</x>
@@ -310,7 +310,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="MyLCDNumber" name="lcdNumber_3">
+     <widget class="QLCDNumber" name="lcdNumber_3">
       <property name="geometry">
        <rect>
         <x>200</x>
@@ -344,7 +344,7 @@
        <string> 光照方向</string>
       </property>
      </widget>
-     <widget class="MyQDial" name="lightDir">
+     <widget class="QDial" name="lightDir">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -373,7 +373,7 @@
        <string>光照颜色</string>
       </property>
      </widget>
-     <widget class="MyPushButton" name="lightColor">
+     <widget class="QPushButton" name="lightColor">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -424,7 +424,7 @@
      <attribute name="title">
       <string>视角</string>
      </attribute>
-     <widget class="MyQCheckBox" name="showMesh">
+     <widget class="QCheckBox" name="showMesh">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -440,7 +440,7 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="MyPushButton" name="front">
+     <widget class="QPushButton" name="front">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -453,7 +453,7 @@
        <string> 前</string>
       </property>
      </widget>
-     <widget class="MyPushButton" name="left">
+     <widget class="QPushButton" name="left">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -466,7 +466,7 @@
        <string> 左</string>
       </property>
      </widget>
-     <widget class="MyPushButton" name="back">
+     <widget class="QPushButton" name="back">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -479,7 +479,7 @@
        <string>后</string>
       </property>
      </widget>
-     <widget class="MyPushButton" name="right">
+     <widget class="QPushButton" name="right">
       <property name="geometry">
        <rect>
         <x>210</x>
@@ -492,7 +492,7 @@
        <string>右</string>
       </property>
      </widget>
-     <widget class="MyPushButton" name="up">
+     <widget class="QPushButton" name="up">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -505,7 +505,7 @@
        <string>上</string>
       </property>
      </widget>
-     <widget class="MyPushButton" name="bottom">
+     <widget class="QPushButton" name="bottom">
       <property name="geometry">
        <rect>
         <x>210</x>
@@ -543,7 +543,7 @@
      <string>pause</string>
     </property>
    </widget>
-   <widget class="MyQSlider" name="horizontalSlider">
+   <widget class="QSlider" name="horizontalSlider">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -621,39 +621,14 @@
    <header>mylineeditwidget.h</header>
   </customwidget>
   <customwidget>
-   <class>MyPushButton</class>
-   <extends>QPushButton</extends>
-   <header>MyPushButton.h</header>
-  </customwidget>
-  <customwidget>
    <class>BtnMeshMode</class>
    <extends>QPushButton</extends>
    <header>btnmeshmode.h</header>
   </customwidget>
   <customwidget>
-   <class>MyLCDNumber</class>
-   <extends>QLCDNumber</extends>
-   <header>mylcdnumber.h</header>
-  </customwidget>
-  <customwidget>
-   <class>MyQDial</class>
-   <extends>QDial</extends>
-   <header>myqdial.h</header>
-  </customwidget>
-  <customwidget>
-   <class>MyQCheckBox</class>
-   <extends>QCheckBox</extends>
-   <header>myqcheckbox.h</header>
-  </customwidget>
-  <customwidget>
    <class>BTNPlayAndPause</class>
    <extends>QPushButton</extends>
    <header>BTNPlayAndPause.h</header>
-  </customwidget>
-  <customwidget>
-   <class>MyQSlider</class>
-   <extends>QSlider</extends>
-   <header>myqslider.h</header>
   </customwidget>
   <customwidget>
    <class>MyPainter</class>

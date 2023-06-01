@@ -8,13 +8,8 @@
 
 class Shader{
 public:
-public:
-    // 程序ID
     unsigned int ID;
-
-    // 构造器读取并构建着色器
     Shader(const char *vertexPath, const char *fragmentPath);
-    Shader(const char *vertexPath, const char *fragmentPath, const char *geometryPath);
     void setInt(const char * name,int value);
     void setFloat(const char * name,float value);
     void setBool(const char * name,bool value);

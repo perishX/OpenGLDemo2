@@ -4,19 +4,6 @@
 
 Mesh::Mesh()
 {
-//    std::cout << "default" << std::endl;
-//    this->vertices = {};
-//    this->textures = {};
-//    this->indices = {0, 1, 2};
-
-//    Vertex vertex1{glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(0.0f, 0.0f)};
-//    Vertex vertex2{glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(1.0f, 0.0f)};
-//    Vertex vertex3{glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec2(1.0f, 1.0f)};
-//    this->vertices.push_back(vertex1);
-//    this->vertices.push_back(vertex2);
-//    this->vertices.push_back(vertex3);
-
-//    setupMesh();
 }
 
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures)
@@ -24,14 +11,6 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std:
     this->vertices = vertices;
     this->textures = textures;
     this->indices = indices;
-//    for(Vertex& v:this->vertices){
-//        std::cout<<v.Position.x<<" "<<v.Position.y<<" "<<v.Position.z<<" || ";
-//    }
-//    std::cout<<'\n';
-//    for(unsigned int i:this->indices){
-//        std::cout<<i<<" ";
-//    }
-//    std::cout<<this->vertices.size()<<" "<<this->indices.size()<<std::endl;
     setupMesh();
 }
 
@@ -48,8 +27,6 @@ void Mesh::setupMesh()
     glGenBuffers(1, &EBO);
 
     glBindVertexArray(VAO);
-//    std::cout<<VAO<<" "<<VBO<<" "<<EBO<<std::endl;
-
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
@@ -62,8 +39,6 @@ void Mesh::setupMesh()
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, TexCoords));
     glEnableVertexAttribArray(2);
-
-
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));
     glEnableVertexAttribArray(3);
     glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
@@ -74,11 +49,6 @@ void Mesh::setupMesh()
     glEnableVertexAttribArray(6);
 
     glBindVertexArray(0);
-
-    glBindVertexArray(0);
-//    VAO+=2;
-//    VBO-=4;
-//    EBO-=4;
 }
 
 void Mesh::Draw(Shader shader, bool isLineMode)
@@ -115,18 +85,12 @@ void Mesh::Draw(Shader shader, bool isLineMode)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
     glBindVertexArray(VAO);
-//    glDrawArrays(GL_TRIANGLES, 0, this->vertices.size());
     glDrawElements(GL_TRIANGLES,this->indices.size(), GL_UNSIGNED_INT, (void*)0);
-
     glBindVertexArray(0);
     glActiveTexture(GL_TEXTURE0);
 }
 
 void Mesh::deleteMesh(){
-//    glDisableVertexAttribArray(0);
-//    glDisableVertexAttribArray(1);
-//    glDisableVertexAttribArray(2);
-
     glBindVertexArray(0);
 
     glDeleteVertexArrays(1,&this->VAO);

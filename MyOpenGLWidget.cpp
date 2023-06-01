@@ -107,10 +107,10 @@ void MyOpenGLWidget::initializeGL(){
     this->cube2=new Cube();
     this->floor=new Floor();
     this->model=new Model();
-//    this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
-//    this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
-//    this->modelShaderWithAnimation=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/animationModelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/animationModelShader.frag"};
-//    this->modelShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.frag"};
+    this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
+    this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
+    this->modelShaderWithAnimation=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/animationModelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/animationModelShader.frag"};
+    this->modelShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.frag"};
 
 //    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
 //    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
@@ -130,10 +130,10 @@ void MyOpenGLWidget::initializeGL(){
     }
     std::cout<<workPath<<std::endl;
 
-    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
-    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
-    this->modelShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/modelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/modelShader.frag"};
-    this->modelShaderWithAnimation=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/animationModelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/animationModelShader.frag"};
+//    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
+//    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
+//    this->modelShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/modelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/modelShader.frag"};
+//    this->modelShaderWithAnimation=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/animationModelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/animationModelShader.frag"};
 }
 
 void MyOpenGLWidget::resizeGL(int w, int h){

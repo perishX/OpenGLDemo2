@@ -185,18 +185,18 @@ void MainWindow::on_horizontalSlider_valueChanged(int value)
 void MainWindow::on_openGLWidget_frameSwapped()
 {
     std::cout<<"on_openGLWidget_frameSwapped"<<std::endl;
-    if(!ui->openGLWidget->isLoaded){
-        ui->openGLWidget_2->setContext(ui->openGLWidget->cube,ui->openGLWidget->shader,
-                                       ui->openGLWidget->floor,ui->openGLWidget->floorShader,
-                                       nullptr,nullptr,false);
-    }else{
-        std::cout<<"isLoaded"<<std::endl;
-        bool hasAnimation=ui->openGLWidget->model->hasAnimation();
-        ui->openGLWidget_2->setContext(ui->openGLWidget->cube,ui->openGLWidget->shader,
-                                       ui->openGLWidget->floor,ui->openGLWidget->floorShader,
-                                       ui->openGLWidget->model,
-                                       hasAnimation?ui->openGLWidget->modelShaderWithAnimation:ui->openGLWidget->modelShader,false);
-    }
+//    if(!ui->openGLWidget->isLoaded){
+//        ui->openGLWidget_2->setContext(ui->openGLWidget->cube,ui->openGLWidget->shader,
+//                                       ui->openGLWidget->floor,ui->openGLWidget->floorShader,
+//                                       nullptr,nullptr,false);
+//    }else{
+//        std::cout<<"isLoaded"<<std::endl;
+//        bool hasAnimation=ui->openGLWidget->model->hasAnimation();
+//        ui->openGLWidget_2->setContext(ui->openGLWidget->cube,ui->openGLWidget->shader,
+//                                       ui->openGLWidget->floor,ui->openGLWidget->floorShader,
+//                                       ui->openGLWidget->model,
+//                                       hasAnimation?ui->openGLWidget->modelShaderWithAnimation:ui->openGLWidget->modelShader,false);
+//    }
 
 
     float progress=ui->openGLWidget->getAnimationProgress();

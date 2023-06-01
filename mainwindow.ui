@@ -424,19 +424,6 @@
      <attribute name="title">
       <string>视角</string>
      </attribute>
-     <widget class="CameraOpenGLWidget" name="openGLWidget_2">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>370</y>
-        <width>300</width>
-        <height>300</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="MyQCheckBox" name="showMesh">
       <property name="geometry">
        <rect>
@@ -627,11 +614,6 @@
    <class>MyPushButton</class>
    <extends>QPushButton</extends>
    <header>MyPushButton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>CameraOpenGLWidget</class>
-   <extends>QOpenGLWidget</extends>
-   <header>cameraopenglwidget.h</header>
   </customwidget>
   <customwidget>
    <class>BtnMeshMode</class>

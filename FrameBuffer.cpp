@@ -66,7 +66,6 @@ void FrameBuffer::Draw(bool isLineMode)
     {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
-    glBindTexture(GL_TEXTURE_2D, this->textureColorbuffer);
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, this->vertices.size());
     glBindVertexArray(0);

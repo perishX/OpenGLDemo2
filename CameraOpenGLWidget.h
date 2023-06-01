@@ -14,6 +14,7 @@
 #include "Mesh.h"
 #include "Floor.h"
 #include "Model.h"
+#include "FrameBuffer.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -25,7 +26,7 @@ class CameraOpenGLWidget : public QOpenGLWidget,QOpenGLFunctions_3_3_Core
 public:
     explicit  CameraOpenGLWidget(QWidget *parent=nullptr);
     void setModelMatrix(glm::vec3 position,glm::vec3 rotation,glm::vec3 scale);
-    void setContext(Cube* cube,Shader* cubeShader,Floor* floor,Shader* floorShader,Model* model, Shader* modelShader, bool meshMode);
+    void setContext(FrameBuffer* framebuffer,Shader* framebufferShader);
 protected:
     virtual void initializeGL();
     virtual void resizeGL(int w,int h);
@@ -41,8 +42,8 @@ protected:
     virtual void focusOutEvent(QFocusEvent *event);
 private:
     Viewer viewer{};
-    int g_width{800};
-    int g_height{800};
+    int g_width{300};
+    int g_height{300};
     int lastX{};
     int lastY{};
     glm::mat4 modelMatrix{glm::mat4{1.0f}};
@@ -57,6 +58,9 @@ private:
 
     Cube* test;
     Shader* testShader;
+
+    Shader* framebufferShader;
+    FrameBuffer* framebuffer;
 signals:
 };
 

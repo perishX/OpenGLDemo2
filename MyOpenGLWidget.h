@@ -9,6 +9,8 @@
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QCoreApplication>
+#include <QOpenGLFramebufferObject>
+#include <QImage>
 #include <iostream>
 #include <vector>
 #include <sstream>
@@ -27,6 +29,7 @@
 #include "Animation.h"
 #include "Animator.h"
 #include "FrameBuffer.h"
+#include "CameraOpenGLWidget.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -66,10 +69,12 @@ public:
     bool isMeshMode{false};
     bool isLoaded{false};
 
-
+    CameraOpenGLWidget* cameraWidget;
     // unsigned int framebuffer;
     // unsigned int textureColorbuffer;
     // unsigned int rbo;
+
+    QImage image{};
 protected:
     virtual void initializeGL();
     virtual void resizeGL(int w,int h);
@@ -127,6 +132,8 @@ private:
 
     FrameBuffer* framebuffer;
     Shader* frameBufferShader;
+
+    QOpenGLFramebufferObject* fbo;
 signals:
 };
 

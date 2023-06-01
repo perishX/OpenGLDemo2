@@ -518,6 +518,16 @@
        <string>下</string>
       </property>
      </widget>
+     <widget class="MyPainter" name="widget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>380</y>
+        <width>300</width>
+        <height>300</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="BTNPlayAndPause" name="playAndPause">
@@ -644,6 +654,12 @@
    <class>MyQSlider</class>
    <extends>QSlider</extends>
    <header>myqslider.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MyPainter</class>
+   <extends>QWidget</extends>
+   <header>MyPainter.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

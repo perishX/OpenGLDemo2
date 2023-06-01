@@ -102,60 +102,27 @@ void CameraOpenGLWidget::initializeGL(){
     initializeOpenGLFunctions();
     glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
     glEnable(GL_DEPTH_TEST);
-
-    this->test=new Cube();
-    this->testShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
-
 }
 
 void CameraOpenGLWidget::resizeGL(int w, int h){
     std::cout<<w<<" "<<h<<std::endl;
     this->g_width=w;
     this->g_height=h;
+
 }
 
 void CameraOpenGLWidget::paintGL(){
     glViewport(0,0,g_width,g_height);
 
-    glClearColor(0.8f,0.8f,0.8f,1.0f);
+    glClearColor(0.f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glm::mat4 model = glm::mat4{1.0f};
-    glm::mat4 view = glm::mat4{1.0f};
-    view = this->viewer.getViewMatrix();
-//    glm::mat4 perspective = glm::mat4{1.0f};
-//    perspective = glm::perspective(glm::radians(this->viewer.getFov()), static_cast<float>(this->g_width) / static_cast<float>(this->g_height), 0.1f, 100.0f);
-
-//    model= glm::translate(model,glm::vec3{-2,0,0});
-////    glUseProgram(this->testShader->ID);
-////    this->testShader->setMatrix4f("model", 1, glm::value_ptr(model));
-////    this->testShader->setMatrix4f("view", 1, glm::value_ptr(view));
-////    this->testShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
-////    this->test->Draw();
-
-    if(this->cube!=nullptr&&this->cubeShader!=nullptr){
-        glUseProgram(this->cubeShader->ID);
-        this->cubeShader->setMatrix4f("view", 1, glm::value_ptr(view));
-        this->cube->Draw();
-//        model= glm::translate(model,glm::vec3{2,0,0});
-//        this->cubeShader->setMatrix4f("model", 1, glm::value_ptr(model));
-//        this->cube->Draw();
+    if(this->framebuffer!=nullptr&&this->framebufferShader!=nullptr){
+        std::cout<<"camera paint"<<std::endl;
+        glUseProgram(this->framebufferShader->ID);
+        this->framebuffer->Draw();
     }
-    makeCurrent();
-
-    if(this->floor!=nullptr&&this->floorShader!=nullptr){
-        glUseProgram(this->floorShader->ID);
-        this->floorShader->setMatrix4f("view", 1, glm::value_ptr(view));
-        this->floor->Draw();
-    }
-
-    if(this->model!=nullptr&&this->modelShader!=nullptr){
-        std::cout<<"model"<<std::endl;
-        glUseProgram(this->modelShader->ID);
-        this->modelShader->setMatrix4f("model",1,glm::value_ptr(model));
-        this->model->Draw(*this->modelShader,false);
-    }
-
+    update();
 }
 
 void CameraOpenGLWidget::setModelMatrix(glm::vec3 position,glm::vec3 rotation,glm::vec3 scale){
@@ -169,13 +136,7 @@ void CameraOpenGLWidget::setModelMatrix(glm::vec3 position,glm::vec3 rotation,gl
 }
 
 
-void CameraOpenGLWidget::setContext(Cube* cube,Shader* cubeShader,Floor* floor,Shader* floorShader,Model* model, Shader* modelShader, bool meshMode){
-    this->cube=cube;
-    this->cubeShader=cubeShader;
-    this->floor=floor;
-    this->floorShader=floorShader;
-    this->model=model;
-    this->modelShader=modelShader;
-    this->meshMode=meshMode;
-    update();
+void CameraOpenGLWidget::setContext(FrameBuffer* framebuffer,Shader* framebufferShader){
+    this->framebuffer=framebuffer;
+    this->framebufferShader=framebufferShader;
 }

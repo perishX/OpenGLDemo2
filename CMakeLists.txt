@@ -92,6 +92,8 @@ add_executable(OpenGLDemo
   MyQSlider.h
   FrameBuffer.cpp
   FrameBuffer.h
+  MyPainter.cpp
+  MyPainter.h
 )
 
 #if(assimp_FOUND)

@@ -150,6 +150,7 @@ void MyOpenGLWidget::initializeGL()
 //    this->cameraWidget->setContext(this->framebuffer, this->frameBufferShader);
 
     this->fbo=new QOpenGLFramebufferObject{300,300};
+    this->fbo->setAttachment(QOpenGLFramebufferObject::CombinedDepthStencil);
 }
 
 void MyOpenGLWidget::resizeGL(int w, int h)

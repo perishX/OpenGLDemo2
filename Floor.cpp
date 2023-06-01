@@ -69,7 +69,7 @@ void Floor::setupMesh()
 
 void Floor::Draw(bool isLineMode)
 {
-    std::cout<<"line draw"<<std::endl;
+//    std::cout<<"line draw"<<std::endl;
     glewInit();
     if (isLineMode)
     {

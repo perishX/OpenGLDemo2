@@ -184,7 +184,7 @@ void MainWindow::on_horizontalSlider_valueChanged(int value)
 
 void MainWindow::on_openGLWidget_frameSwapped()
 {
-    std::cout<<"on_openGLWidget_frameSwapped"<<std::endl;
+//    std::cout<<"on_openGLWidget_frameSwapped"<<std::endl;
 //    if(!ui->openGLWidget->isLoaded){
 //        ui->openGLWidget_2->setContext(ui->openGLWidget->cube,ui->openGLWidget->shader,
 //                                       ui->openGLWidget->floor,ui->openGLWidget->floorShader,
@@ -221,7 +221,7 @@ void MainWindow::on_horizontalSlider_sliderReleased()
 
 void MainWindow::on_horizontalSlider_sliderMoved(int position)
 {
-    std::cout<<"on_horizontalSlider_sliderMoved "<<position<<std::endl;
+//    std::cout<<"on_horizontalSlider_sliderMoved "<<position<<std::endl;
     this->progress=position;
     ui->horizontalSlider->setValue(position);
 }

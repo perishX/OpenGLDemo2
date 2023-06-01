@@ -104,36 +104,14 @@ void MyOpenGLWidget::initializeGL(){
     glEnable(GL_DEPTH_TEST);
 
     this->cube=new Cube();
-    this->cube2=new Cube();
+//    this->cube2=new Cube();
     this->floor=new Floor();
     this->model=new Model();
-    this->shader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/shader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/shader.frag"};
-    this->floorShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/floorShader.frag"};
-    this->modelShaderWithAnimation=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/animationModelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/animationModelShader.frag"};
-    this->modelShader=new Shader{"C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.vert","C:/Users/73965/Documents/OpenGLDemo/shaders/modelShader.frag"};
 
-//    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
-//    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
-//    this->modelShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/modelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/modelShader.frag"};
-//    this->modelShaderWithAnimation=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/animationModelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/animationModelShader.frag"};
-
-    char* buffer;
-
-    if((buffer = _getcwd(NULL, 0)) == NULL)
-    {
-        std::cerr<<"getcwd error"<<std::endl;
-    }
-    else
-    {
-        this->workPath=buffer;
-        free(buffer);
-    }
-    std::cout<<workPath<<std::endl;
-
-//    this->shader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/shader.vert","D:/Qt/projects/OpenGLDemo2/shaders/shader.frag"};
-//    this->floorShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/floorShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/floorShader.frag"};
-//    this->modelShader=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/modelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/modelShader.frag"};
-//    this->modelShaderWithAnimation=new Shader{"D:/Qt/projects/OpenGLDemo2/shaders/animationModelShader.vert","D:/Qt/projects/OpenGLDemo2/shaders/animationModelShader.frag"};
+    this->shader=new Shader{"shaders/shader.vert","shaders/shader.frag"};
+    this->floorShader=new Shader{"shaders/floorShader.vert","shaders/floorShader.frag"};
+    this->modelShaderWithAnimation=new Shader{"shaders/animationModelShader.vert","shaders/animationModelShader.frag"};
+    this->modelShader=new Shader{"shaders/modelShader.vert","shaders/modelShader.frag"};
 }
 
 void MyOpenGLWidget::resizeGL(int w, int h){
@@ -154,12 +132,12 @@ void MyOpenGLWidget::paintGL(){
     glm::mat4 perspective = glm::mat4{1.0f};
     perspective = glm::perspective(glm::radians(this->viewer.getFov()), static_cast<float>(this->g_width) / static_cast<float>(this->g_height), 0.1f, 100.0f);
 
-    model= glm::translate(model,glm::vec3{-2,0,0});
-    glUseProgram(this->shader->ID);
-    this->shader->setMatrix4f("model", 1, glm::value_ptr(model));
-    this->shader->setMatrix4f("view", 1, glm::value_ptr(view));
-    this->shader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
-    this->cube->Draw();
+//    model= glm::translate(model,glm::vec3{-2,0,0});
+//    glUseProgram(this->shader->ID);
+//    this->shader->setMatrix4f("model", 1, glm::value_ptr(model));
+//    this->shader->setMatrix4f("view", 1, glm::value_ptr(view));
+//    this->shader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
+//    this->cube->Draw();
 
     if(this->showMesh){
         model = glm::mat4{1.0f};
@@ -278,26 +256,9 @@ void MyOpenGLWidget::test(){
 }
 
 void MyOpenGLWidget::loadModel(std::string path){
-//    this->models.push_back(Model{path});
-    std::cout<<path<<std::endl;
-//    std::future<bool> f=std::async(std::launch::deferred,[&](std::string path){
-//        std::cout<<std::this_thread::get_id()<<" "<<path<<std::endl;
-//        std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-//        this->models.push_back(Model{path});
-//        return true;
-//    },path);
-//    std::cout<<f.get()<<std::endl;
-//    std::cout << std::this_thread::get_id() << std::endl;
-//    this->model->deleteMesh();
-//    update();
-//    this->model=new Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"};
-//    this->model->loadModel(path);
-//this->models.push_back(Model{"C:/Users/73965/Documents/OpenGLDemo/models/nanosuit/nanosuit.obj"});
     this->needLoad=true;
     this->isLoaded=false;
     this->path=path;
-//    std::cout<<"loaded!!! "<<this->models.size()<<std::endl;
-//    this->models[this->models.size()-1].print();
     update();
 }
 

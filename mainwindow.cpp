@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lightG->updateNum();
     ui->lightB->updateNum();
 
-//    ui->openGLWidget->cameraWidget=ui->openGLWidget_2;
+    ui->openGLWidget->cameraWidget=ui->widget;
 }
 
 void MainWindow::salute()

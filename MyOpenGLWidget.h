@@ -12,6 +12,7 @@
 #include <QOpenGLFramebufferObject>
 #include <QImage>
 #include <iostream>
+#include <QWidget>
 #include <vector>
 #include <sstream>
 #include <future>
@@ -30,6 +31,7 @@
 #include "Animator.h"
 #include "FrameBuffer.h"
 #include "CameraOpenGLWidget.h"
+#include "MyPainter.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -69,12 +71,12 @@ public:
     bool isMeshMode{false};
     bool isLoaded{false};
 
-    CameraOpenGLWidget* cameraWidget;
     // unsigned int framebuffer;
     // unsigned int textureColorbuffer;
     // unsigned int rbo;
 
     QImage image{};
+    MyPainter* cameraWidget;
 protected:
     virtual void initializeGL();
     virtual void resizeGL(int w,int h);
@@ -134,6 +136,7 @@ private:
     Shader* frameBufferShader;
 
     QOpenGLFramebufferObject* fbo;
+    void paintFBO();
 signals:
 };
 

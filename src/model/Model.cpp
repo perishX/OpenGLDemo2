@@ -5,7 +5,6 @@ Model::Model()
 {
 }
 
-
 Model::Model(std::string path)
 {
     loadModel(path);
@@ -17,13 +16,13 @@ Model::~Model()
 
 void Model::Draw(Shader shader, bool isLineMode)
 {
-    for (Mesh& mesh : meshes)
+    for (Mesh &mesh : meshes)
     {
         mesh.Draw(shader, isLineMode);
     }
 }
 
-void Model::loadModel(std::string path,std::function<void(float)> callback)
+void Model::loadModel(std::string path, std::function<void(float)> callback)
 {
     glewInit();
     Assimp::Importer import{};
@@ -36,36 +35,34 @@ void Model::loadModel(std::string path,std::function<void(float)> callback)
     }
     directory = path.substr(0, path.find_last_of("/"));
 
-    this->process=0;
-    this->totalNode=0;
+    this->process = 0;
+    this->totalNode = 0;
 
-    this->vertexNum=0;
-    this->triangleNum=0;
-    this->calcNodesSum(scene->mRootNode,scene);
+    this->vertexNum = 0;
+    this->triangleNum = 0;
+    this->calcNodesSum(scene->mRootNode, scene);
 
     processNode(scene->mRootNode, scene, callback);
-
-    this->boneNum=this->m_BoneCounter;
+    
     this->infoCallback();
-
-    this->animationNum=scene->mNumAnimations;
+    this->animationNum = scene->mNumAnimations;
 }
 
-void Model::processNode(aiNode *node, const aiScene *scene,std::function<void(float)> callback)
+void Model::processNode(aiNode *node, const aiScene *scene, std::function<void(float)> callback)
 {
     for (unsigned int i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
         meshes.push_back(processMesh(mesh, scene));
-
     }
-    
+
     for (unsigned int i = 0; i < node->mNumChildren; i++)
     {
         processNode(node->mChildren[i], scene, callback);
         ++process;
-        if(callback!=nullptr){
-            callback(totalNode==0?1:static_cast<float>(process)/totalNode);
+        if (callback != nullptr)
+        {
+            callback(totalNode == 0 ? 1 : static_cast<float>(process) / totalNode);
         }
     }
 }
@@ -122,7 +119,7 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
         textures.insert(textures.end(), reflectMaps.begin(), reflectMaps.end());
     }
 
-    this->ExtractBoneWeightForVertices(vertices,mesh,scene);
+    this->ExtractBoneWeightForVertices(vertices, mesh, scene);
 
     return Mesh(vertices, indices, textures);
 }
@@ -159,14 +156,17 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
     return textures;
 }
 
-void Model::print(){
-    for(Mesh& mesh:this->meshes){
-        std::cout<<mesh.vertices.size()<<" "<<mesh.indices.size()<<" "<<mesh.textures.size()<<" "<<mesh.VAO<<" "<<mesh.VBO<<" "<<mesh.EBO<<std::endl;
+void Model::print()
+{
+    for (Mesh &mesh : this->meshes)
+    {
+        std::cout << mesh.vertices.size() << " " << mesh.indices.size() << " " << mesh.textures.size() << " " << mesh.VAO << " " << mesh.VBO << " " << mesh.EBO << std::endl;
     }
 }
 
-void Model::deleteMesh(){
-    for (Mesh& mesh : meshes)
+void Model::deleteMesh()
+{
+    for (Mesh &mesh : meshes)
     {
         mesh.deleteMesh();
     }
@@ -174,27 +174,28 @@ void Model::deleteMesh(){
     textures_loaded.clear();
 }
 
-void Model::calcNodesSum(aiNode *node,const aiScene *scene){
+void Model::calcNodesSum(aiNode *node, const aiScene *scene)
+{
     for (unsigned int i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-        this->vertexNum+=mesh->mNumVertices;
-        this->triangleNum+=mesh->mNumFaces;
+        this->vertexNum += mesh->mNumVertices;
+        this->triangleNum += mesh->mNumFaces;
     }
 
     for (unsigned int i = 0; i < node->mNumChildren; i++)
     {
         ++this->totalNode;
-        calcNodesSum(node->mChildren[i],scene);
+        calcNodesSum(node->mChildren[i], scene);
     }
 }
 
-void Model::initInfo(std::function<void()> infoCallback){
-    this->infoCallback=infoCallback;
+void Model::initInfo(std::function<void()> infoCallback)
+{
+    this->infoCallback = infoCallback;
 }
 
-
-void Model::SetVertexBoneDataToDefault(Vertex& vertex)
+void Model::SetVertexBoneDataToDefault(Vertex &vertex)
 {
     for (int i = 0; i < MAX_BONE_INFLUENCE; i++)
     {
@@ -203,10 +204,10 @@ void Model::SetVertexBoneDataToDefault(Vertex& vertex)
     }
 }
 
-void Model::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene)
+void Model::ExtractBoneWeightForVertices(std::vector<Vertex> &vertices, aiMesh *mesh, const aiScene *scene)
 {
-    auto& boneInfoMap = m_BoneInfoMap;
-    int& boneCount = m_BoneCounter;
+    auto &boneInfoMap = m_BoneInfoMap;
+    int &boneCount = m_BoneCounter;
 
     for (int boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex)
     {
@@ -239,7 +240,7 @@ void Model::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* 
     }
 }
 
-void Model::SetVertexBoneData(Vertex& vertex, int boneID, float weight)
+void Model::SetVertexBoneData(Vertex &vertex, int boneID, float weight)
 {
     for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
     {
@@ -252,6 +253,7 @@ void Model::SetVertexBoneData(Vertex& vertex, int boneID, float weight)
     }
 }
 
-bool Model::hasAnimation(){
-    return this->animationNum>0;
+bool Model::hasAnimation()
+{
+    return this->animationNum > 0;
 }

@@ -45,7 +45,6 @@ public:
     void deleteMesh();
     int vertexNum{};
     int triangleNum{};
-    int boneNum{};
     void calcNodesSum(aiNode *node,const aiScene *scene);
     void initInfo(std::function<void()> infoCallback);
 

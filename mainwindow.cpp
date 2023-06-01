@@ -75,7 +75,7 @@ void MainWindow::openModel()
                                       {
         ui->lcdNumber->display(ui->openGLWidget->model->triangleNum);
         ui->lcdNumber_2->display(ui->openGLWidget->model->vertexNum);
-        ui->lcdNumber_3->display(ui->openGLWidget->model->boneNum); });
+        ui->lcdNumber_3->display(ui->openGLWidget->model->GetBoneCount()); });
 }
 
 void MainWindow::exit()

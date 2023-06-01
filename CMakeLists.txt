@@ -90,6 +90,8 @@ add_executable(OpenGLDemo
   BTNPlayAndPause.h
   MyQSlider.cpp
   MyQSlider.h
+  FrameBuffer.cpp
+  FrameBuffer.h
 )
 
 #if(assimp_FOUND)

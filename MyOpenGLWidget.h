@@ -26,11 +26,11 @@
 #include "FBXModel.h"
 #include "Animation.h"
 #include "Animator.h"
+#include "FrameBuffer.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
 
 class MyOpenGLWidget : public QOpenGLWidget,QOpenGLFunctions_3_3_Core{
     Q_OBJECT
@@ -67,9 +67,9 @@ public:
     bool isLoaded{false};
 
 
-    unsigned int framebuffer;
-    unsigned int textureColorbuffer;
-    unsigned int rbo;
+    // unsigned int framebuffer;
+    // unsigned int textureColorbuffer;
+    // unsigned int rbo;
 protected:
     virtual void initializeGL();
     virtual void resizeGL(int w,int h);
@@ -95,8 +95,8 @@ private:
     Viewer viewer{};
 
 
-    int g_width{800};
-    int g_height{800};
+    int g_width{700};
+    int g_height{700};
     int lastX{};
     int lastY{};
     glm::mat4 modelMatrix{glm::mat4{1.0f}};
@@ -124,6 +124,9 @@ private:
     bool isPlay{true};
 //    int progress{0};
 
+
+    FrameBuffer* framebuffer;
+    Shader* frameBufferShader;
 signals:
 };
 

@@ -1,6 +1,6 @@
 #define GLEW_STATIC
 #include <gl/glew.h>
-//#include <GLFW/glfw3.h>
+// #include <GLFW/glfw3.h>
 #include "Shader.h"
 
 Shader::Shader(const char *vertexPath, const char *fragmentPath)
@@ -51,7 +51,7 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath)
     }
     else
     {
-//        std::cout << "VERTEX SHADER COMPILE SUCCESS" << '\n';
+        //        std::cout << "VERTEX SHADER COMPILE SUCCESS" << '\n';
     }
 
     unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -66,7 +66,7 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath)
     }
     else
     {
-//        std::cout << "FRAGMENT SHADER COMPILE SUCCESS" << '\n';
+        //        std::cout << "FRAGMENT SHADER COMPILE SUCCESS" << '\n';
     }
 
     unsigned int shaderProgram = glCreateProgram();
@@ -79,11 +79,11 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath)
     {
         glGetProgramInfoLog(shaderProgram, 512, nullptr, info);
         std::cerr << "ERROR::LINK_FAILED\n"
-                  << info << '\n';
+                  << info << "  " << vertexPath << '\n';
     }
     else
     {
-//        std::cout << "LINK SUCCESS" << '\n';
+        //        std::cout << "LINK SUCCESS" << '\n';
     }
 
     glDeleteShader(fragmentShader);
@@ -196,7 +196,7 @@ Shader::Shader(const char *vertexPath, const char *fragmentPath, const char *geo
     }
     else
     {
-        std::cout << "LINK SUCCESS" << '\n';
+        std::cout << "LINK SUCCESS" << vertexPath << '\n';
     }
 
     glDeleteShader(fragmentShader);
@@ -210,7 +210,8 @@ void Shader::setInt(const char *name, int value)
 {
     glUniform1i(glGetUniformLocation(ID, name), value);
 }
-void Shader::setBool(const char * name,bool value){
+void Shader::setBool(const char *name, bool value)
+{
     glUniform1i(glGetUniformLocation(ID, name), value);
 }
 void Shader::setFloat(const char *name, float value)

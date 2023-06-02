@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.5)
 project(OpenGLDemo LANGUAGES CXX)
 
 # 修改QT环境
-set (CMAKE_PREFIX_PATH "D:\\Qt\\Qt5.12.6\\5.12.6\\mingw73_64")
+set (CMAKE_PREFIX_PATH "C:\\Qt\\Qt5.12.6\\5.12.6\\mingw73_64")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 

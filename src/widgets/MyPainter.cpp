@@ -53,8 +53,10 @@ void MyPainter::keyReleaseEvent(QKeyEvent *event){
 }
 
 void MyPainter::mousePressEvent(QMouseEvent *event){
+    this->grabKeyboard();
     if(event->button()==Qt::LeftButton){
-        this->grabKeyboard();
+        this->lastX=event->x();
+        this->lastY=event->y();
     }
     if(event->button()==Qt::RightButton){
         this->lastX=event->x();
@@ -70,6 +72,16 @@ void MyPainter::mouseReleaseEvent(QMouseEvent *event){
 }
 
 void MyPainter::mouseMoveEvent(QMouseEvent *event){
+    if(event->buttons()&Qt::LeftButton){
+        float xOffset=event->x()-this->lastX;
+        float yOffset=this->lastY-event->y();
+
+        this->lastX=event->x();
+        this->lastY=event->y();
+
+        this->viewer.move(xOffset,yOffset);
+        update();
+    }
     if(event->buttons()&Qt::RightButton){
         float xOffset=event->x()-this->lastX;
         float yOffset=this->lastY-event->y();

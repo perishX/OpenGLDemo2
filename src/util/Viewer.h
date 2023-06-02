@@ -24,6 +24,8 @@ public:
     glm::mat4 getViewMatrix();
     glm::vec3 Pos{0,1.5,5};
     void setView(glm::vec3 position,glm::vec2 rotation);
+    void move(float xOffset,float yOffset);
+    void rotateAround(float pitchOffset=0, float yawOffset=0);
 private:
 
     glm::vec3 Front{0,0,-1};

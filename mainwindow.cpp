@@ -23,15 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->horizontalSlider, &QSlider::sliderMoved, this, &MainWindow::on_horizontalSlider_sliderMoved);
     connect(ui->openGLWidget, &QOpenGLWidget::frameSwapped, this, &MainWindow::on_openGLWidget_frameSwapped);
 
-        ui->positionX->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
-        ui->positionY->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
-        ui->positionZ->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
-        ui->rotationX->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
-        ui->rotationY->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
-        ui->rotationZ->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
-        ui->scaleX->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
-        ui->scaleY->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
-        ui->scaleZ->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));
+ 
 
     ui->lightR->updateNum();
     ui->lightG->updateNum();

@@ -18,6 +18,7 @@
 #include <future>
 #include <thread>
 #include <chrono>
+#include <thread>
 #include <direct.h>
 #include "Shader.h"
 #include "Cube.h"
@@ -110,6 +111,9 @@ private:
 
     QOpenGLFramebufferObject *fbo;
     void paintFBO();
+
+    QProgressDialog *progressDlg;
+    void loadModelAsync();
 signals:
 };
 

@@ -142,6 +142,9 @@ void MyOpenGLWidget::initializeGL()
 
     this->fbo = new QOpenGLFramebufferObject{300, 300};
     this->fbo->setAttachment(QOpenGLFramebufferObject::CombinedDepthStencil);
+
+    this->progressDlg = new QProgressDialog;
+    this->progressDlg->close();
 }
 
 void MyOpenGLWidget::resizeGL(int w, int h)
@@ -182,20 +185,25 @@ void MyOpenGLWidget::paintGL()
 
     if (isLoaded)
     {
-        if (this->model->hasAnimation())
-        {
-            glUseProgram(this->modelShaderWithAnimation->ID);
-            this->modelShaderWithAnimation->setMatrix4f("view", 1, glm::value_ptr(view));
-            this->modelShaderWithAnimation->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
-            this->model->Draw(*this->modelShaderWithAnimation, isMeshMode);
-        }
-        else
-        {
-            glUseProgram(this->modelShader->ID);
-            this->modelShader->setMatrix4f("view", 1, glm::value_ptr(view));
-            this->modelShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
-            this->model->Draw(*this->modelShader, isMeshMode);
-        }
+        // if (this->model->hasAnimation())
+        // {
+        //     glUseProgram(this->modelShaderWithAnimation->ID);
+        //     this->modelShaderWithAnimation->setMatrix4f("view", 1, glm::value_ptr(view));
+        //     this->modelShaderWithAnimation->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
+        //     this->model->Draw(*this->modelShaderWithAnimation, isMeshMode);
+        // }
+        // else
+        // {
+        //     glUseProgram(this->modelShader->ID);
+        //     this->modelShader->setMatrix4f("view", 1, glm::value_ptr(view));
+        //     this->modelShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
+        //     this->model->Draw(*this->modelShader, isMeshMode);
+        // }
+
+        glUseProgram(this->modelShader->ID);
+        this->modelShader->setMatrix4f("view", 1, glm::value_ptr(view));
+        this->modelShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
+        this->model->Draw(*this->modelShader, isMeshMode);
     }
 
     update();
@@ -274,10 +282,10 @@ void MyOpenGLWidget::setAnimationProgress(int progress)
 
 float MyOpenGLWidget::getAnimationProgress()
 {
-    if (this->model->hasAnimation())
-    {
-        return this->animator->getProgress();
-    }
+    // if (this->model->hasAnimation())
+    // {
+    //     return this->animator->getProgress();
+    // }
     return 0;
 }
 
@@ -317,13 +325,13 @@ void MyOpenGLWidget::paintFBO()
     {
         this->isLoaded = false;
         this->needLoad = false;
-        QProgressDialog *progressDlg = new QProgressDialog;
-        progressDlg->setMinimumDuration(0);
-        progressDlg->setWindowTitle("Please Wait...");
-        progressDlg->setLabelText("Loading...");
-        progressDlg->setRange(0, 100);
+        this->progressDlg->setMinimumDuration(0);
+        this->progressDlg->setWindowTitle("Please Wait...");
+        this->progressDlg->setLabelText("Loading...");
+        this->progressDlg->setRange(0, 100);
         progressDlg->show();
         this->model->deleteMesh();
+        // this->loadModelAsync();
         this->model->loadModel(this->path, [&](float count)
                                {
                  progressDlg->setValue(static_cast<int>(count*100));
@@ -334,62 +342,87 @@ void MyOpenGLWidget::paintFBO()
                      progressDlg->cancel();
                      this->isLoaded=true;
                  } });
-        if (this->model->hasAnimation())
-        {
-            this->animation = new Animation(this->path, this->model);
-            this->animator = new Animator(this->animation);
-        }
+
+        // if (this->model->hasAnimation())
+        // {
+        //     this->animation = new Animation(this->path, this->model);
+        //     this->animator = new Animator(this->animation);
+        // }
     }
     if (isLoaded)
     {
-        if (this->model->hasAnimation())
-        {
-            glUseProgram(this->modelShaderWithAnimation->ID);
-            this->modelShaderWithAnimation->setMatrix4f("model", 1, glm::value_ptr(model));
-            this->modelShaderWithAnimation->setMatrix4f("view", 1, glm::value_ptr(view));
-            this->modelShaderWithAnimation->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
-            this->modelShaderWithAnimation->setFloat("material.shininess", 256.f);
-            this->modelShaderWithAnimation->setVector3f("viewerPos", 1, glm::value_ptr(this->viewer.Pos));
-            this->modelShaderWithAnimation->setVector3f("directionLight.color", 1, glm::value_ptr(this->directionlightColor));
-            this->modelShaderWithAnimation->setVector3f("directionLight.direction", 1, glm::value_ptr(this->lightDirection));
-            this->modelShaderWithAnimation->setVector3f("directionLight.ambient", 1, glm::value_ptr(this->lightColor * 0.2f));
-            this->modelShaderWithAnimation->setVector3f("directionLight.diffuse", 1, glm::value_ptr(this->lightColor * 0.5f));
-            this->modelShaderWithAnimation->setVector3f("directionLight.specular", 1, glm::value_ptr(this->lightColor * 1.0f));
-            if (this->isPlay)
-            {
-                this->animator->UpdateAnimation(0.033);
-            }
-            else
-            {
-                this->animator->UpdateAnimation(0);
-            }
+        // this->model->print();
+        // if (this->model->hasAnimation())
+        // {
+        //     glUseProgram(this->modelShaderWithAnimation->ID);
+        //     this->modelShaderWithAnimation->setMatrix4f("model", 1, glm::value_ptr(model));
+        //     this->modelShaderWithAnimation->setMatrix4f("view", 1, glm::value_ptr(view));
+        //     this->modelShaderWithAnimation->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
+        //     this->modelShaderWithAnimation->setFloat("material.shininess", 256.f);
+        //     this->modelShaderWithAnimation->setVector3f("viewerPos", 1, glm::value_ptr(this->viewer.Pos));
+        //     this->modelShaderWithAnimation->setVector3f("directionLight.color", 1, glm::value_ptr(this->directionlightColor));
+        //     this->modelShaderWithAnimation->setVector3f("directionLight.direction", 1, glm::value_ptr(this->lightDirection));
+        //     this->modelShaderWithAnimation->setVector3f("directionLight.ambient", 1, glm::value_ptr(this->lightColor * 0.2f));
+        //     this->modelShaderWithAnimation->setVector3f("directionLight.diffuse", 1, glm::value_ptr(this->lightColor * 0.5f));
+        //     this->modelShaderWithAnimation->setVector3f("directionLight.specular", 1, glm::value_ptr(this->lightColor * 1.0f));
+        //     if (this->isPlay)
+        //     {
+        //         this->animator->UpdateAnimation(0.033);
+        //     }
+        //     else
+        //     {
+        //         this->animator->UpdateAnimation(0);
+        //     }
 
-            std::vector<glm::mat4> transforms = animator->GetFinalBoneMatrices();
-            for (int i = 0; i < transforms.size(); ++i)
-            {
-                glm::mat4 t = transforms[i];
-                std::stringstream ss{};
-                ss << "finalBonesMatrices[" << i << "]";
-                this->modelShaderWithAnimation->setMatrix4f(ss.str().c_str(), 1, glm::value_ptr(t));
-            }
-            this->model->Draw(*this->modelShaderWithAnimation, isMeshMode);
-        }
-        else
-        {
-            glUseProgram(this->modelShader->ID);
-            this->modelShader->setMatrix4f("model", 1, glm::value_ptr(model));
-            this->modelShader->setMatrix4f("view", 1, glm::value_ptr(view));
-            this->modelShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
-            this->modelShader->setFloat("material.shininess", 256.f);
-            this->modelShader->setVector3f("viewerPos", 1, glm::value_ptr(this->viewer.Pos));
-            this->modelShader->setVector3f("directionLight.color", 1, glm::value_ptr(this->directionlightColor));
-            this->modelShader->setVector3f("directionLight.direction", 1, glm::value_ptr(this->lightDirection));
-            this->modelShader->setVector3f("directionLight.ambient", 1, glm::value_ptr(this->lightColor * 0.2f));
-            this->modelShader->setVector3f("directionLight.diffuse", 1, glm::value_ptr(this->lightColor * 0.5f));
-            this->modelShader->setVector3f("directionLight.specular", 1, glm::value_ptr(this->lightColor * 1.0f));
-            this->model->Draw(*this->modelShader, isMeshMode);
-        }
+        //     std::vector<glm::mat4> transforms = animator->GetFinalBoneMatrices();
+        //     for (int i = 0; i < transforms.size(); ++i)
+        //     {
+        //         glm::mat4 t = transforms[i];
+        //         std::stringstream ss{};
+        //         ss << "finalBonesMatrices[" << i << "]";
+        //         this->modelShaderWithAnimation->setMatrix4f(ss.str().c_str(), 1, glm::value_ptr(t));
+        //     }
+        //     this->model->Draw(*this->modelShaderWithAnimation, isMeshMode);
+        // }
+        // else
+        // {
+        //     glUseProgram(this->modelShader->ID);
+        //     this->modelShader->setMatrix4f("model", 1, glm::value_ptr(model));
+        //     this->modelShader->setMatrix4f("view", 1, glm::value_ptr(view));
+        //     this->modelShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
+        //     this->modelShader->setFloat("material.shininess", 256.f);
+        //     this->modelShader->setVector3f("viewerPos", 1, glm::value_ptr(this->viewer.Pos));
+        //     this->modelShader->setVector3f("directionLight.color", 1, glm::value_ptr(this->directionlightColor));
+        //     this->modelShader->setVector3f("directionLight.direction", 1, glm::value_ptr(this->lightDirection));
+        //     this->modelShader->setVector3f("directionLight.ambient", 1, glm::value_ptr(this->lightColor * 0.2f));
+        //     this->modelShader->setVector3f("directionLight.diffuse", 1, glm::value_ptr(this->lightColor * 0.5f));
+        //     this->modelShader->setVector3f("directionLight.specular", 1, glm::value_ptr(this->lightColor * 1.0f));
+        //     this->model->Draw(*this->modelShader, isMeshMode);
+        // }
+
+        model = glm::mat4{1.0f};
+        model = glm::scale(model, glm::vec3{0.1, 0.1, 0.1});
+        glUseProgram(this->modelShader->ID);
+        this->modelShader->setMatrix4f("model", 1, glm::value_ptr(model));
+        this->modelShader->setMatrix4f("view", 1, glm::value_ptr(view));
+        this->modelShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
+        this->modelShader->setFloat("material.shininess", 256.f);
+        this->modelShader->setVector3f("viewerPos", 1, glm::value_ptr(this->viewer.Pos));
+        this->modelShader->setVector3f("directionLight.color", 1, glm::value_ptr(this->directionlightColor));
+        this->modelShader->setVector3f("directionLight.direction", 1, glm::value_ptr(this->lightDirection));
+        this->modelShader->setVector3f("directionLight.ambient", 1, glm::value_ptr(this->lightColor * 0.2f));
+        this->modelShader->setVector3f("directionLight.diffuse", 1, glm::value_ptr(this->lightColor * 0.5f));
+        this->modelShader->setVector3f("directionLight.specular", 1, glm::value_ptr(this->lightColor * 1.0f));
+        // std::cout<<"sadsa"<<std::endl;
+        this->model->Draw(*this->modelShader, isMeshMode);
+        // std::cout<<"sad123515sa"<<std::endl;
     }
 
     this->fbo->release();
+}
+
+void MyOpenGLWidget::loadModelAsync()
+{
+    // std::thread t{&Model::loadModelAsync, this->model, this->path, std::ref(this->isLoaded)};
+    // t.detach();
 }

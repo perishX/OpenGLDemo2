@@ -17,6 +17,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include_directories(include)
 link_directories(lib)
 
+include_directories(.)
 include_directories(src/animation)
 include_directories(src/model)
 include_directories(src/util)

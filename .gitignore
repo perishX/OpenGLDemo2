@@ -72,3 +72,5 @@
 # *.exe
 
 build/*
+
+CMakeLists.txt.user

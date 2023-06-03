@@ -22,9 +22,9 @@ void Model::Draw(Shader shader, bool isLineMode)
     }
 }
 
-void Model::loadModel(std::string path, std::function<void(float)> callback)
+void Model::loadModel(std::string path, CallbackFun callback)
 {
-    glewInit();
+//    glewInit();
     Assimp::Importer import{};
     const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
@@ -33,22 +33,25 @@ void Model::loadModel(std::string path, std::function<void(float)> callback)
         std::cout << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
         return;
     }
+    std::cout<<"1111 "<<path<<std::endl;
+//    callback(true,1);
     directory = path.substr(0, path.find_last_of("/"));
-
+    std::cout<<"2222"<<directory<<std::endl;
+//callback(true,1);
     this->process = 0;
     this->totalNode = 0;
 
     this->vertexNum = 0;
     this->triangleNum = 0;
     this->calcNodesSum(scene->mRootNode, scene);
-
+//    std::cout<<"processNode start"<<std::endl;
     processNode(scene->mRootNode, scene, callback);
-
-    this->infoCallback();
+//    std::cout<<"processNode end"<<std::endl;
+//    this->infoCallback();
     this->animationNum = scene->mNumAnimations;
 }
 
-void Model::processNode(aiNode *node, const aiScene *scene, std::function<void(float)> callback)
+void Model::processNode(aiNode *node, const aiScene *scene, CallbackFun callback)
 {
     for (unsigned int i = 0; i < node->mNumMeshes; i++)
     {
@@ -62,7 +65,7 @@ void Model::processNode(aiNode *node, const aiScene *scene, std::function<void(f
         ++process;
         if (callback != nullptr)
         {
-            callback(totalNode == 0 ? 1 : static_cast<float>(process) / totalNode);
+            callback(process>=totalNode, totalNode == 0 ? 1 : static_cast<float>(process) / totalNode);
         }
     }
 }

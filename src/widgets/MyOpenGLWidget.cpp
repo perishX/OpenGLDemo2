@@ -1,10 +1,10 @@
 #include "MyOpenGLWidget.h"
 
-MyOpenGLWidget* MyOpenGLWidget::openglWidget=nullptr;
+MyOpenGLWidget *MyOpenGLWidget::openglWidget = nullptr;
 
 MyOpenGLWidget::MyOpenGLWidget(QWidget *parent) : QOpenGLWidget{parent}
 {
-    this->openglWidget=this;
+    this->openglWidget = this;
 }
 
 void MyOpenGLWidget::resizeEvent(QResizeEvent *event)
@@ -334,7 +334,7 @@ void MyOpenGLWidget::paintFBO()
         this->progressDlg->setRange(0, 100);
         progressDlg->show();
         this->model->deleteMesh();
-        this->loadModelAsync();
+//        this->loadModelAsync();
         // this->model->loadModel(this->path, [&](float count)
         //                        {
         //          progressDlg->setValue(static_cast<int>(count*100));
@@ -435,25 +435,31 @@ void MyOpenGLWidget::paintFBO()
     this->fbo->release();
 }
 
-void MyOpenGLWidget::loadModelAsync()
+//void MyOpenGLWidget::loadModelAsync()
+//{
+//    //     std::thread t{
+//    //         &Model::loadModel, this->model, this->path,[](float rate){
+//    // //            std::cout<<"rate "<<rate<<std::endl;
+//    //                                   int progress=static_cast<int>(rate*100);
+//    // //            openglWidget->progressDlg->setValue(progress);
+
+//    // //                      QCoreApplication::processEvents();
+//    // //                      makeCurrent();
+//    //                       if(progress==100){
+//    // //                          progressDlg->cancel();
+//    //                           openglWidget->needTrangerData=true;
+//    //                       }
+//    //         }};
+
+//    std::thread t{
+//        &Model::loadModel, this->model, this->path, [](float rate)
+//        {
+//            std::cout << "rate: " << rate << std::endl;
+//        }};
+//    t.detach();
+//}
+
+void MyOpenGLWidget::processCallback(float rate)
 {
-    std::thread t{
-        &Model::loadModel, this->model, this->path,[](float rate){
-//            std::cout<<"rate "<<rate<<std::endl;
-                                  int progress=static_cast<int>(rate*100);
-//            openglWidget->progressDlg->setValue(progress);
-
-//                      QCoreApplication::processEvents();
-//                      makeCurrent();
-                      if(progress==100){
-//                          progressDlg->cancel();
-                          openglWidget->needTrangerData=true;
-                      }
-        }};
-    t.detach();
-}
-
-void MyOpenGLWidget::processCallback(float rate){
-    std::cout<<"rate!!!! "<<rate<<std::endl;
-    emit loadModelProcess(rate);
+    
 }

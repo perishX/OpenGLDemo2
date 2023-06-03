@@ -74,7 +74,8 @@ public:
 
     static MyOpenGLWidget* openglWidget;
         QProgressDialog *progressDlg;
-    void processCallback(float rate);
+    static void processCallback(float rate);
+        bool needTrangerData{false};
 protected:
     virtual void initializeGL();
     virtual void resizeGL(int w, int h);
@@ -116,8 +117,8 @@ private:
     void paintFBO();
 
 
-    void loadModelAsync();
-    bool needTrangerData{false};
+//    void loadModelAsync();
+
 signals:
     void loadModelProcess(float rate);
 };

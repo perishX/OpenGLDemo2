@@ -9,9 +9,12 @@
 #include <QFileDialog>
 #include <QPushButton>
 #include <QMessageBox>
+#include <QProgressDialog>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "MyThread.h"
+#include "Model.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,10 +27,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void updateProgress(bool isEnd,float rate,Model* model);
 
 private:
     Ui::MainWindow *ui;
     int progress{};
+    MyThread* mythread;
+    QProgressDialog* progressDlg;
 
 private slots:
     void openModel();
@@ -51,5 +57,8 @@ private slots:
     void on_horizontalSlider_sliderPressed();
     void on_horizontalSlider_sliderReleased();
     void on_horizontalSlider_sliderMoved(int position);
+    void on_start_clicked();
+
+
 };
 #endif // MAINWINDOW_H

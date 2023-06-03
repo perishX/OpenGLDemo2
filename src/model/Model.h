@@ -17,13 +17,15 @@
 #include "BoneInfo.h"
 #include "AssimpGLMHelpers.h"
 
+typedef void(* CallbackFun)(bool,float);
+
 class Model
 {
 private:
     std::vector<Texture> textures_loaded{};
     std::string directory{};
     void processNode(
-        aiNode *node, const aiScene *scene, std::function<void(float)> callback=nullptr);
+        aiNode *node, const aiScene *scene, CallbackFun callback=nullptr);
     Mesh processMesh(aiMesh *mesh, const aiScene *scene);
     std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
 
@@ -41,7 +43,7 @@ public:
     Model(std::string path);
     ~Model();
     void loadModel(
-        std::string path, std::function<void(float)> callback=nullptr);
+        std::string path, CallbackFun callback=nullptr);
 
     void Draw(Shader shader, bool isLineMode = false);
 

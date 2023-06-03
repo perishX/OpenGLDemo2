@@ -1,7 +1,10 @@
 #include "MyOpenGLWidget.h"
 
+MyOpenGLWidget* MyOpenGLWidget::openglWidget=nullptr;
+
 MyOpenGLWidget::MyOpenGLWidget(QWidget *parent) : QOpenGLWidget{parent}
 {
+    this->openglWidget=this;
 }
 
 void MyOpenGLWidget::resizeEvent(QResizeEvent *event)
@@ -331,17 +334,17 @@ void MyOpenGLWidget::paintFBO()
         this->progressDlg->setRange(0, 100);
         progressDlg->show();
         this->model->deleteMesh();
-        // this->loadModelAsync();
-        this->model->loadModel(this->path, [&](float count)
-                               {
-                 progressDlg->setValue(static_cast<int>(count*100));
-                 int progress=static_cast<int>(count*100);
-                 QCoreApplication::processEvents();
-                 makeCurrent();
-                 if(progress==100){
-                     progressDlg->cancel();
-                     this->isLoaded=true;
-                 } });
+        this->loadModelAsync();
+        // this->model->loadModel(this->path, [&](float count)
+        //                        {
+        //          progressDlg->setValue(static_cast<int>(count*100));
+        //          int progress=static_cast<int>(count*100);
+        //          QCoreApplication::processEvents();
+        //          makeCurrent();
+        //          if(progress==100){
+        //              progressDlg->cancel();
+        //              this->isLoaded=true;
+        //          } });
 
         // if (this->model->hasAnimation())
         // {
@@ -349,6 +352,17 @@ void MyOpenGLWidget::paintFBO()
         //     this->animator = new Animator(this->animation);
         // }
     }
+
+    if (this->needTrangerData)
+    {
+        this->needTrangerData = false;
+        // this->model->print();
+        this->model->transferDataToGPU();
+        // this->model->print();
+        this->isLoaded = true;
+        progressDlg->cancel();
+    }
+
     if (isLoaded)
     {
         // this->model->print();
@@ -423,6 +437,23 @@ void MyOpenGLWidget::paintFBO()
 
 void MyOpenGLWidget::loadModelAsync()
 {
-    // std::thread t{&Model::loadModelAsync, this->model, this->path, std::ref(this->isLoaded)};
-    // t.detach();
+    std::thread t{
+        &Model::loadModel, this->model, this->path,[](float rate){
+//            std::cout<<"rate "<<rate<<std::endl;
+                                  int progress=static_cast<int>(rate*100);
+//            openglWidget->progressDlg->setValue(progress);
+
+//                      QCoreApplication::processEvents();
+//                      makeCurrent();
+                      if(progress==100){
+//                          progressDlg->cancel();
+                          openglWidget->needTrangerData=true;
+                      }
+        }};
+    t.detach();
+}
+
+void MyOpenGLWidget::processCallback(float rate){
+    std::cout<<"rate!!!! "<<rate<<std::endl;
+    emit loadModelProcess(rate);
 }

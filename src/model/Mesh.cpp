@@ -11,7 +11,7 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std:
     this->vertices = vertices;
     this->textures = textures;
     this->indices = indices;
-    setupMesh();
+    // setupMesh();
 }
 
 Mesh::~Mesh()

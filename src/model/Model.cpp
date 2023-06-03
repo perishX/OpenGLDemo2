@@ -43,7 +43,7 @@ void Model::loadModel(std::string path, std::function<void(float)> callback)
     this->calcNodesSum(scene->mRootNode, scene);
 
     processNode(scene->mRootNode, scene, callback);
-    
+
     this->infoCallback();
     this->animationNum = scene->mNumAnimations;
 }
@@ -105,19 +105,19 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
         }
     }
 
-    if (mesh->mMaterialIndex >= 0)
-    {
-        aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-        std::vector<Texture> diffuseMaps = loadMaterialTextures(material,
-                                                                aiTextureType_DIFFUSE, "texture_diffuse");
-        textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-        std::vector<Texture> specularMaps = loadMaterialTextures(material,
-                                                                 aiTextureType_SPECULAR, "texture_specular");
-        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-        std::vector<Texture> reflectMaps = loadMaterialTextures(material,
-                                                                aiTextureType_AMBIENT, "texture_reflect");
-        textures.insert(textures.end(), reflectMaps.begin(), reflectMaps.end());
-    }
+    // if (mesh->mMaterialIndex >= 0)
+    // {
+    //     aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
+    //     std::vector<Texture> diffuseMaps = loadMaterialTextures(material,
+    //                                                             aiTextureType_DIFFUSE, "texture_diffuse");
+    //     textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+    //     std::vector<Texture> specularMaps = loadMaterialTextures(material,
+    //                                                              aiTextureType_SPECULAR, "texture_specular");
+    //     textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+    //     std::vector<Texture> reflectMaps = loadMaterialTextures(material,
+    //                                                             aiTextureType_AMBIENT, "texture_reflect");
+    //     textures.insert(textures.end(), reflectMaps.begin(), reflectMaps.end());
+    // }
 
     this->ExtractBoneWeightForVertices(vertices, mesh, scene);
 
@@ -257,3 +257,12 @@ bool Model::hasAnimation()
 {
     return this->animationNum > 0;
 }
+
+void Model::transferDataToGPU()
+{
+    for (Mesh &mesh : meshes)
+    {
+        mesh.setupMesh();
+    }
+}
+

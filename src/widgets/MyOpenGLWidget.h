@@ -72,6 +72,9 @@ public:
     QImage image{};
     MyPainter *cameraWidget;
 
+    static MyOpenGLWidget* openglWidget;
+        QProgressDialog *progressDlg;
+    void processCallback(float rate);
 protected:
     virtual void initializeGL();
     virtual void resizeGL(int w, int h);
@@ -112,9 +115,11 @@ private:
     QOpenGLFramebufferObject *fbo;
     void paintFBO();
 
-    QProgressDialog *progressDlg;
+
     void loadModelAsync();
+    bool needTrangerData{false};
 signals:
+    void loadModelProcess(float rate);
 };
 
 #endif // MYOPENGLWIDGET_H

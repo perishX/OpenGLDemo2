@@ -13,8 +13,6 @@
 class Mesh
 {
 private:
-    void setupMesh();
-
 public:
     unsigned int VAO, VBO, EBO;
     std::vector<Vertex> vertices;
@@ -24,8 +22,8 @@ public:
     Mesh(std::vector<Vertex> vertices,
          std::vector<unsigned int> indices, std::vector<Texture> textures);
     ~Mesh();
-
     void Draw(Shader shader, bool isLineMode = false);
+    void setupMesh();
     void deleteMesh();
 };
 

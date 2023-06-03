@@ -34,6 +34,7 @@ private:
     int progress{};
     MyThread* mythread;
     QProgressDialog* progressDlg;
+    std::string path={};
 
 private slots:
     void openModel();

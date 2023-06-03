@@ -4,7 +4,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
-    ui->setupUi(this); 
+    ui->setupUi(this);
     //    setCentralWidget(ui->openGLWidget);
     connect(ui->actionImport, &QAction::triggered, this, &MainWindow::openModel);
     connect(ui->actionExit, &QAction::triggered, this, &MainWindow::exit);
@@ -27,11 +27,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lightG->updateNum();
     ui->lightB->updateNum();
 
-    ui->openGLWidget->cameraWidget=ui->widget;
+    ui->openGLWidget->cameraWidget = ui->widget;
 
-    mythread=new MyThread{this};
-    connect(ui->start,&QPushButton::clicked,this,&MainWindow::on_start_clicked);
-//    connect(mythread,&MyThread::done,this,&MainWindow::loaded);
+    mythread = new MyThread{this};
+    connect(ui->start, &QPushButton::clicked, this, &MainWindow::on_start_clicked);
+    //    connect(mythread,&MyThread::done,this,&MainWindow::loaded);
 
     this->progressDlg = new QProgressDialog;
     this->progressDlg->setMinimumDuration(0);
@@ -40,7 +40,6 @@ MainWindow::MainWindow(QWidget *parent)
     this->progressDlg->setRange(0, 100);
     this->progressDlg->close();
 }
-
 
 MainWindow::~MainWindow()
 {
@@ -51,36 +50,10 @@ void MainWindow::openModel()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("选择模型"), tr("C:/Users/73965/Downloads"), tr("*.fbx *.obj *.dae"));
     std::string path = filename.toStdString();
-//    ui->openGLWidget->loadModel(path);
-    mythread->path=path;
+    mythread->path = path;
+    this->path=path;
     this->progressDlg->show();
     this->mythread->start();
-
-
-//    ui->positionX->setText(QString::number(ui->openGLWidget->position.x));
-//    ui->positionY->setText(QString::number(ui->openGLWidget->position.y));
-//    ui->positionZ->setText(QString::number(ui->openGLWidget->position.z));
-//    ui->rotationX->setText(QString::number(ui->openGLWidget->rotation.x));
-//    ui->rotationY->setText(QString::number(ui->openGLWidget->rotation.y));
-//    ui->rotationZ->setText(QString::number(ui->openGLWidget->rotation.z));
-//    ui->scaleX->setText(QString::number(ui->openGLWidget->scale.x));
-//    ui->scaleY->setText(QString::number(ui->openGLWidget->scale.y));
-//    ui->scaleZ->setText(QString::number(ui->openGLWidget->scale.z));
-//    ui->positionX->updateNum();
-//    ui->positionX->updateNum();
-//    ui->positionX->updateNum();
-//    ui->rotationX->updateNum();
-//    ui->rotationY->updateNum();
-//    ui->rotationZ->updateNum();
-//    ui->scaleX->updateNum();
-//    ui->scaleY->updateNum();
-//    ui->scaleZ->updateNum();
-
-//    ui->openGLWidget->model->initInfo([&]()
-//                                      {
-//        ui->lcdNumber->display(ui->openGLWidget->model->triangleNum);
-//        ui->lcdNumber_2->display(ui->openGLWidget->model->vertexNum);
-//        ui->lcdNumber_3->display(ui->openGLWidget->model->GetBoneCount()); });
 }
 
 void MainWindow::exit()
@@ -197,38 +170,40 @@ void MainWindow::on_start_clicked()
     this->progressDlg->show();
 }
 
-void MainWindow::updateProgress(bool isEnd,float rate,Model* model)
+void MainWindow::updateProgress(bool isEnd, float rate, Model *model)
 {
-    std::cout<<"[rate] "<<rate<<std::endl;
-    ui->progressBar->setValue(static_cast<int>(rate*100));
-    this->progressDlg->setValue(static_cast<int>(rate*100));
-    if(isEnd){
+    std::cout << "[rate] " << rate << std::endl;
+    ui->progressBar->setValue(static_cast<int>(rate * 100));
+    this->progressDlg->setValue(static_cast<int>(rate * 100));
+    if (isEnd)
+    {
         this->progressDlg->cancel();
-        model->print();
 
-        ui->openGLWidget->model=model;
-        ui->openGLWidget->needTrangerData=true;
-            ui->positionX->setText(QString::number(ui->openGLWidget->position.x));
-            ui->positionY->setText(QString::number(ui->openGLWidget->position.y));
-            ui->positionZ->setText(QString::number(ui->openGLWidget->position.z));
-            ui->rotationX->setText(QString::number(ui->openGLWidget->rotation.x));
-            ui->rotationY->setText(QString::number(ui->openGLWidget->rotation.y));
-            ui->rotationZ->setText(QString::number(ui->openGLWidget->rotation.z));
-            ui->scaleX->setText(QString::number(ui->openGLWidget->scale.x));
-            ui->scaleY->setText(QString::number(ui->openGLWidget->scale.y));
-            ui->scaleZ->setText(QString::number(ui->openGLWidget->scale.z));
-            ui->positionX->updateNum();
-            ui->positionX->updateNum();
-            ui->positionX->updateNum();
-            ui->rotationX->updateNum();
-            ui->rotationY->updateNum();
-            ui->rotationZ->updateNum();
-            ui->scaleX->updateNum();
-            ui->scaleY->updateNum();
-            ui->scaleZ->updateNum();
+        ui->openGLWidget->model = model;
+        ui->openGLWidget->animation = new Animation(this->path, model);
+        ui->openGLWidget->animator = new Animator(ui->openGLWidget->animation);
+        ui->openGLWidget->needTrangerData = true;
+        ui->positionX->setText(QString::number(ui->openGLWidget->position.x));
+        ui->positionY->setText(QString::number(ui->openGLWidget->position.y));
+        ui->positionZ->setText(QString::number(ui->openGLWidget->position.z));
+        ui->rotationX->setText(QString::number(ui->openGLWidget->rotation.x));
+        ui->rotationY->setText(QString::number(ui->openGLWidget->rotation.y));
+        ui->rotationZ->setText(QString::number(ui->openGLWidget->rotation.z));
+        ui->scaleX->setText(QString::number(ui->openGLWidget->scale.x));
+        ui->scaleY->setText(QString::number(ui->openGLWidget->scale.y));
+        ui->scaleZ->setText(QString::number(ui->openGLWidget->scale.z));
+        ui->positionX->updateNum();
+        ui->positionX->updateNum();
+        ui->positionX->updateNum();
+        ui->rotationX->updateNum();
+        ui->rotationY->updateNum();
+        ui->rotationZ->updateNum();
+        ui->scaleX->updateNum();
+        ui->scaleY->updateNum();
+        ui->scaleZ->updateNum();
 
-            ui->lcdNumber->display(ui->openGLWidget->model->triangleNum);
-            ui->lcdNumber_2->display(ui->openGLWidget->model->vertexNum);
-            ui->lcdNumber_3->display(ui->openGLWidget->model->GetBoneCount());
+        ui->lcdNumber->display(ui->openGLWidget->model->triangleNum);
+        ui->lcdNumber_2->display(ui->openGLWidget->model->vertexNum);
+        ui->lcdNumber_3->display(ui->openGLWidget->model->GetBoneCount());
     }
 }

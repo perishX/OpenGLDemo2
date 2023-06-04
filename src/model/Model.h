@@ -16,6 +16,7 @@
 #include "STBImage.h"
 #include "BoneInfo.h"
 #include "AssimpGLMHelpers.h"
+#include "Texture.h"
 
 typedef void(* CallbackFun)(bool,float);
 

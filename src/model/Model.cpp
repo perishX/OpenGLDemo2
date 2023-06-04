@@ -108,19 +108,19 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
         }
     }
 
-//     if (mesh->mMaterialIndex >= 0)
-//     {
-//         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-//         std::vector<Texture> diffuseMaps = loadMaterialTextures(material,
-//                                                                 aiTextureType_DIFFUSE, "texture_diffuse");
-//         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-//         std::vector<Texture> specularMaps = loadMaterialTextures(material,
-//                                                                  aiTextureType_SPECULAR, "texture_specular");
-//         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-//         std::vector<Texture> reflectMaps = loadMaterialTextures(material,
-//                                                                 aiTextureType_AMBIENT, "texture_reflect");
-//         textures.insert(textures.end(), reflectMaps.begin(), reflectMaps.end());
-//     }
+     if (mesh->mMaterialIndex >= 0)
+     {
+         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
+         std::vector<Texture> diffuseMaps = loadMaterialTextures(material,
+                                                                 aiTextureType_DIFFUSE, "texture_diffuse");
+         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+         std::vector<Texture> specularMaps = loadMaterialTextures(material,
+                                                                  aiTextureType_SPECULAR, "texture_specular");
+         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+         std::vector<Texture> reflectMaps = loadMaterialTextures(material,
+                                                                 aiTextureType_AMBIENT, "texture_reflect");
+         textures.insert(textures.end(), reflectMaps.begin(), reflectMaps.end());
+     }
 
     this->ExtractBoneWeightForVertices(vertices, mesh, scene);
 
@@ -149,7 +149,8 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
         if (!skip)
         {
             Texture texture;
-            texture.id = TextureFromFile(str.C_Str(), directory);
+            texture.id=-1;
+            texture.info=getTextureFromFile(str.C_Str(), directory);
             texture.type = typeName;
             texture.path = str;
             textures.push_back(texture);
@@ -163,7 +164,11 @@ void Model::print()
 {
     for (Mesh &mesh : this->meshes)
     {
-        std::cout << mesh.vertices.size() << " " << mesh.indices.size() << " " << mesh.textures.size() << " " << mesh.VAO << " " << mesh.VBO << " " << mesh.EBO << std::endl;
+        std::cout << mesh.vertices.size() << " " << mesh.indices.size() << " " << mesh.textures.size() << " " << mesh.VAO << " " << mesh.VBO << " " << mesh.EBO<<" ";
+        for(Texture& t:mesh.textures){
+            std::cout<<t.id<<" ";
+        }
+        std::cout<< std::endl;
     }
 }
 

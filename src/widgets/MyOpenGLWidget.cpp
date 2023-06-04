@@ -200,11 +200,6 @@ void MyOpenGLWidget::paintGL()
             this->modelShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
             this->model->Draw(*this->modelShader, isMeshMode);
         }
-
-        // glUseProgram(this->modelShader->ID);
-        // this->modelShader->setMatrix4f("view", 1, glm::value_ptr(view));
-        // this->modelShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
-        // this->model->Draw(*this->modelShader, isMeshMode);
     }
 
     update();
@@ -368,7 +363,6 @@ void MyOpenGLWidget::paintFBO()
         }
         else
         {
-            std::cout<<"11111111111111111"<<std::endl;
             glUseProgram(this->modelShader->ID);
             this->modelShader->setMatrix4f("model", 1, glm::value_ptr(model));
             this->modelShader->setMatrix4f("view", 1, glm::value_ptr(view));
@@ -382,23 +376,6 @@ void MyOpenGLWidget::paintFBO()
             this->modelShader->setVector3f("directionLight.specular", 1, glm::value_ptr(this->lightColor * 1.0f));
             this->model->Draw(*this->modelShader, isMeshMode);
         }
-
-        // model = glm::mat4{1.0f};
-        // model = glm::scale(model, glm::vec3{0.1, 0.1, 0.1});
-        // glUseProgram(this->modelShader->ID);
-        // this->modelShader->setMatrix4f("model", 1, glm::value_ptr(model));
-        // this->modelShader->setMatrix4f("view", 1, glm::value_ptr(view));
-        // this->modelShader->setMatrix4f("perspective", 1, glm::value_ptr(perspective));
-        // this->modelShader->setFloat("material.shininess", 256.f);
-        // this->modelShader->setVector3f("viewerPos", 1, glm::value_ptr(this->viewer.Pos));
-        // this->modelShader->setVector3f("directionLight.color", 1, glm::value_ptr(this->directionlightColor));
-        // this->modelShader->setVector3f("directionLight.direction", 1, glm::value_ptr(this->lightDirection));
-        // this->modelShader->setVector3f("directionLight.ambient", 1, glm::value_ptr(this->lightColor * 0.2f));
-        // this->modelShader->setVector3f("directionLight.diffuse", 1, glm::value_ptr(this->lightColor * 0.5f));
-        // this->modelShader->setVector3f("directionLight.specular", 1, glm::value_ptr(this->lightColor * 1.0f));
-        // // std::cout<<"sadsa"<<std::endl;
-        // this->model->Draw(*this->modelShader, isMeshMode);
-        // // std::cout<<"sad123515sa"<<std::endl;
     }
 
     this->fbo->release();

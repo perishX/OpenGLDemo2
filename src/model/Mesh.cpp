@@ -49,6 +49,11 @@ void Mesh::setupMesh()
     glEnableVertexAttribArray(6);
 
     glBindVertexArray(0);
+
+    for(Texture& t:this->textures){
+        t.id=TextureToGPU(t.info);
+    }
+
 }
 
 void Mesh::Draw(Shader shader, bool isLineMode)

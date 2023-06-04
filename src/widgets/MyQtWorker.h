@@ -6,6 +6,7 @@
 #include <QThread>
 #include "Test.h"
 #include "Model.h"
+#include "Animation.h"
 
 class MyQtWorker:public QObject
 {

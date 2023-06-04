@@ -30,8 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->openGLWidget->cameraWidget = ui->widget;
 
     mythread = new MyThread{this};
-    connect(ui->start, &QPushButton::clicked, this, &MainWindow::on_start_clicked);
-    //    connect(mythread,&MyThread::done,this,&MainWindow::loaded);
 
     this->progressDlg = new QProgressDialog;
     this->progressDlg->setMinimumDuration(0);
@@ -50,10 +48,12 @@ void MainWindow::openModel()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("选择模型"), tr("C:/Users/73965/Downloads"), tr("*.fbx *.obj *.dae"));
     std::string path = filename.toStdString();
-    mythread->path = path;
-    this->path=path;
-    this->progressDlg->show();
-    this->mythread->start();
+    if(path!=""){
+        mythread->path = path;
+        this->path=path;
+        this->progressDlg->show();
+        this->mythread->start();
+    }
 }
 
 void MainWindow::exit()
@@ -164,24 +164,20 @@ void MainWindow::on_horizontalSlider_sliderMoved(int position)
     ui->horizontalSlider->setValue(position);
 }
 
-void MainWindow::on_start_clicked()
-{
-    this->mythread->start();
-    this->progressDlg->show();
-}
-
 void MainWindow::updateProgress(bool isEnd, float rate, Model *model)
 {
     std::cout << "[rate] " << rate << std::endl;
-    ui->progressBar->setValue(static_cast<int>(rate * 100));
     this->progressDlg->setValue(static_cast<int>(rate * 100));
     if (isEnd)
     {
         this->progressDlg->cancel();
 
         ui->openGLWidget->model = model;
-        ui->openGLWidget->animation = new Animation(this->path, model);
-        ui->openGLWidget->animator = new Animator(ui->openGLWidget->animation);
+        if(model->hasAnimation()){
+            ui->openGLWidget->animation = new Animation();
+            ui->openGLWidget->animation->loadAnimation(this->path, model);
+            ui->openGLWidget->animator = new Animator(ui->openGLWidget->animation);
+        }
         ui->openGLWidget->needTrangerData = true;
         ui->positionX->setText(QString::number(ui->openGLWidget->position.x));
         ui->positionY->setText(QString::number(ui->openGLWidget->position.y));

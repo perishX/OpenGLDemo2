@@ -9,6 +9,7 @@
 #include "Shader.h"
 #include "Vertex.h"
 #include "Texture.h"
+#include "STBImage.h"
 
 class Mesh
 {

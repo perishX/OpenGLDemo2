@@ -37,3 +37,46 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
     stbi_image_free(data);
     return texture;
 }
+
+Info getTextureFromFile(const char *path, const std::string &directory, bool gamma){
+    std::string filename = directory + "/" + std::string(path);
+    Info info{};
+    unsigned char *data = stbi_load(filename.c_str(), &info.width, &info.height, &info.nrChannels, 0);
+    info.data=data;
+    return info;
+}
+
+unsigned int TextureToGPU(Info& info){
+    int width=info.width;
+    int height=info.height;
+    int nrChannels=info.nrChannels;
+    unsigned char *data = info.data;
+
+    unsigned int texture;
+    glGenTextures(1, &texture);
+
+    if (data)
+    {
+        GLenum format;
+        if (nrChannels == 1)
+            format = GL_RED;
+        else if (nrChannels == 3)
+            format = GL_RGB;
+        else if (nrChannels == 4)
+            format = GL_RGBA;
+
+        glBindTexture(GL_TEXTURE_2D, texture);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    }
+    else
+    {
+        std::cerr << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+    return texture;
+}

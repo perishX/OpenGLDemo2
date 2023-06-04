@@ -33,6 +33,7 @@ public:
     float GetDuration();
     const AssimpNodeData &GetRootNode();
     const std::map<std::string, BoneInfo> &GetBoneIDMap();
+    void loadAnimation(const std::string &animationPath, Model *model);
 
 private:
     void ReadMissingBones(const aiAnimation *animation, Model &model);

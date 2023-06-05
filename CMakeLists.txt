@@ -5,6 +5,10 @@ project(OpenGLDemo LANGUAGES CXX)
 set(CMAKE_PREFIX_PATH $ENV{QTDIR})
 message(STATUS "[QTDIR] $ENV{QTDIR}")
 
+# set(CMAKE_PREFIX_PATH $ENV{QTDIR_MINGW64})
+# message(STATUS "[QTDIR_MINGW64] $ENV{QTDIR_MINGW64}")
+
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOUIC ON)
@@ -50,9 +54,8 @@ add_executable(OpenGLDemo
 )
 
 target_link_libraries(OpenGLDemo Qt5::Widgets)
-#target_link_libraries(OpenGLDemo glew32)
-#target_link_libraries(OpenGLDemo glew32d)
+# target_link_libraries(OpenGLDemo glew32)
 target_link_libraries(OpenGLDemo glew32s)
 target_link_libraries(OpenGLDemo opengl32)
-#target_link_libraries(OpenGLDemo libassimp.dll.a)
+# target_link_libraries(OpenGLDemo libassimp.dll.a)
 target_link_libraries(OpenGLDemo assimp-vc142-mtd)

@@ -71,6 +71,10 @@
 # *.dll
 # *.exe
 
+CMakeLists.txt.user
+
+.vscode
 build/*
 
-CMakeLists.txt.user
+.vs
+out/*

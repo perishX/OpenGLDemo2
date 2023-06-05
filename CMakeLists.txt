@@ -15,8 +15,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories(include)
-link_directories(lib)
-
 include_directories(.)
 include_directories(src/animation)
 include_directories(src/model)
@@ -34,6 +32,8 @@ file(GLOB UTIL_SOURCE "./src/util/*.cpp")
 file(GLOB WIDGETS_HEAD "./src/widgets/*.h")
 file(GLOB WIDGETS_SOURCE "./src/widgets/*.cpp")
 
+link_directories(lib)
+
 add_executable(OpenGLDemo
   main.cpp
   mainwindow.cpp
@@ -50,6 +50,9 @@ add_executable(OpenGLDemo
 )
 
 target_link_libraries(OpenGLDemo Qt5::Widgets)
-target_link_libraries(OpenGLDemo glew32)
+#target_link_libraries(OpenGLDemo glew32)
+#target_link_libraries(OpenGLDemo glew32d)
+target_link_libraries(OpenGLDemo glew32s)
 target_link_libraries(OpenGLDemo opengl32)
-target_link_libraries(OpenGLDemo libassimp.dll.a)
+#target_link_libraries(OpenGLDemo libassimp.dll.a)
+target_link_libraries(OpenGLDemo assimp-vc142-mtd)

@@ -33,21 +33,14 @@ void Model::loadModel(std::string path, CallbackFun callback)
         std::cout << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
         return;
     }
-    std::cout<<"1111 "<<path<<std::endl;
-//    callback(true,1);
     directory = path.substr(0, path.find_last_of("/"));
-    std::cout<<"2222"<<directory<<std::endl;
-//callback(true,1);
     this->process = 0;
     this->totalNode = 0;
 
     this->vertexNum = 0;
     this->triangleNum = 0;
     this->calcNodesSum(scene->mRootNode, scene);
-//    std::cout<<"processNode start"<<std::endl;
     processNode(scene->mRootNode, scene, callback);
-//    std::cout<<"processNode end"<<std::endl;
-//    this->infoCallback();
     this->animationNum = scene->mNumAnimations;
 }
 

@@ -132,7 +132,6 @@ void MainWindow::on_playAndPause_clicked(bool checked)
 
 void MainWindow::on_horizontalSlider_valueChanged(int value)
 {
-    //    std::cout<<"on_horizontalSlider_valueChanged "<<value<<std::endl;
     //    ui->openGLWidget->setAnimationProgress(value);
     //    this->progress=value;
 }
@@ -166,7 +165,6 @@ void MainWindow::on_horizontalSlider_sliderMoved(int position)
 
 void MainWindow::updateProgress(bool isEnd, float rate, Model *model)
 {
-    std::cout << "[rate] " << rate << std::endl;
     this->progressDlg->setValue(static_cast<int>(rate * 100));
     if (isEnd)
     {

@@ -328,7 +328,6 @@ void MyOpenGLWidget::paintFBO()
 
     if (isLoaded)
     {
-        this->model->print();
         if (this->model->hasAnimation())
         {
             glUseProgram(this->modelShaderWithAnimation->ID);

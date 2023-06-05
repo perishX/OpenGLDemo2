@@ -278,10 +278,10 @@ void MyOpenGLWidget::setAnimationProgress(int progress)
 
 float MyOpenGLWidget::getAnimationProgress()
 {
-    // if (this->model->hasAnimation())
-    // {
-    //     return this->animator->getProgress();
-    // }
+     if (this->model->hasAnimation())
+     {
+         return this->animator->getProgress();
+     }
     return 0;
 }
 

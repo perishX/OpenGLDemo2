@@ -79,3 +79,5 @@ build/*
 .vs
 out/*
 CMakeSettings.json
+
+ModelViewer

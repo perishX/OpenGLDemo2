@@ -16,3 +16,8 @@
 使用glew32s、assimp-vc142-mtd。
 
 其他与mingw+vscode环境类似。
+
+# 打包
+
+1. 将exe拷到单独的文件夹
+2. 运行windeployqt OpenGLDemo.exe，自动将运行时需要的dll拷贝
